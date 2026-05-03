@@ -1,0 +1,24 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_utils_rpc;
+
+import "decisol.proto";
+import "solana.proto";
+import "types.proto";
+
+service AuraUtilsRpc {
+  rpc ChangeApiKey(types.ApiKeyReq) returns (types.ApiKeyResp);
+  rpc TxnProcsStat(types.TxnProcsStatReq) returns (types.TxnProcessorsStats);
+  rpc SwitchWallet(solana.Address) returns (types.Done);
+  rpc RemoveWallet(types.RemoveWallet) returns (types.Done);
+  rpc AddWallet(solana.Keypair) returns (decisol.Lamports);
+  rpc WrapWsol(types.WrapWsolRequest) returns (solana.Signature);
+  rpc UnwrapWsol(types.UnwrapWsolRequest) returns (solana.Signature);
+  rpc OpenTa(types.OpenTaRequest) returns (solana.Signature);
+  rpc OpenUtilAccs(solana.Address) returns (solana.Signature);
+  rpc MakeWithdraw(types.MakeWithdrawReq) returns (types.MakeWithdrawResp);
+  rpc CreateNonces(types.CreateNoncesReq) returns (types.CreateNoncesResp);
+  rpc UpdateNonces(types.UpdateNoncesReq) returns (types.UpdateNoncesResp);
+  rpc DexCuSet(types.AtomicDexCU) returns (types.Done);
+  rpc DexCuGet(types.GetDexCu) returns (types.AtomicDexCU);
+}

@@ -1,0 +1,14 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_limit_orders_rpc;
+
+import "solana.proto";
+import "types.proto";
+
+service AuraLimitOrdersRpc {
+  rpc GetTokenLimitOrders(solana.Address) returns (types.TokenLimitOrders);
+  rpc GetLimitOrders(types.GetLimitOrders) returns (types.LimitOrders);
+  rpc PlaceLimitOrders(types.UpdateTokenLimitOrders) returns (types.UpdateLimitOrdersResponse);
+  rpc DeleteLimitOrders(types.DeleteOrders) returns (types.DeleteLimitOrdersResponse);
+  rpc ClearLimitOrders(types.ClearLimitOrders) returns (types.ClearLimitOrdersResponse);
+}

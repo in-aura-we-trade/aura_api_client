@@ -1,0 +1,23 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_snipe_rpc;
+
+import "types.proto";
+
+service AuraSnipeRpc {
+  rpc SnipeNewCfgDef(types.CreateDefCfg) returns (types.SnipeTask);
+  rpc SnipeDuplicateCfg(types.SnipeTaskId) returns (types.SnipeTaskId);
+  rpc SnipeTurnOffAllTasks(types.TurnOffAll) returns (types.Done);
+  rpc SnipeTurnOnAllTasks(types.TurnOnAll) returns (types.Done);
+  rpc SnipeDelCfg(types.SnipeTaskId) returns (types.Done);
+  rpc SnipeClearAllCfgs(types.ClearAll) returns (types.Done);
+  rpc SnipeGetCfgs(types.GetCfgIds) returns (types.SnipeCfgIds);
+  rpc SnipeGetCfg(types.SnipeTaskId) returns (types.SnipeTask);
+  rpc SnipeGetMints(types.SnipeTaskId) returns (types.Pubkeys);
+  rpc SnipeGetDevs(types.SnipeTaskId) returns (types.Pubkeys);
+  rpc SnipeGetBlacklist(types.SnipeTaskId) returns (types.Pubkeys);
+  rpc SnipeCfgGetLimitOrders(types.SnipeTaskId) returns (types.ApiOrders);
+  rpc SnipeCfgGetBuyTxnProc(types.SnipeTaskId) returns (types.TxnProcessors);
+  rpc SnipeCfgGetSellTxnProc(types.SnipeTaskId) returns (types.TxnProcessors);
+  rpc SnipeSetFields(types.SnipeUpdate) returns (types.Done);
+}

@@ -1,0 +1,23 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_ct_rpc;
+
+import "types.proto";
+
+service AuraCtRpc {
+  rpc CtGetBuyBlacklist(types.CtTaskId) returns (types.Pubkeys);
+  rpc CtGetSellBlacklist(types.CtTaskId) returns (types.Pubkeys);
+  rpc CtNewCfgDef(types.CreateDefCfg) returns (types.CtTask);
+  rpc CtDuplicateCfg(types.CtTaskId) returns (types.CtTaskId);
+  rpc CtTurnOffAllTasks(types.TurnOffAll) returns (types.Done);
+  rpc CtTurnOnAllTasks(types.TurnOnAll) returns (types.Done);
+  rpc CtDelCfg(types.CtTaskId) returns (types.Done);
+  rpc CtClearAllCfgs(types.ClearAll) returns (types.Done);
+  rpc CtGetCfgs(types.GetCfgIds) returns (types.CtCfgIds);
+  rpc CtGetCfg(types.CtTaskId) returns (types.CtTask);
+  rpc CtGetCopyWallets(types.CtTaskId) returns (types.Pubkeys);
+  rpc CtCfgGetLimitOrders(types.CtTaskId) returns (types.ApiOrders);
+  rpc CtCfgGetBuyTxnProc(types.CtTaskId) returns (types.TxnProcessors);
+  rpc CtCfgGetSellTxnProc(types.CtTaskId) returns (types.TxnProcessors);
+  rpc CtSetFields(types.CtUpdate) returns (types.Done);
+}

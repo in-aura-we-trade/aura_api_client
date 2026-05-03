@@ -1,0 +1,10 @@
+/target
+/src/private_client
+/aura_protos/protos/arb
+/aura_protos/protos/aura_licence
+/aura_protos/protos/be
+/aura_protos/protos/txn_send_admin
+/aura_protos/protos/txn_send
+/aura_protos/protos/next_block.proto
+/aura_protos/protos/bloxroute.proto
+/aura_protos/protos/block_razor_rpc.proto

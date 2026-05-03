@@ -1,0 +1,1231 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package types;
+
+import "chrono.proto";
+import "decisol.proto";
+import "fastnum.proto";
+import "solana.proto";
+
+message HashSetAddress {
+  repeated solana.Address value = 1;
+}
+
+enum Action {
+  INSERT = 0;
+  DELETE = 1;
+  CLEAR = 2;
+}
+
+enum CopyTradeBuyMode {
+  BUY_ONLY_LIMITS = 0;
+  BUY_FIXED = 1;
+  BUY_PERC_SELF = 2;
+  BUY_PERC_MASTER = 3;
+}
+
+enum CopyTradeSellMode {
+  SELL_PERC_SELF = 0;
+  SELL_PERC_MASTER = 1;
+  SELL_ONLY_LIMITS = 2;
+  SELL_FIXED = 3;
+  SELL_INIT = 4;
+}
+
+enum CtMigrationFilter {
+  NO_FILTER = 0;
+  ONLY_BEFORE = 1;
+  ONLY_AFTER = 2;
+}
+
+enum DexType {
+  PUMP = 0;
+  PUMP_AMM = 1;
+  RAY_AMM = 2;
+  RAY_CPMM = 3;
+  RAY_LL = 4;
+}
+
+enum Direction {
+  ABOVE = 0;
+  BELOW = 1;
+}
+
+enum FollowSwaps {
+  FOLLOW_OFF = 0;
+  FIRST = 1;
+  ALL = 2;
+  CUSTOM = 3;
+}
+
+enum MarketExecuteMode {
+  ALWAYS = 0;
+  ONLY_IN_PROFIT = 1;
+  ONLY_IN_LOSS = 2;
+}
+
+enum MigrationStatus {
+  PRE = 0;
+  POST = 1;
+  NON_MIGRATABLE = 2;
+}
+
+enum OrderEventTrigger {
+  IMMEDIATE = 0;
+  MIGRATION = 1;
+  DEV_BUY = 2;
+  DEV_SELL = 3;
+}
+
+enum OrderStatus {
+  EXECUTE = 0;
+  SKIP = 1;
+  REMOVE = 2;
+}
+
+enum ProcKind {
+  AURA = 0;
+  JITO = 1;
+  BLOXROUTE = 2;
+  NOZOMI = 3;
+  NEXT_BLOCK = 4;
+  SLOT0 = 5;
+  ASTRA = 6;
+  BLOCK_RAZOR = 7;
+  NODE1 = 8;
+  TPU_PEN = 9;
+  HELIUS = 10;
+  STELLIUM = 11;
+  SOYAS = 12;
+  FALCON = 13;
+  RAIDEN = 14;
+  CIRCULAR = 15;
+  FLASH_BLOCK = 16;
+  MOON = 17;
+  BLOCKSPRINT = 18;
+}
+
+enum SnipeBuyAmount {
+  FIXED = 0;
+  PERC_SELF = 1;
+}
+
+enum SnipeSellAmount {
+  FIXED = 0;
+  PERC_SELF = 1;
+  INIT = 2;
+}
+
+enum TokenAccountKindUi {
+  ATA = 0;
+  PDA = 1;
+}
+
+enum TradeType {
+  SELL = 0;
+  BUY = 1;
+}
+
+enum TxnNonce {
+  CUSTOM = 0;
+  DURABLE = 1;
+  NONE = 2;
+}
+
+enum UserNonceStrategy {
+  DURABLE = 0;
+  HYBRID = 1;
+  CUSTOM = 2;
+  ALL = 3;
+  ALL_HYBRID = 4;
+}
+
+message ActivationTime {
+  uint64 field_0 = 1;
+}
+
+message ApiKeyReq {
+  solana.Address key = 1;
+}
+
+message ApiKeyResp {}
+
+message ApiOrders {
+  repeated LimitOrder orders = 1;
+}
+
+message ArbAttemptInfo {
+  DexType hop_0 = 1;
+  DexType hop_1 = 2;
+  solana.Address hop_0_id = 3;
+  solana.Address hop_1_id = 4;
+  decisol.QuoteLamportsKind quote = 5;
+  solana.Address base = 6;
+  uint64 amount_in = 7;
+  uint64 profit = 8;
+  solana.Signature trigger_tx_sig = 9;
+}
+
+message AtomicDexCU {
+  uint32 pump_buy = 1;
+  uint32 pump_sell = 2;
+  uint32 pump_amm_buy = 3;
+  uint32 pump_amm_sell = 4;
+  uint32 ray_amm_buy = 5;
+  uint32 ray_amm_sell = 6;
+  uint32 ray_cpmm_buy = 7;
+  uint32 ray_cpmm_sell = 8;
+  uint32 ray_ll_buy = 9;
+  uint32 ray_ll_sell = 10;
+}
+
+message BeUserAction {
+  UserId id = 1;
+  BeAction value = 2;
+}
+
+message ClearAll {}
+
+message ClearLimitOrders {}
+
+message ClearLimitOrdersResponse {}
+
+message ConfigPubkeys {
+  Action act = 1;
+  repeated solana.Address pubkeys = 2;
+}
+
+message ConfirmState {
+  repeated solana.Signature sigs = 1;
+  uint64 event_slot = 2;
+  uint64 event_idx = 3;
+  UserId user_id = 4;
+  optional LimitConfirmState limit_state = 5;
+  ConfirmTradeKind confirm_trade_kind = 6;
+  TxnNonce nonce = 7;
+}
+
+message CreateDefCfg {}
+
+message CreateNoncesReq {
+  solana.Address wallet = 1;
+  uint32 amount = 2;
+}
+
+message CreateNoncesResp {
+  solana.Signature sig = 1;
+}
+
+message CtCfgIdProto {
+  CtTaskId id = 1;
+  string name = 2;
+  bool is_on = 3;
+}
+
+message CtCfgIds {
+  repeated CtCfgIdProto ids = 1;
+}
+
+message CtTask {
+  optional CtTaskId cfg_id = 1;
+  UserId user_id = 2;
+  CtTaskFlags flags = 3;
+  CtTaskValues values = 4;
+  CtTaskTriggers triggers = 5;
+}
+
+message CtTaskFlags {
+  bool is_on = 1;
+  bool buy_blacklist = 2;
+  bool sell_blacklist = 3;
+  bool limit_orders_on_buys = 4;
+  bool limit_orders_on_sells = 5;
+  bool buy_freezeable = 6;
+  bool buy_mintable = 7;
+  bool pump = 8;
+  bool pump_mayhem = 9;
+  bool bonk = 10;
+  bool ray_amm = 11;
+  bool ray_cpmm = 12;
+  bool pump_amm = 13;
+  bool ray_ll = 14;
+  bool moon = 15;
+  bool reverse_sell = 16;
+  bool reverse_buy = 17;
+  bool use_age = 18;
+  bool use_mcap = 19;
+  uint64 min_age = 20;
+  uint64 max_age = 21;
+  uint64 min_buy = 22;
+  uint64 max_buy = 23;
+  bool config_limits = 24;
+  int32 buys_left = 25;
+  FollowSwaps follow_buys = 26;
+  FollowSwaps follow_sells = 27;
+  CtMigrationFilter buy_migration_filter = 28;
+  CtMigrationFilter sell_migration_filter = 29;
+  UserNonceStrategy buy_user_nonce = 30;
+  UserNonceStrategy sell_user_nonce = 31;
+}
+
+message CtTaskId {
+  int64 field_0 = 1;
+}
+
+message CtTaskTriggers {
+  HashSetAddress copy_wallets = 1;
+  HashSetAddress buy_blacklist = 2;
+  HashSetAddress sell_blacklist = 3;
+}
+
+message CtTaskValues {
+  string name = 1;
+  ApiOrders limit_orders = 2;
+  uint32 allowed_buys = 3;
+  LruAddressuint3232 token_buys = 4;
+  uint32 allowed_sells = 5;
+  LruAddressuint3232 token_sells = 6;
+  CopyTradeBuyMode buy_mode = 7;
+  CopyTradeSellMode sell_mode = 8;
+  decisol.QuoteLamports buy_amount = 9;
+  decisol.QuoteLamports sell_amount = 10;
+  fastnum.UD128 buy_amount_perc = 11;
+  fastnum.UD128 sell_amount_perc = 12;
+  fastnum.UD128 min_mcap = 13;
+  fastnum.UD128 max_mcap = 14;
+  decisol.Lamports buy_tip = 15;
+  decisol.Lamports sell_tip = 16;
+  decisol.Lamports buy_fee = 17;
+  decisol.Lamports sell_fee = 18;
+  fastnum.UD128 buy_slippage = 19;
+  fastnum.UD128 sell_slippage = 20;
+  TxnProcessors buy_procs = 21;
+  TxnProcessors sell_procs = 22;
+  uint32 max_slot_latency_buy = 23;
+  uint32 max_slot_latency_sell = 24;
+  solana.Address wallet = 25;
+}
+
+message CtUpdate {
+  CtTaskId cfg_id = 1;
+  repeated CtUpdateField updates = 2;
+}
+
+message DeleteLimitOrdersResponse {
+  uint32 total_orders_after = 1;
+}
+
+message DeleteOrders {
+  solana.Address mint = 1;
+  bool all = 2;
+  repeated OrderId ids = 3;
+}
+
+message Done {}
+
+message FetchFullWalletsInfo {
+  solana.Address active = 1;
+  WalletBalances balances = 2;
+  WalletUtilAccountsInfo accounts_state = 3;
+  repeated solana.Address wallets = 4;
+}
+
+message FetchFullWalletsInfoReq {}
+
+message FetchInfo {}
+
+message FetchInfoResponse {
+  solana.Address wallet = 1;
+  WalletBalances balances = 2;
+  optional WalletTaInfo token_accounts = 3;
+  uint32 wallets_num = 4;
+  uint32 limit_orders_num = 5;
+  uint32 ct_cfgs_num = 6;
+  uint32 snipes_num = 7;
+}
+
+message GetCfgIds {}
+
+message GetDexCu {}
+
+message GetLimitOrders {}
+
+message GetUserReq {}
+
+message GetUserResp {
+  optional UserBe user = 1;
+}
+
+message GetUsersReq {}
+
+message LimitConfirmState {
+  OrderId order_id = 1;
+  OrderMeta meta = 2;
+}
+
+message LimitOrder {
+  OrderState state = 1;
+  RawOrder order = 2;
+  OrderEventTrigger trigger = 3;
+  solana.Address wallet = 4;
+}
+
+message LimitOrders {
+  repeated LimitOrder orders = 1;
+}
+
+message LiqState {
+  uint64 pc_raw = 1;
+  uint64 token_raw = 2;
+  uint64 pc_v = 3;
+  uint64 token_v = 4;
+}
+
+message LruAddressuint3232 {
+  repeated LruPairAddressuint32 items = 1;
+}
+
+message LruPairAddressuint32 {
+  solana.Address k = 1;
+  uint32 v = 2;
+}
+
+message LruPairSolanaAddressAddressU8 {
+  solana.Address k = 1;
+  uint32 v = 2;
+}
+
+message LruSolanaAddressAddressU8 {
+  repeated LruPairAddressuint32 items = 1;
+}
+
+message MainUniSub {}
+
+message MakeWithdrawReq {
+  solana.Address destination = 1;
+  decisol.Lamports amount = 2;
+}
+
+message MakeWithdrawResp {
+  solana.Signature sig = 1;
+  decisol.Lamports fee = 2;
+}
+
+message MarketTrade {
+  optional solana.Address wallet = 1;
+  SwapAmount amount = 2;
+  solana.Address mint = 3;
+  fastnum.UD128 slippage = 4;
+  decisol.Lamports tip = 5;
+  optional TxnProcessors procs = 6;
+  UserNonceStrategy nonce = 7;
+  decisol.Lamports priority_fee = 8;
+  optional uint32 slot_latency = 9;
+  optional chrono.DateTime expire_at = 10;
+  optional uint64 rpc_nonce = 11;
+  optional fastnum.UD128 max_price_impact = 12;
+  ApiOrders limit_orders = 13;
+}
+
+message OpenTaRequest {
+  solana.Address owner = 1;
+  solana.Address mint = 2;
+  TokenAccountKindUi kind = 3;
+  bool is_2022 = 4;
+}
+
+message OrderId {
+  int64 field_0 = 1;
+}
+
+message OrderMeta {
+  OrderEventTrigger trigger = 1;
+  int32 left_attempts = 2;
+}
+
+message Ping {
+  uint64 count = 1;
+}
+
+message Pong {
+  uint64 count = 1;
+}
+
+message ProcessorStats {
+  uint64 total_slot_lat = 1;
+  uint64 sent_txn_count = 2;
+  uint64 landed_txn_count = 3;
+  uint64 error_txn_count = 4;
+  uint64 prio_fee = 5;
+  uint64 tip = 6;
+}
+
+message Pubkeys {
+  repeated solana.Address values = 1;
+}
+
+message QuoteState {
+  decisol.Usd usd_buy = 1;
+  decisol.Usd usd_sell = 2;
+  decisol.Usd usd_sell_unknown = 3;
+  decisol.Sol sol_buy = 4;
+  decisol.Sol sol_sell = 5;
+  decisol.Sol sol_sell_unknown = 6;
+}
+
+message RawOrder {
+  fastnum.UD128 slippage = 1;
+  decisol.Lamports tip = 2;
+  decisol.Lamports fee = 3;
+  Target target = 4;
+  SwapAmount amount = 5;
+  TxnProcessors procs = 6;
+  UserNonceStrategy nonce = 7;
+  uint32 slot_latency = 8;
+}
+
+message RegisterUserReq {
+  solana.Keypair keypair = 1;
+  optional UserId ref_id = 2;
+}
+
+message RemoveWallet {
+  solana.Address to_remove = 1;
+  solana.Address new = 2;
+}
+
+message SnipeCfgIdProto {
+  SnipeTaskId id = 1;
+  string name = 2;
+  bool is_on = 3;
+}
+
+message SnipeCfgIds {
+  repeated SnipeCfgIdProto ids = 1;
+}
+
+message SnipeTask {
+  optional SnipeTaskId cfg_id = 1;
+  UserId user_id = 2;
+  SnipeTaskFlags flags = 3;
+  SnipeTaskValues values = 4;
+  SnipeTaskTriggers triggers = 5;
+}
+
+message SnipeTaskFlags {
+  bool is_on = 1;
+  bool blacklist = 2;
+  bool snipe_all = 3;
+  bool creation = 4;
+  bool migration = 5;
+  bool pump = 6;
+  bool pump_mayhem = 7;
+  bool ray_amm = 8;
+  bool ray_cpmm = 9;
+  bool pump_amm = 10;
+  bool ray_ll = 11;
+  bool bonk = 12;
+  bool use_time = 13;
+  uint64 min_age = 14;
+  uint64 max_age = 15;
+  uint64 min_dev_buy = 16;
+  uint64 max_dev_buy = 17;
+  bool buy_freezable = 18;
+  bool buy_mintable = 19;
+  bool use_mcap = 20;
+  bool config_limits = 21;
+  int32 buys_left = 22;
+  bool buy_mode = 23;
+  bool sell_mode = 24;
+  UserNonceStrategy buy_user_nonce = 25;
+  UserNonceStrategy sell_user_nonce = 26;
+}
+
+message SnipeTaskId {
+  int64 field_0 = 1;
+}
+
+message SnipeTaskTriggers {
+  HashSetAddress devs = 1;
+  HashSetAddress mints = 2;
+  HashSetAddress blacklist = 3;
+}
+
+message SnipeTaskValues {
+  string name = 1;
+  fastnum.UD128 min_mcap = 2;
+  fastnum.UD128 max_mcap = 3;
+  ApiOrders limit_orders = 4;
+  bool use_limit_orders = 5;
+  bool latest_state_slippage = 6;
+  bool allow_multiple_actions_for_mint = 7;
+  bool allow_multiple_actions_for_dev = 8;
+  SnipeBuyAmount buy_amount = 9;
+  fastnum.UD128 buy_perc = 10;
+  decisol.QuoteLamports buy_exact = 11;
+  fastnum.UD128 buy_slippage = 12;
+  decisol.Lamports buy_tip = 13;
+  decisol.Lamports buy_fee = 14;
+  uint32 max_slot_latency_buy = 15;
+  SnipeSellAmount sell_amount = 16;
+  fastnum.UD128 sell_perc = 17;
+  decisol.QuoteLamports sell_exact = 18;
+  fastnum.UD128 sell_slippage = 19;
+  decisol.Lamports sell_tip = 20;
+  decisol.Lamports sell_fee = 21;
+  uint32 max_slot_latency_sell = 22;
+  TxnProcessors buy_procs = 23;
+  TxnProcessors sell_procs = 24;
+  solana.Address wallet = 25;
+}
+
+message SnipeUpdate {
+  SnipeTaskId cfg_id = 1;
+  repeated SnipeUpdateField updates = 2;
+}
+
+message Social {
+  string name = 1;
+  string value = 2;
+}
+
+message TokenBalanceInner {
+  TokenBalanceRaw pda_balance = 1;
+  TokenBalanceRaw ata_balance = 2;
+  uint32 pda_bump = 3;
+}
+
+message TokenBalanceRaw {
+  uint64 balance = 1;
+  uint64 slot = 2;
+}
+
+message TokenLimitOrders {
+  solana.Address mint = 1;
+  repeated LimitOrder orders = 2;
+}
+
+message TokenMeta {
+  optional decisol.SolanaLamports supply = 1;
+  fastnum.UD128 tax_bps = 2;
+  string ticker = 3;
+  string name = 4;
+  bool mint_auth = 5;
+  bool freeze_auth = 6;
+  repeated Social socials = 7;
+}
+
+message TokenPool {
+  solana.Address mint = 1;
+  solana.Address pool_id = 2;
+  DexType pool_type = 3;
+  MigrationStatus migration_status = 4;
+  fastnum.UD128 price = 5;
+  decisol.SolanaLamports base_liq_raw = 6;
+  decisol.QuoteLamports quote_liq_raw = 7;
+  decisol.SolanaLamports base_liq_v = 8;
+  decisol.QuoteLamports quote_liq_v = 9;
+}
+
+message TokenPosition {
+  solana.Address mint = 1;
+  string ticker = 2;
+  optional fastnum.UD128 pnl = 3;
+  decisol.QuoteLamports quote_value = 4;
+  uint32 orders_num = 5;
+  uint64 last_traded_slot = 6;
+}
+
+message TokenPositions {
+  repeated TokenPosition v = 1;
+  decisol.Lamports sol_balance = 2;
+}
+
+message TokenPositionsReq {}
+
+message TokenPositionsUi {
+  repeated TokenPosition positions = 1;
+  decisol.Lamports sol_balance = 2;
+  optional TokenTradeState selected = 3;
+}
+
+message TokenPositionsUiReq {
+  optional solana.Address mint = 1;
+}
+
+message TokenStatus {
+  TokenPool most_liq_pool = 1;
+  TokenMeta token_meta = 2;
+}
+
+message TokenTradeState {
+  TokenBalanceRaw pda_balance = 1;
+  TokenBalanceRaw ata_balance = 2;
+  decisol.SolanaLamportsKind base = 3;
+  bool is_2022 = 4;
+  decisol.SolanaLamports base_buy = 5;
+  decisol.SolanaLamports base_sell = 6;
+  uint32 buy_n = 7;
+  uint32 sell_n = 8;
+  uint64 last_traded_slot = 9;
+  QuoteState quote = 10;
+  decisol.QuoteLamports total_quote_position = 11;
+  solana.Address mint = 12;
+}
+
+message TokenTradeStateInner {
+  decisol.SolanaLamports base_buy = 1;
+  decisol.SolanaLamports base_sell = 2;
+  QuoteState quote = 3;
+  uint32 buy_n = 4;
+  uint32 sell_n = 5;
+  uint64 last_traded_slot = 6;
+}
+
+message Trade {
+  solana.Address mint = 1;
+  solana.Address pool_id = 2;
+  solana.Address trader = 3;
+  DexType dex_data = 4;
+  decisol.SolanaLamports base = 5;
+  decisol.QuoteLamports quote = 6;
+  TradeType side = 7;
+  decisol.SolanaLamports pre_base_balance = 8;
+  decisol.QuoteLamports pre_quote_balance = 9;
+  LiqState liq = 10;
+  bool migration = 11;
+}
+
+message TradeResponse {
+  uint64 slot = 1;
+}
+
+message TransactionErrorWithAccount {
+  optional solana.Address account = 1;
+  solana.TransactionError err = 2;
+}
+
+message TurnOffAll {}
+
+message TurnOnAll {}
+
+message TxnProcessors {
+  bool jito_validators = 1;
+  bool jito_bundled = 2;
+  bool aura = 3;
+  bool bloxroute = 4;
+  bool nozomi = 5;
+  bool next_block = 6;
+  bool slot0 = 7;
+  bool astra = 8;
+  bool block_razor = 9;
+  bool node1 = 10;
+  bool tpu_penetrator = 11;
+  bool helius = 12;
+  bool stellium = 13;
+  bool soyas = 14;
+  bool falcon = 15;
+  bool raiden = 16;
+  bool circular = 17;
+  bool flash_block = 18;
+  bool moon = 19;
+  bool blocksprint = 20;
+  bool aura_revert = 21;
+}
+
+message TxnProcessorsStats {
+  ProcessorStats jito = 1;
+  ProcessorStats aura = 2;
+  ProcessorStats bloxroute = 3;
+  ProcessorStats nozomi = 4;
+  ProcessorStats next_block = 5;
+  ProcessorStats slot0 = 6;
+  ProcessorStats astra = 7;
+  ProcessorStats block_razor = 8;
+  ProcessorStats tpu_pen = 9;
+  ProcessorStats node1 = 10;
+  ProcessorStats stellium = 11;
+  ProcessorStats helius = 12;
+  ProcessorStats soyas = 13;
+  ProcessorStats falcon = 14;
+  ProcessorStats raiden = 15;
+  ProcessorStats circular = 16;
+  ProcessorStats flashblock = 17;
+  ProcessorStats moon = 18;
+  ProcessorStats blocksprint = 19;
+}
+
+message TxnProcsStatReq {}
+
+message TxnTipsParsed {
+  decisol.Lamports priority = 1;
+  decisol.Lamports jito = 2;
+}
+
+message UnwrapWsolRequest {
+  solana.Address owner = 1;
+  TokenAccountKindUi kind = 2;
+  UnwrapWsolAmount amount = 3;
+}
+
+message UpdateLimitOrdersResponse {
+  uint32 total_orders = 1;
+  repeated OrderId ids = 2;
+}
+
+message UpdateNoncesReq {
+  solana.Address wallet = 1;
+}
+
+message UpdateNoncesResp {
+  uint32 found = 1;
+  uint32 updated = 2;
+}
+
+message UpdateTokenLimitOrders {
+  solana.Address mint = 1;
+  ApiOrders orders = 2;
+}
+
+message UserActionEventSub {}
+
+message UserBe {
+  solana.Address active_wallet = 1;
+  repeated solana.Address wallets = 2;
+  solana.Address api_key = 3;
+  decisol.Lamports balance = 4;
+}
+
+message UserId {
+  uint64 field_0 = 1;
+}
+
+message Users {
+  repeated UserId users = 1;
+}
+
+message UtilAccsInfo {
+  bool pump_uva = 1;
+  bool pump_amm_uva = 2;
+  bool pump_amm_uva_ata = 3;
+  bool custom_nonce = 4;
+  uint32 durable_nonces = 5;
+}
+
+message WalletBalances {
+  TokenBalanceRaw sol = 1;
+  TokenBalanceRaw wsol_ata = 2;
+  TokenBalanceRaw usdc_ata = 3;
+  TokenBalanceRaw usd1_ata = 4;
+  TokenBalanceRaw usdt_ata = 5;
+  TokenBalanceRaw wsol_pda = 6;
+  TokenBalanceRaw usdc_pda = 7;
+  TokenBalanceRaw usd1_pda = 8;
+  TokenBalanceRaw usdt_pda = 9;
+}
+
+message WalletTaInfo {
+  bool wsol_ata = 1;
+  bool usdc_ata = 2;
+  bool usd1_ata = 3;
+  bool usdt_ata = 4;
+  bool wsol_pda = 5;
+  bool usdc_pda = 6;
+  bool usd1_pda = 7;
+  bool usdt_pda = 8;
+  uint32 positions = 9;
+}
+
+message WalletUtilAccountsInfo {
+  WalletTaInfo token_accounts = 1;
+  UtilAccsInfo util_accs = 2;
+}
+
+message WrapWsolRequest {
+  solana.Address owner = 1;
+  TokenAccountKindUi kind = 2;
+  uint64 amount = 3;
+}
+
+message ArbProfitCheckSol {}
+message ArbProfitCheck {
+  oneof value {
+    solana.Address ta = 1;
+    ArbProfitCheckSol sol = 2;
+    solana.Address wsol_and_sol = 3;
+  }
+}
+
+
+message BeAction {
+  oneof value {
+    TradeStateUpdate trade_callback = 1;
+    ConfirmState trade_event = 2;
+    TokenLimitOrders order_event = 3;
+    Ping ping = 4;
+    Pong pong = 5;
+  }
+}
+
+message ConfirmTradeKindSnipe {
+  SnipeTaskId task_id = 1;
+  string task_name = 2;
+  solana.Signature txn_sig = 3;
+  solana.Address mint = 4;
+  bool migration = 5;
+  TradeType trade_ty = 6;
+}
+
+message ConfirmTradeKindLimitOrder {
+  solana.Address token = 1;
+  LimitOrder order = 2;
+}
+
+message ConfirmTradeKindSwap {
+  solana.Address token = 1;
+  TradeType trade_ty = 2;
+}
+
+message ConfirmTradeKindMigration {
+  solana.Address token = 1;
+  TradeType trade_ty = 2;
+}
+
+message ConfirmTradeKindDev {
+  solana.Address token = 1;
+  TradeType trade_ty = 2;
+  solana.Signature tx_sig = 3;
+}
+
+message ConfirmTradeKindCopytrade {
+  CtTaskId cfg_id = 1;
+  string config_name = 2;
+  solana.Address wallet = 3;
+  solana.Signature tx_sig = 4;
+  Trade trade_data = 5;
+}
+
+message ConfirmTradeKindArb {
+  ArbAttemptInfo info = 1;
+  solana.Address signer = 2;
+  ArbProfitCheck profit_check = 3;
+}
+message ConfirmTradeKind {
+  oneof value {
+    ConfirmTradeKindSnipe snipe = 1;
+    ConfirmTradeKindLimitOrder limit_order = 2;
+    ConfirmTradeKindSwap swap = 3;
+    ConfirmTradeKindMigration migration = 4;
+    ConfirmTradeKindDev dev = 5;
+    ConfirmTradeKindCopytrade copytrade = 6;
+    ConfirmTradeKindArb arb = 7;
+  }
+}
+
+
+message CtUpdateField {
+  oneof value {
+    bool config_limits = 1;
+    uint32 left_buys = 2;
+    CopyTradeBuyMode buy_mode = 3;
+    CopyTradeSellMode sell_mode = 4;
+    decisol.QuoteLamports buy_amount_fixed = 5;
+    fastnum.UD128 buy_amount_perc = 6;
+    decisol.QuoteLamports sell_amount_fixed = 7;
+    fastnum.UD128 sell_amount_perc = 8;
+    TxnProcessors txn_proc_buy = 9;
+    TxnProcessors txn_proc_sell = 10;
+    ApiOrders limit_orders = 11;
+    ConfigPubkeys wallets = 12;
+    ConfigPubkeys buy_black_list = 13;
+    ConfigPubkeys sell_black_list = 14;
+    bool buy_blacklist_switch = 15;
+    bool sell_blacklist_switch = 16;
+    string name = 17;
+    fastnum.UD128 min_mcap = 18;
+    fastnum.UD128 max_mcap = 19;
+    fastnum.UD128 buy_slippage = 20;
+    decisol.Lamports buy_tip = 21;
+    decisol.Lamports buy_fee = 22;
+    uint32 max_slot_latency_buy = 23;
+    fastnum.UD128 sell_slippage = 24;
+    decisol.Lamports sell_tip = 25;
+    decisol.Lamports sell_fee = 26;
+    uint32 max_slot_latency_sell = 27;
+    bool is_on = 28;
+    CtMigrationFilter buy_migration_filter = 29;
+    CtMigrationFilter sell_migration_filter = 30;
+    FollowSwaps follow_buys = 31;
+    FollowSwaps follow_sells = 32;
+    bool pump_mayhem = 33;
+    bool pump = 34;
+    bool ray_amm = 35;
+    bool ray_cpmm = 36;
+    bool pump_amm = 37;
+    bool ray_ll = 38;
+    bool bonk = 39;
+    bool use_age = 40;
+    uint64 min_age = 41;
+    uint64 max_age = 42;
+    bool buy_freezable = 43;
+    bool buy_mintable = 44;
+    bool use_mcap = 45;
+    decisol.Lamports min_master_buy = 46;
+    decisol.Lamports max_master_buy = 47;
+    bool use_limit_orders_for_buys = 48;
+    bool use_limit_orders_for_sells = 49;
+    bool reverse_buy = 50;
+    bool reverse_sell = 51;
+    uint32 allowed_buys = 52;
+    uint32 allowed_sells = 53;
+    UserNonceStrategy buy_nonce = 54;
+    UserNonceStrategy sell_nonce = 55;
+    solana.Address set_wallet = 56;
+  }
+}
+
+message OrderStatePlaced {
+  OrderId id = 1;
+  int32 left_attempts = 2;
+  int64 expire_timestamp_utc = 3;
+  OrderStatus status = 4;
+  uint64 activate_timestamp_utc = 5;
+}
+
+message OrderStateApi {
+  optional OrderId id = 1;
+  optional chrono.TimeDelta expire_dur = 2;
+  optional chrono.TimeDelta activate_dur = 3;
+}
+message OrderState {
+  oneof value {
+    OrderStatePlaced placed = 1;
+    OrderStateApi api = 2;
+  }
+}
+
+message ParsedTradeUiBuy {
+  solana.Address mint = 1;
+  string ticker = 2;
+  decisol.SolanaLamports base = 3;
+  decisol.QuoteLamports quote = 4;
+  optional fastnum.UD128 mc_usd = 5;
+  fastnum.UD128 price_usd = 6;
+}
+
+message ParsedTradeUiSell {
+  solana.Address mint = 1;
+  string ticker = 2;
+  decisol.SolanaLamports base = 3;
+  decisol.QuoteLamports quote = 4;
+  optional fastnum.UD128 pnl = 5;
+  optional fastnum.UD128 mc_usd = 6;
+  fastnum.UD128 price_usd = 7;
+}
+message ParsedTradeUi {
+  oneof value {
+    ParsedTradeUiBuy buy = 1;
+    ParsedTradeUiSell sell = 2;
+  }
+}
+
+
+message SnipeUpdateField {
+  oneof value {
+    bool buy_mode = 1;
+    SnipeBuyAmount buy_amount = 2;
+    SnipeSellAmount sell_amount = 3;
+    bool sell_mode = 4;
+    bool config_limits = 5;
+    uint32 left_buys = 6;
+    TxnProcessors txn_proc_buy = 7;
+    TxnProcessors txn_proc_sell = 8;
+    ApiOrders limit_orders = 9;
+    ConfigPubkeys devs = 10;
+    ConfigPubkeys mints = 11;
+    ConfigPubkeys black_list = 12;
+    bool blacklist_switch = 13;
+    string name = 14;
+    fastnum.UD128 min_mcap = 15;
+    fastnum.UD128 max_mcap = 16;
+    bool use_limit_orders = 17;
+    bool latest_state_slippage = 18;
+    bool allow_multiple_actions_for_mint = 19;
+    bool allow_multiple_actions_for_dev = 20;
+    fastnum.UD128 buy_amount_perc = 21;
+    fastnum.UD128 sell_amount_perc = 22;
+    decisol.QuoteLamports buy_amount_fixed = 23;
+    decisol.QuoteLamports sell_amount_fixed = 24;
+    fastnum.UD128 buy_slippage = 25;
+    decisol.Lamports buy_tip = 26;
+    decisol.Lamports buy_fee = 27;
+    uint32 max_slot_latency_buy = 28;
+    fastnum.UD128 sell_slippage = 29;
+    decisol.Lamports sell_tip = 30;
+    decisol.Lamports sell_fee = 31;
+    uint32 max_slot_latency_sell = 32;
+    bool is_on = 33;
+    bool snipe_all = 34;
+    bool creation = 35;
+    bool migration = 36;
+    bool pump = 37;
+    bool pump_mayhem = 38;
+    bool ray_amm = 39;
+    bool ray_cpmm = 40;
+    bool pump_amm = 41;
+    bool ray_ll = 42;
+    bool bonk = 43;
+    bool use_age = 44;
+    uint64 min_age = 45;
+    uint64 max_age = 46;
+    bool buy_freezable = 47;
+    bool buy_mintable = 48;
+    bool use_mcap = 49;
+    decisol.Lamports min_dev_buy = 50;
+    decisol.Lamports max_dev_buy = 51;
+    UserNonceStrategy buy_nonce = 52;
+    UserNonceStrategy sell_nonce = 53;
+    solana.Address set_wallet = 54;
+  }
+}
+
+message SwapAmountBuyPerc {
+  fastnum.UD128 amount = 1;
+}
+
+message SwapAmountSellPerc {
+  fastnum.UD128 amount = 1;
+}
+
+message SwapAmountSellInit {}
+message SwapAmount {
+  oneof value {
+    decisol.QuoteLamports buy = 1;
+    SwapAmountBuyPerc buy_perc = 2;
+    SwapAmountSellPerc sell_perc = 3;
+    decisol.QuoteLamports sell_out = 4;
+    SwapAmountSellInit sell_init = 5;
+  }
+}
+
+message TargetPrice {
+  fastnum.UD128 price = 1;
+  Direction direction = 2;
+}
+
+message TargetProfit {
+  fastnum.UD128 init_profit_perc = 1;
+  optional fastnum.UD128 recalced_profit = 2;
+  Direction direction = 3;
+}
+
+message TargetMovingPerc {
+  fastnum.UD128 price_perc = 1;
+  optional fastnum.UD128 local_ath = 2;
+  Direction direction = 3;
+}
+
+message TargetPricePerc {
+  fastnum.UD128 price_perc = 1;
+  optional fastnum.UD128 price = 2;
+  Direction direction = 3;
+}
+
+message TargetMcap {
+  fastnum.UD128 mcap = 1;
+  optional fastnum.UD128 price = 2;
+  Direction direction = 3;
+}
+
+message TargetMarket {
+  MarketExecuteMode mode = 1;
+}
+message Target {
+  oneof value {
+    TargetPrice price = 1;
+    TargetProfit profit = 2;
+    TargetMovingPerc moving_perc = 3;
+    TargetPricePerc price_perc = 4;
+    TargetMcap mcap = 5;
+    TargetMarket market = 6;
+  }
+}
+
+message TokenAccountKindAta {}
+
+message TokenAccountKindCanonicalPda {
+  uint32 bump = 1;
+}
+message TokenAccountKind {
+  oneof value {
+    TokenAccountKindAta ata = 1;
+    TokenAccountKindCanonicalPda canonical_pda = 2;
+  }
+}
+
+message TradeStateUpdateLanded {
+  solana.Signature signature = 1;
+  TxnConfirmState state = 2;
+}
+
+message TradeStateUpdateLost {
+  repeated solana.Signature signatures = 1;
+}
+message TradeStateUpdate {
+  oneof value {
+    TradeStateUpdateLanded landed = 1;
+    TradeStateUpdateLost lost = 2;
+  }
+}
+
+message TxnConfirmStateFailed {
+  TxnTipsParsed tips = 1;
+  uint32 cu = 2;
+  TransactionErrorWithAccount err = 3;
+  ProcKind proc = 4;
+  uint64 slot_sent = 5;
+  uint64 slot_land = 6;
+  uint64 idx_sent = 7;
+  uint64 idx_land = 8;
+}
+
+message TxnConfirmStateConfirmed {
+  repeated ParsedTradeUi trades = 1;
+  TxnTipsParsed tips = 2;
+  uint32 cu = 3;
+  ProcKind proc = 4;
+  uint64 slot_sent = 5;
+  uint64 slot_land = 6;
+  uint64 idx_sent = 7;
+  uint64 idx_land = 8;
+}
+
+message TxnConfirmStateLost {}
+message TxnConfirmState {
+  oneof value {
+    TxnConfirmStateFailed failed = 1;
+    TxnConfirmStateConfirmed confirmed = 2;
+    TxnConfirmStateLost lost = 3;
+  }
+}
+
+message UnwrapWsolAmountAll {}
+message UnwrapWsolAmount {
+  oneof value {
+    UnwrapWsolAmountAll all = 1;
+    uint64 some = 2;
+  }
+}
+
+
+message UserAction {
+  oneof value {
+    TradeStateUpdate trade_callback = 1;
+    ConfirmState trade_event = 2;
+    TokenLimitOrders order_event = 3;
+    TokenTradeState token_trade_stats = 4;
+    Ping ping = 5;
+    Pong pong = 6;
+  }
+}
+

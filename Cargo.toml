@@ -1,0 +1,52 @@
+[package]
+name = "aura_api_client"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = { version = "0.4" }
+fastnum = { version = "0.7.4", optional = true }
+solana-address = { version = "2" }
+solana-instruction-error = { version = "2", optional = true }
+solana-keypair = { version = "3", optional = true }
+solana-signature = { version = "3" }
+solana-transaction-error = { version = "3", optional = true }
+teloxide-core = { version = "0.13", optional = true }
+
+decisol = { git = "https://github.com/4r33x/decisol", features = ["proto"] }
+inventory = { version = "0.3", optional = true }
+log = "0.4"
+nohash-hasher = { version = "0.2.0", optional = true }
+proto_rs = { version = "0.11", features = [
+  "chrono",
+  "fastnum",
+  "solana",
+  "stable",
+  "teloxide"
+], optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+tonic = { version = "0.14.5", optional = true }
+
+[features]
+default = ["client"]
+build-schemas = [
+  "decisol/build-schemas",
+  "dep:inventory",
+  "proto_rs/build-schemas"
+]
+client = [
+  "chrono/serde",
+  "dep:fastnum",
+  "dep:nohash-hasher",
+  "dep:proto_rs",
+  "dep:serde",
+  "dep:solana-instruction-error",
+  "dep:solana-keypair",
+  "dep:solana-transaction-error",
+  "dep:teloxide-core",
+  "dep:tonic",
+  "solana-address/serde",
+  "solana-signature/serde"
+]
+dev = []
+private_client = ["client"]

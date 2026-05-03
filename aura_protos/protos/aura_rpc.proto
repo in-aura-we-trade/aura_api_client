@@ -1,0 +1,20 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_rpc;
+
+import "solana.proto";
+import "types.proto";
+
+service AuraRpc {
+  rpc UserActivity(types.UserActionEventSub) returns (stream types.UserAction);
+  rpc UserPing(types.Ping) returns (types.Pong);
+  rpc Trade(types.MarketTrade) returns (types.TradeResponse);
+  rpc FetchStateInfo(types.FetchInfo) returns (types.FetchInfoResponse);
+  rpc GetTokenStatus(solana.Address) returns (types.TokenStatus);
+  rpc GetTokenMostLiqPool(solana.Address) returns (types.TokenPool);
+  rpc GetTokenMeta(solana.Address) returns (types.TokenMeta);
+  rpc GetTokenTradeStats(solana.Address) returns (types.TokenTradeState);
+  rpc GetTokenPositions(types.TokenPositionsReq) returns (types.TokenPositions);
+  rpc GetTokenPositionsUi(types.TokenPositionsUiReq) returns (types.TokenPositionsUi);
+  rpc FetchFullWalletInfo(types.FetchFullWalletsInfoReq) returns (types.FetchFullWalletsInfo);
+}
