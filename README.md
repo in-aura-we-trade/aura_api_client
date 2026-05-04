@@ -56,14 +56,6 @@ The public client groups the API into five service clients:
 - `limit_orders()` - limit order reads and writes.
 - `utils()` - wallets, API keys, WSOL utilities, nonce handling, compute-unit settings, and processor stats.
 
-## Building
-
-```bash
-cargo build
-```
-
-The default feature set enables the client implementation. Schema/codegen-related pieces are behind the `build-schemas` feature.
-
 ## Links
 
 - Aura: https://aura.rehab
