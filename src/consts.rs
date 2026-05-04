@@ -88,4 +88,8 @@ pub const AURA_TG_BOT_LINK: &str = "https://t.me/trade_with_aura";
 pub const AURA_MANUAL_LINK: &str = "https://aura-15.gitbook.io/aura-user-manual";
 pub const AURA_SITE_LINK: &str = "https://aura.rehab";
 
+pub const AURA_API_LINK: &str = "http://trade.aura.rehab:40051";
+pub const AURA_SENDER_LINK: &str = "http://sender.aura.rehab:50054";
+pub const AURA_TXN_LINK: &str = "http://txn.aura.rehab:50053";
+
 pub const MINIMUM_DELAY_SLOTS: u8 = 2;
