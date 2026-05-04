@@ -2,8 +2,6 @@
 
 Rust client types and gRPC bindings for the Aura trading API.
 
-Aura is available from three places:
-
 - Landing page: https://aura.rehab
 - API endpoint: `trade.aura.rehab`
 - Telegram bot: https://t.me/trade_with_aura_bot (`@trade_with_aura_bot`)
