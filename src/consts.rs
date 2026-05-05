@@ -16,8 +16,8 @@ pub const OPEN_TA_CU: u32 = 40_000;
 pub const OPEN_UTILS_CU: u32 = 100_000;
 pub const OPEN_NONCE_CU: u32 = 10_000;
 
-pub const PUMP_BUY_CU: u32 = 110_000;
-pub const PUMP_SELL_CU: u32 = 85_000;
+pub const PUMP_BUY_CU: u32 = 115_000;
+pub const PUMP_SELL_CU: u32 = 95_000;
 
 pub const PUMP_AMM_BUY_CU: u32 = 150_000;
 pub const PUMP_AMM_SELL_CU: u32 = 140_000;
