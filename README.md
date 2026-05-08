@@ -4,7 +4,7 @@ Rust client types and gRPC bindings for the Aura trading API.
 
 - Landing page: https://aura.rehab
 - API endpoint: `http://trade.aura.rehab:40051`
-- Telegram bot: https://t.me/trade_with_aura_bot (`@trade_with_aura_bot`)
+- Telegram bot: https://t.me/trade_with_aura_bot (`@trade_with_aura_bot`) - get API key here, in `API | Extension tab`, (use it with `auth` header in gRPC headers)
 
 The Telegram bot is the fastest way to start trading with Aura. The API is for builders, power users, and automation: it exposes the same product surface with much finer and richer control than the Telegram UI
 

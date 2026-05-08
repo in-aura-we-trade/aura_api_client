@@ -20,6 +20,7 @@ impl nohash_hasher::IsEnabled for SnipeTaskId {}
 impl nohash_hasher::IsEnabled for OrderId {}
 
 pub use orders::MarketOrdersDeduper;
+use tonic::Status;
 
 #[expect(clippy::derivable_impls)]
 impl Default for MarketExecuteMode {
@@ -95,6 +96,24 @@ pub trait UserCtxInterceptor: Send + Sync + 'static + Sized {
         payload: Self::Payload,
         req: &mut tonic::Request<T>,
     ) -> Result<(), tonic::Status>;
+}
+
+#[derive(Clone, Copy)]
+pub struct UserCtx;
+
+impl UserCtxInterceptor for UserCtx {
+    type Payload = Address;
+
+    fn intercept<T>(payload: Self::Payload, req: &mut tonic::Request<T>) -> Result<(), Status> {
+        req.metadata_mut().insert(
+            "auth",
+            payload
+                .to_string()
+                .parse()
+                .map_err(|_| Status::failed_precondition("Failed to convert api key to string"))?,
+        );
+        Ok(())
+    }
 }
 
 impl Display for SnipeTaskId {
