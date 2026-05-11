@@ -83,7 +83,7 @@ pub mod types {
         ),
     }
 
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, Debug)]
     #[proto_message]
     pub enum BeAction {
         TradeCallback(
@@ -103,7 +103,7 @@ pub mod types {
         ),
     }
 
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, Debug)]
     #[proto_message]
     pub struct BeUserAction {
         pub id: UserId,
@@ -768,7 +768,7 @@ pub mod types {
         Remove,
     }
 
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum ParsedTradeUi {
         Buy {
@@ -867,7 +867,7 @@ pub mod types {
         pub slot_latency: u8,
     }
 
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug)]
     #[proto_message]
     pub struct RegisterUserReq {
         pub keypair: Keypair,

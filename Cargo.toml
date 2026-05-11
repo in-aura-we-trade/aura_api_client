@@ -10,7 +10,7 @@ solana-address = { version = "2" }
 solana-instruction-error = { version = "2", optional = true }
 solana-keypair = { version = "3", optional = true }
 solana-signature = { version = "3" }
-solana-transaction-error = { version = "3", optional = true }
+solana-transaction-error = { version = "3", features = ["serde"], optional = true }
 teloxide-core = { version = "0.13", optional = true }
 
 decisol = { git = "https://github.com/4r33x/decisol", features = ["proto"] }

@@ -1,3 +1,4 @@
+#[path = "client/types.rs"]
 mod api_types;
 pub use api_types::types;
 mod ct_rpc;
