@@ -83,7 +83,7 @@ pub mod types {
         ),
     }
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum BeAction {
         TradeCallback(
@@ -103,7 +103,7 @@ pub mod types {
         ),
     }
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct BeUserAction {
         pub id: UserId,
@@ -768,7 +768,7 @@ pub mod types {
         Remove,
     }
 
-    #[derive(Clone, serde::Serialize, serde::Deserialize)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum ParsedTradeUi {
         Buy {
@@ -867,7 +867,7 @@ pub mod types {
         pub slot_latency: u8,
     }
 
-    #[derive(Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct RegisterUserReq {
         pub keypair: Keypair,
@@ -1312,7 +1312,7 @@ pub mod types {
     #[proto_message]
     pub struct TokenPositionsReq;
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct TokenPositionsUi {
         pub positions: ::proto_rs::alloc::vec::Vec<TokenPosition>,
@@ -1383,7 +1383,7 @@ pub mod types {
         pub slot: u64,
     }
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum TradeStateUpdate {
         Landed {
@@ -1402,7 +1402,7 @@ pub mod types {
         Buy,
     }
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct TransactionErrorWithAccount {
         pub account: ::core::option::Option<Address>,
@@ -1417,7 +1417,7 @@ pub mod types {
     #[proto_message]
     pub struct TurnOnAll;
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum TxnConfirmState {
         Failed {
@@ -1565,7 +1565,7 @@ pub mod types {
         pub orders: ApiOrders,
     }
 
-    #[derive(Clone, Debug)]
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum UserAction {
         TradeCallback(
