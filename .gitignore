@@ -8,3 +8,4 @@
 /aura_protos/protos/next_block.proto
 /aura_protos/protos/bloxroute.proto
 /aura_protos/protos/block_razor_rpc.proto
+/aura_protos/protos/aura_sender_types.proto

@@ -1,0 +1,92 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package aura_sender_types;
+
+import "solana.proto";
+
+message ArhivedSigners {
+  bytes signers = 1;
+  uint32 payer_idx = 2;
+  uint32 tip_payer_idx = 3;
+}
+
+message AuraMeta {
+  bool main_endpoint = 1;
+  bool revert_endpoint = 2;
+}
+
+message FalconMeta {}
+
+message HeliusMeta {
+  bool sqwos_only = 1;
+}
+
+message JitoMeta {
+  bool grpc = 1;
+  bool rpc = 2;
+}
+
+message SendProcessors {
+  JitoMeta jito = 1;
+  AuraMeta aura = 2;
+  bool bloxroute = 3;
+  bool nozomi = 4;
+  bool next_block = 5;
+  bool slot0 = 6;
+  bool astra = 7;
+  bool block_razor = 8;
+  bool node1 = 9;
+  optional HeliusMeta helius = 10;
+  bool stellium = 11;
+  bool soyas = 12;
+  optional FalconMeta falcon = 13;
+  bool raiden = 14;
+  bool circular = 15;
+  bool flash_block = 16;
+  bool moon = 17;
+  bool blocksprint = 18;
+}
+
+message TxnData {
+  ArhivedSigners signers = 1;
+  TxnMeta meta = 2;
+  ArchivedTxnKind kind = 3;
+  uint64 slot = 4;
+}
+
+message TxnMeta {
+  bool include_dont_front = 1;
+  optional uint32 max_cu = 2;
+  optional uint32 max_loaded_data = 3;
+  optional uint64 max_tip = 4;
+  optional uint64 max_fee = 5;
+  optional uint64 max_total = 6;
+  repeated solana.Instruction insts = 7;
+  repeated TxnPriorityStrat txn_priorities = 8;
+  SendProcessors procs = 9;
+  solana.Hash recent_blockhash = 10;
+}
+
+message ArchivedTxnKindLegacy {}
+message ArchivedTxnKind {
+  oneof value {
+    ArchivedTxnKindLegacy legacy = 1;
+    ArchivedAddressLookupTableAccount versioned = 2;
+  }
+}
+
+message TxnPriorityStratExact {}
+
+message TxnPriorityStratMinTipAndFeeRest {}
+
+message TxnPriorityStratMinTipAndExactFee {}
+message TxnPriorityStrat {
+  oneof value {
+    TxnPriorityStratExact exact = 1;
+    uint32 bps_fee_and_exact_tip = 2;
+    uint32 bps_fee_from_total = 3;
+    TxnPriorityStratMinTipAndFeeRest min_tip_and_fee_rest = 4;
+    TxnPriorityStratMinTipAndExactFee min_tip_and_exact_fee = 5;
+  }
+}
+

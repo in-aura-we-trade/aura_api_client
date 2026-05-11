@@ -2,9 +2,9 @@
 
 Rust client types and gRPC bindings for the Aura trading API.
 
-- Landing page: https://aura.rehab
+- Landing page: [https://aura.rehab](https://aura.rehab)
 - API endpoint: `http://trade.aura.rehab:40051`
-- Telegram bot: https://t.me/trade_with_aura_bot (`@trade_with_aura_bot`) - get API key here, in `API | Extension tab`, (use it with `auth` header in gRPC headers)
+- Telegram bot: [https://t.me/trade_with_aura_bot](https://t.me/trade_with_aura_bot) (`@trade_with_aura_bot`) - get API key here, in `API | Extension tab`, (Use it with the `auth` header (`auth` is key) in gRPC metadata.)
 
 The Telegram bot is the fastest way to start trading with Aura. The API is for builders, power users, and automation: it exposes the same product surface with much finer and richer control than the Telegram UI
 
@@ -50,14 +50,14 @@ Package name: `aura_api_client`
 
 The public client groups the API into five service clients:
 
-- `aura()` - core trading, token data, wallet state, and user activity.
-- `snipe()` - sniper task configuration and controls.
-- `ct()` - copy-trading task configuration and controls.
-- `limit_orders()` - limit order reads and writes.
-- `utils()` - wallets, API keys, WSOL utilities, nonce handling, compute-unit settings, and processor stats.
+- `aura` - core trading, token data, wallet state, and user activity.
+- `snipe` - sniper task configuration and controls.
+- `ct` - copy-trading task configuration and controls.
+- `limit_orders` - limit order reads and writes.
+- `utils` - wallets, API keys, WSOL utilities, nonce handling, compute-unit settings, and processor stats.
 
 ## Links
-
-- Aura: https://aura.rehab
+- Aura: [https://aura.rehab](https://aura.rehab)
 - API: `http://trade.aura.rehab:40051`
-- Telegram bot: https://t.me/trade_with_aura_bot
+- Telegram bot: [https://t.me/trade_with_aura_bot](https://t.me/trade_with_aura_bot)
+- Telegram group: [https://t.me/trade_with_aura](https://t.me/trade_with_aura)
