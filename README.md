@@ -4,7 +4,7 @@ Aura is a low-latency Solana trading platform that gives bots, AI agents, and po
 
 - Landing page: [https://aura.rehab](https://aura.rehab)
 - API endpoint: `http://trade.aura.rehab:40051`
-- Telegram bot: [https://t.me/trade_with_aura_bot](@trade_with_aura_bot) — get an API key in the `API | Extension` tab. Use it with the `auth` header in gRPC metadata.
+- Telegram bot: [@trade_with_aura_bot](https://t.me/trade_with_aura_bot) — get an API key in the `API | Extension` tab. Use it with the `auth` header in gRPC metadata.
 
 The Telegram bot is the fastest way to start using Aura. The API is for builders, power users, and automation: it exposes the same product surface as the Telegram UI, but with finer and richer control.
 
@@ -69,7 +69,7 @@ Add the client from Git:
 aura_api_client = { git = "https://github.com/in-aura-we-trade/aura_api_client" }
 ```
 
-Get an API key from [https://t.me/trade_with_aura_bot](@trade_with_aura_bot) in the API | Extension tab.
+Get an API key from [@trade_with_aura_bot](https://t.me/trade_with_aura_bot) in the API | Extension tab.
 
 Use it in gRPC metadata:
 
