@@ -9,7 +9,16 @@ Aura is a low-latency Solana trading platform that gives bots, AI agents, and po
 The Telegram bot is the fastest way to start using Aura. The API is for builders, power users, and automation: it exposes the same product surface as the Telegram UI, but with finer and richer control.
 
 ## Why Aura Is Fast
-![Architecture diagram](./assets/arch.png)
+![Aura low-latency Solana trading architecture with XDP transaction ingestion, deshredding, signature verification, transaction simulation, replay, state, streaming, health checks, and gRPC API access](./assets/arch.png)
+
+Aura uses two data paths inside the node:
+
+- A raw fast path for low-latency transaction simulation and early data delivery.
+- A richer replay-backed path for more complete and correct state.
+- Shared-memory queues connect ingestion, simulation, replay, state, streaming, health checks, and the public API with minimal overhead.
+- The Aura API exposes this data over gRPC to developers and AI agents.
+
+Latency numbers are measured inside Aura infrastructure and depend on region, load, requested endpoint, and client location.
 
 ## What the API gives you
 
