@@ -8,6 +8,9 @@ Rust client types and gRPC bindings for the Aura trading API.
 
 The Telegram bot is the fastest way to start trading with Aura. The API is for builders, power users, and automation: it exposes the same product surface with much finer and richer control than the Telegram UI
 
+
+![Architecture diagram](./assets/arch.png)
+
 ## What the API gives you
 
 The Aura API gives full control over the trading features behind the bot (and some data endpoints too), including:
