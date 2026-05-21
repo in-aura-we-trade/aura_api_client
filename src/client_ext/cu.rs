@@ -1,7 +1,8 @@
 use crate::{
     consts::{
-        PUMP_AMM_BUY_CU, PUMP_AMM_SELL_CU, PUMP_BUY_CU, PUMP_SELL_CU, RAY_AMM_BUY_CU,
-        RAY_AMM_SELL_CU, RAY_CPMM_BUY_CU, RAY_CPMM_SELL_CU, RAY_LL_BUY_CU, RAY_LL_SELL_CU,
+        PUMP_AMM_BUY_CU, PUMP_AMM_SELL_CU, PUMP_BUY_CU, PUMP_BUY_V2_CU, PUMP_SELL_CU,
+        PUMP_SELL_V2_CU, RAY_AMM_BUY_CU, RAY_AMM_SELL_CU, RAY_CPMM_BUY_CU, RAY_CPMM_SELL_CU,
+        RAY_LL_BUY_CU, RAY_LL_SELL_CU,
     },
     types::DexCu,
 };
@@ -19,6 +20,8 @@ impl DexCu {
             ray_cpmm_sell: RAY_CPMM_SELL_CU,
             ray_ll_buy: RAY_LL_BUY_CU,
             ray_ll_sell: RAY_LL_SELL_CU,
+            pump_buy_v2: PUMP_BUY_V2_CU,
+            pump_sell_v2: PUMP_SELL_V2_CU,
         }
     }
 }
