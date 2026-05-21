@@ -530,6 +530,8 @@ pub mod types {
     pub struct DexCu {
         pub pump_buy: u32,
         pub pump_sell: u32,
+        pub pump_buy_v2: u32,
+        pub pump_sell_v2: u32,
         pub pump_amm_buy: u32,
         pub pump_amm_sell: u32,
         pub ray_amm_buy: u32,

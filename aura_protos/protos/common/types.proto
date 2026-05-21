@@ -169,14 +169,16 @@ message ArbAttemptInfo {
 message AtomicDexCU {
   uint32 pump_buy = 1;
   uint32 pump_sell = 2;
-  uint32 pump_amm_buy = 3;
-  uint32 pump_amm_sell = 4;
-  uint32 ray_amm_buy = 5;
-  uint32 ray_amm_sell = 6;
-  uint32 ray_cpmm_buy = 7;
-  uint32 ray_cpmm_sell = 8;
-  uint32 ray_ll_buy = 9;
-  uint32 ray_ll_sell = 10;
+  uint32 pump_buy_v2 = 3;
+  uint32 pump_sell_v2 = 4;
+  uint32 pump_amm_buy = 5;
+  uint32 pump_amm_sell = 6;
+  uint32 ray_amm_buy = 7;
+  uint32 ray_amm_sell = 8;
+  uint32 ray_cpmm_buy = 9;
+  uint32 ray_cpmm_sell = 10;
+  uint32 ray_ll_buy = 11;
+  uint32 ray_ll_sell = 12;
 }
 
 message BeUserAction {

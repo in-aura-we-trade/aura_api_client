@@ -19,6 +19,10 @@ pub const OPEN_NONCE_CU: u32 = 10_000;
 pub const PUMP_BUY_CU: u32 = 115_000;
 pub const PUMP_SELL_CU: u32 = 95_000;
 
+pub const PUMP_BUY_V2_CU: u32 = 140_000;
+
+pub const PUMP_SELL_V2_CU: u32 = 135_000;
+
 pub const PUMP_AMM_BUY_CU: u32 = 150_000;
 pub const PUMP_AMM_SELL_CU: u32 = 140_000;
 
@@ -93,3 +97,10 @@ pub const AURA_SENDER_LINK: &str = "http://sender.aura.rehab:50054";
 pub const AURA_TXN_LINK: &str = "http://txn.aura.rehab:50053";
 
 pub const MINIMUM_DELAY_SLOTS: u8 = 2;
+
+pub const fn pump_buy_v2_cu() -> u32 {
+    PUMP_BUY_V2_CU
+}
+pub const fn pump_sell_v2_cu() -> u32 {
+    PUMP_SELL_V2_CU
+}
