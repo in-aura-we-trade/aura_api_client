@@ -69,6 +69,8 @@ pub mod types {
         pub amount_in: u64,
         pub profit: u64,
         pub trigger_tx_sig: Signature,
+        pub leader: Address,
+        pub leader_ping_us: ::core::option::Option<u64>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

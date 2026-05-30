@@ -164,6 +164,8 @@ message ArbAttemptInfo {
   uint64 amount_in = 7;
   uint64 profit = 8;
   solana.Signature trigger_tx_sig = 9;
+  solana.Address leader = 10;
+  optional uint64 leader_ping_us = 11;
 }
 
 message AtomicDexCU {
