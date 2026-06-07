@@ -187,8 +187,8 @@ impl OrderEventTrigger {
         match self {
             OrderEventTrigger::Immediate => "Inst.",
             OrderEventTrigger::Migration => "Migr.",
-            OrderEventTrigger::DevBuy => "DevB.",
-            OrderEventTrigger::DevSell => "DevS.",
+            OrderEventTrigger::DevBuy { filter: _ } => "DevB.",
+            OrderEventTrigger::DevSell { filter: _ } => "DevS.",
         }
     }
 }
@@ -540,8 +540,8 @@ impl MarketOrdersDeduper {
             match ord.trigger {
                 OrderEventTrigger::Immediate => self.imm.read(ord),
                 OrderEventTrigger::Migration => self.migration.read(ord),
-                OrderEventTrigger::DevBuy => self.dev_buy.read(ord),
-                OrderEventTrigger::DevSell => self.dev_sell.read(ord),
+                OrderEventTrigger::DevBuy { filter: _ } => self.dev_buy.read(ord),
+                OrderEventTrigger::DevSell { filter: _ } => self.dev_sell.read(ord),
             }
         }
         self
@@ -550,8 +550,8 @@ impl MarketOrdersDeduper {
         match ord.trigger {
             OrderEventTrigger::Immediate => self.imm.dedup(ord),
             OrderEventTrigger::Migration => self.migration.dedup(ord),
-            OrderEventTrigger::DevBuy => self.dev_buy.dedup(ord),
-            OrderEventTrigger::DevSell => self.dev_sell.dedup(ord),
+            OrderEventTrigger::DevBuy { filter: _ } => self.dev_buy.dedup(ord),
+            OrderEventTrigger::DevSell { filter: _ } => self.dev_sell.dedup(ord),
         }
     }
 }

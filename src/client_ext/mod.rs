@@ -1,6 +1,6 @@
 use crate::types::{
     ConfirmTradeKind, CtTaskId, MarketExecuteMode, OrderId, SnipeTaskId, TokenTradeState,
-    TradeStateUpdate, UserNonceStrategy,
+    TradeFilters, TradeStateUpdate, UserNonceStrategy,
 };
 use core::{fmt::Display, str::FromStr};
 
@@ -26,6 +26,21 @@ use tonic::Status;
 impl Default for MarketExecuteMode {
     fn default() -> Self {
         MarketExecuteMode::Always
+    }
+}
+
+impl TradeFilters {
+    pub fn empty() -> Self {
+        Self {
+            min_mcap: None,
+            max_mcap: None,
+        }
+    }
+}
+
+impl Default for TradeFilters {
+    fn default() -> Self {
+        Self::empty()
     }
 }
 
@@ -73,6 +88,7 @@ impl ConfirmTradeKind {
                 token,
                 trade_ty: _,
                 tx_sig: _,
+                filter: _,
             } => token,
             ConfirmTradeKind::Copytrade {
                 cfg_id: _,

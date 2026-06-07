@@ -66,7 +66,7 @@ The public client groups the API into five service clients:
 
 ## API Notes
 
-By default, the API allows 4 RPC connections per API key and per IP address.
+By default, the API allows 4 requets per second per API key and per IP address.
 
 To receive live notifications such as trade updates, limit order executions, and errors, clients must subscribe to the `UserActivity` stream. Keep the stream alive by sending a ping every 10 seconds.
 

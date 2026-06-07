@@ -70,13 +70,6 @@ enum MigrationStatus {
   NON_MIGRATABLE = 2;
 }
 
-enum OrderEventTrigger {
-  IMMEDIATE = 0;
-  MIGRATION = 1;
-  DEV_BUY = 2;
-  DEV_SELL = 3;
-}
-
 enum OrderStatus {
   EXECUTE = 0;
   SKIP = 1;
@@ -429,6 +422,7 @@ message MarketTrade {
   optional uint64 rpc_nonce = 11;
   optional fastnum.UD128 max_price_impact = 12;
   ApiOrders limit_orders = 13;
+  TradeFilters filters = 14;
 }
 
 message OpenTaRequest {
@@ -700,6 +694,11 @@ message Trade {
   bool migration = 11;
 }
 
+message TradeFilters {
+  optional fastnum.UD128 min_mcap = 1;
+  optional fastnum.UD128 max_mcap = 2;
+}
+
 message TradeResponse {
   uint64 slot = 1;
 }
@@ -899,6 +898,7 @@ message ConfirmTradeKindDev {
   solana.Address token = 1;
   TradeType trade_ty = 2;
   solana.Signature tx_sig = 3;
+  DevTriggerFilter filter = 4;
 }
 
 message ConfirmTradeKindCopytrade {
@@ -985,6 +985,45 @@ message CtUpdateField {
     UserNonceStrategy buy_nonce = 54;
     UserNonceStrategy sell_nonce = 55;
     solana.Address set_wallet = 56;
+  }
+}
+
+message DevTriggerFilterNone {}
+
+message DevTriggerFilterPerc {
+  fastnum.UD128 min = 1;
+  fastnum.UD128 max = 2;
+}
+
+message DevTriggerFilterQuoteAmount {
+  decisol.QuoteLamports min = 1;
+  decisol.QuoteLamports max = 2;
+}
+message DevTriggerFilter {
+  oneof value {
+    DevTriggerFilterNone none = 1;
+    DevTriggerFilterPerc perc = 2;
+    DevTriggerFilterQuoteAmount quote_amount = 3;
+  }
+}
+
+message OrderEventTriggerImmediate {}
+
+message OrderEventTriggerMigration {}
+
+message OrderEventTriggerDevBuy {
+  DevTriggerFilter filter = 1;
+}
+
+message OrderEventTriggerDevSell {
+  DevTriggerFilter filter = 1;
+}
+message OrderEventTrigger {
+  oneof value {
+    OrderEventTriggerImmediate immediate = 1;
+    OrderEventTriggerMigration migration = 2;
+    OrderEventTriggerDevBuy dev_buy = 3;
+    OrderEventTriggerDevSell dev_sell = 4;
   }
 }
 

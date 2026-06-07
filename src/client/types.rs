@@ -170,6 +170,7 @@ pub mod types {
             token: Address,
             trade_ty: TradeType,
             tx_sig: Signature,
+            filter: DevTriggerFilter,
         },
         Copytrade {
             cfg_id: CtTaskId,
@@ -529,6 +530,20 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
     #[proto_message]
+    pub enum DevTriggerFilter {
+        None,
+        Perc {
+            min: UD128,
+            max: UD128,
+        },
+        QuoteAmount {
+            min: QuoteLamports,
+            max: QuoteLamports,
+        },
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
+    #[proto_message]
     pub struct DexCu {
         pub pump_buy: u32,
         pub pump_sell: u32,
@@ -706,6 +721,7 @@ pub mod types {
         pub rpc_nonce: ::core::option::Option<u64>,
         pub max_price_impact: ::core::option::Option<UD128>,
         pub limit_orders: ApiOrders,
+        pub filters: TradeFilters,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -730,8 +746,12 @@ pub mod types {
     pub enum OrderEventTrigger {
         Immediate,
         Migration,
-        DevBuy,
-        DevSell,
+        DevBuy {
+            filter: DevTriggerFilter,
+        },
+        DevSell {
+            filter: DevTriggerFilter,
+        },
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq, Copy, Hash)]
@@ -1379,6 +1399,13 @@ pub mod types {
         pub pre_quote_balance: QuoteLamports,
         pub liq: LiqState,
         pub migration: bool,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct TradeFilters {
+        pub min_mcap: ::core::option::Option<UD128>,
+        pub max_mcap: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
