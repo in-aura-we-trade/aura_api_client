@@ -21,6 +21,13 @@ pub use private_client::aura_arb_rpc::aura_arb_rpc;
 pub use private_client::aura_be_rpc::aura_be_rpc;
 pub mod utils;
 
+#[cfg(all(feature = "api-types", not(target_arch = "wasm32")))]
+pub use teloxide_core::types::UserId;
+#[cfg(all(feature = "api-types", target_arch = "wasm32"))]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[proto_rs::proto_message]
+pub struct UserId(pub u64);
+
 #[cfg(feature = "api-types")]
 #[inline(always)]
 const fn serde_true() -> bool {

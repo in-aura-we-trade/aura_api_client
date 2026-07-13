@@ -16,7 +16,7 @@ pub mod types {
     use solana_keypair::Keypair;
     use solana_signature::Signature;
     use solana_transaction_error::TransactionError;
-    use teloxide_core::types::UserId;
+    use crate::UserId;
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]

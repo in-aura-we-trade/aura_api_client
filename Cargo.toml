@@ -11,18 +11,16 @@ solana-instruction-error = { version = "2", optional = true }
 solana-keypair = { version = "3", optional = true }
 solana-signature = { version = "3" }
 solana-transaction-error = { version = "3", features = ["serde"], optional = true }
-teloxide-core = { version = "0.13", optional = true, default-features = false }
 
 decisol = { git = "https://github.com/4r33x/decisol", features = ["proto"] }
 inventory = { version = "0.3", optional = true }
 log = "0.4"
 nohash-hasher = { version = "0.2.0", optional = true }
-proto_rs = { version = "0.11", default-features = false, features = [
+proto_rs = { version = "0.11.26", default-features = false, features = [
   "chrono",
   "fastnum",
   "solana",
-  "stable",
-  "teloxide"
+  "stable"
 ], optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
 tonic = { version = "0.14.6", optional = true, default-features = false, features = ["codegen"] }
@@ -59,3 +57,7 @@ client = [
 ]
 dev = []
 private_client = ["client"]
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+proto_rs = { version = "0.11.26", default-features = false, features = ["teloxide"], optional = true }
+teloxide-core = { version = "0.13", optional = true, default-features = false }
