@@ -4,7 +4,15 @@ use solana_address::{Address, address};
 
 pub const AURA_MIN_TIP: u64 = 1_000_000; //0.001
 pub const AURA_REVERT_MIN_TIP: u64 = 100_000_000; //0.1
-pub const AURA_FEE_ADDRESS: Address = address!("AURAfdCVLzjnaeDGELTSXNyQwugaTm7QkxirQqq1MPZ6");
+pub const AURA_FEE_PUBKEYS: &[Address] = &[
+    address!("AURAfdCVLzjnaeDGELTSXNyQwugaTm7QkxirQqq1MPZ6"),
+    address!("AURAx5Apw8sY3aSpD54nfAGM2aL2ErQi83Yupf9vRjGF"),
+    address!("AURAx29or3jHHCHcTwmapKZi4ez7VoA6x8QkJrVx6Mgg"),
+    address!("AURAxaRk25kSHsEi5aG9kb5Ev6L6jemgDnh5gUTbKbEZ"),
+    address!("AURAxG4VyF8xJByB1vEpYfrnPBCoe6oMWrHobB3GgP7U"),
+    address!("AURAxiKmSfXsztJPW2Z65ih417tMFwwnjs6a4d6nVxxV"),
+    address!("AURAxVLCHrtCHNtdKoAUtXM33uhDtjG8qoj5bsLbbz3Z"),
+];
 
 pub const PFEE_UTIL: u64 = 50_000;
 

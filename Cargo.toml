@@ -11,13 +11,13 @@ solana-instruction-error = { version = "2", optional = true }
 solana-keypair = { version = "3", optional = true }
 solana-signature = { version = "3" }
 solana-transaction-error = { version = "3", features = ["serde"], optional = true }
-teloxide-core = { version = "0.13", optional = true }
+teloxide-core = { version = "0.13", optional = true, default-features = false }
 
 decisol = { git = "https://github.com/4r33x/decisol", features = ["proto"] }
 inventory = { version = "0.3", optional = true }
 log = "0.4"
 nohash-hasher = { version = "0.2.0", optional = true }
-proto_rs = { version = "0.11", features = [
+proto_rs = { version = "0.11", default-features = false, features = [
   "chrono",
   "fastnum",
   "solana",
@@ -25,7 +25,7 @@ proto_rs = { version = "0.11", features = [
   "teloxide"
 ], optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
-tonic = { version = "0.14.5", optional = true }
+tonic = { version = "0.14.6", optional = true, default-features = false, features = ["codegen"] }
 
 [features]
 default = ["client"]
@@ -34,19 +34,28 @@ build-schemas = [
   "dep:inventory",
   "proto_rs/build-schemas"
 ]
-client = [
+api-types = [
   "chrono/serde",
   "dep:fastnum",
-  "dep:nohash-hasher",
   "dep:proto_rs",
   "dep:serde",
   "dep:solana-instruction-error",
   "dep:solana-keypair",
   "dep:solana-transaction-error",
   "dep:teloxide-core",
-  "dep:tonic",
   "solana-address/serde",
   "solana-signature/serde"
+]
+client-generic = [
+  "api-types",
+  "dep:nohash-hasher",
+  "dep:tonic",
+  "proto_rs/tonic"
+]
+client = [
+  "client-generic",
+  "proto_rs/tonic-transport",
+  "tonic/transport"
 ]
 dev = []
 private_client = ["client"]

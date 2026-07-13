@@ -1,12 +1,18 @@
 #[path = "client/types.rs"]
 mod api_types;
 pub use api_types::types;
-mod ct_rpc;
-mod limit_orders_rpc;
-mod snipe_rpc;
-mod trade_rpc;
-mod utility_rpc;
+#[cfg(feature = "client-generic")]
+pub mod ct_rpc;
+#[cfg(feature = "client-generic")]
+pub mod limit_orders_rpc;
+#[cfg(feature = "client-generic")]
+pub mod snipe_rpc;
+#[cfg(feature = "client-generic")]
+pub mod trade_rpc;
+#[cfg(feature = "client-generic")]
+pub mod utility_rpc;
 
+#[cfg(feature = "client")]
 use crate::{
     UserCtxInterceptor,
     client::{
@@ -17,14 +23,18 @@ use crate::{
         utility_rpc::aura_utils_rpc::aura_utils_rpc_client::AuraUtilsRpcClient,
     },
 };
+#[cfg(feature = "client")]
 use std::marker::PhantomData;
+#[cfg(feature = "client")]
 use tonic::{
     service::{Interceptor, interceptor::InterceptedService},
     transport::Channel,
 };
 
+#[cfg(feature = "client")]
 type RpcSvc<I> = InterceptedService<Channel, I>;
 
+#[cfg(feature = "client")]
 #[derive(Clone)]
 pub struct AuraClients<I, Ctx> {
     channel: Channel,
@@ -32,6 +42,7 @@ pub struct AuraClients<I, Ctx> {
     _ctx: PhantomData<fn() -> Ctx>,
 }
 
+#[cfg(feature = "client")]
 impl<I, Ctx> AuraClients<I, Ctx>
 where
     I: Interceptor + Clone,

@@ -10,7 +10,6 @@ use solana_signature::Signature;
 
 mod balances;
 mod cu;
-mod debug;
 mod orders;
 mod stats;
 mod ui;
