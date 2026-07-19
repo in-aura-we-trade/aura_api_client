@@ -1033,6 +1033,7 @@ message OrderStatePlaced {
   int64 expire_timestamp_utc = 3;
   OrderStatus status = 4;
   uint64 activate_timestamp_utc = 5;
+  solana.Address mint = 6;
 }
 
 message OrderStateApi {

@@ -32,6 +32,7 @@ impl ApiLimitOrder {
                 expire_timestamp_utc: _,
                 status: _,
                 activate_timestamp_utc: _,
+                mint: _,
             } => Some(*id),
             OrderState::Api {
                 id,
@@ -48,6 +49,7 @@ impl ApiLimitOrder {
                 expire_timestamp_utc,
                 status: _,
                 activate_timestamp_utc: _,
+                mint: _,
             } => DateTime::from_timestamp_secs(*expire_timestamp_utc)
                 .map(|x| x.signed_duration_since(Utc::now()))
                 .unwrap_or(TimeDelta::zero()),
@@ -66,6 +68,7 @@ impl ApiLimitOrder {
                 expire_timestamp_utc: _,
                 status: _,
                 activate_timestamp_utc,
+                mint: _,
             } => DateTime::from_timestamp_secs(*activate_timestamp_utc as i64)
                 .map(|x| x.signed_duration_since(Utc::now()))
                 .unwrap_or(TimeDelta::zero()),
@@ -84,6 +87,7 @@ impl ApiLimitOrder {
                 expire_timestamp_utc,
                 status: _,
                 activate_timestamp_utc: _,
+                mint: _,
             } => *expire_timestamp_utc = (Utc::now() + v).timestamp(),
             OrderState::Api {
                 id: _,
@@ -102,6 +106,7 @@ impl ApiLimitOrder {
                 expire_timestamp_utc: _,
                 status: _,
                 activate_timestamp_utc,
+                mint: _,
             } => *activate_timestamp_utc = (Utc::now() + v).timestamp() as u64,
             OrderState::Api {
                 id: _,

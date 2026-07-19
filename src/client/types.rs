@@ -16,7 +16,7 @@ pub mod types {
     use solana_keypair::Keypair;
     use solana_signature::Signature;
     use solana_transaction_error::TransactionError;
-    use crate::UserId;
+    use teloxide_core::types::UserId;
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -776,6 +776,7 @@ pub mod types {
             expire_timestamp_utc: i64,
             status: OrderStatus,
             activate_timestamp_utc: u64,
+            mint: Address,
         },
         Api {
             id: ::core::option::Option<OrderId>,
