@@ -4,6 +4,7 @@ pub mod types {
     use chrono::DateTime;
     use chrono::TimeDelta;
     use chrono::Utc;
+    use crate::UserId;
     use decisol::Lamports;
     use decisol::QuoteLamports;
     use decisol::QuoteLamportsKind;
@@ -16,7 +17,6 @@ pub mod types {
     use solana_keypair::Keypair;
     use solana_signature::Signature;
     use solana_transaction_error::TransactionError;
-    use teloxide_core::types::UserId;
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
