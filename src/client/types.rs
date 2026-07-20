@@ -141,6 +141,7 @@ pub mod types {
         pub limit_state: ::core::option::Option<LimitConfirmState>,
         pub confirm_trade_kind: ConfirmTradeKind,
         pub nonce: TxnNonce,
+        pub requested_cu: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

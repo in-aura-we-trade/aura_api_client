@@ -200,6 +200,7 @@ message ConfirmState {
   optional LimitConfirmState limit_state = 5;
   ConfirmTradeKind confirm_trade_kind = 6;
   TxnNonce nonce = 7;
+  uint32 requested_cu = 8;
 }
 
 message CreateDefCfg {}
