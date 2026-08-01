@@ -45,6 +45,9 @@ message SendProcessors {
   bool flash_block = 16;
   bool moon = 17;
   bool blocksprint = 18;
+  bool landx = 19;
+  bool manka = 20;
+  bool blockrush = 21;
 }
 
 message TxnData {

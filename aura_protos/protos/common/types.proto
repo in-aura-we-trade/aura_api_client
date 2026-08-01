@@ -96,6 +96,9 @@ enum ProcKind {
   FLASH_BLOCK = 16;
   MOON = 17;
   BLOCKSPRINT = 18;
+  LANDX = 19;
+  MANKA = 20;
+  BLOCKRUSH = 21;
 }
 
 enum SnipeBuyAmount {
@@ -735,6 +738,9 @@ message TxnProcessors {
   bool moon = 19;
   bool blocksprint = 20;
   bool aura_revert = 21;
+  bool landx = 22;
+  bool manka = 23;
+  bool blockrush = 24;
 }
 
 message TxnProcessorsStats {
@@ -757,6 +763,9 @@ message TxnProcessorsStats {
   ProcessorStats flashblock = 17;
   ProcessorStats moon = 18;
   ProcessorStats blocksprint = 19;
+  ProcessorStats landx = 20;
+  ProcessorStats manka = 21;
+  ProcessorStats blockrush = 22;
 }
 
 message TxnProcsStatReq {}

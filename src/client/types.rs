@@ -850,6 +850,9 @@ pub mod types {
         FlashBlock,
         Moon,
         Blocksprint,
+        Landx,
+        Manka,
+        Blockrush,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1517,6 +1520,12 @@ pub mod types {
         #[serde(default = "crate::serde_true")]
         pub blocksprint: bool,
         pub aura_revert: bool,
+        #[serde(default = "crate::serde_true")]
+        pub landx: bool,
+        #[serde(default = "crate::serde_true")]
+        pub manka: bool,
+        #[serde(default = "crate::serde_true")]
+        pub blockrush: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1541,6 +1550,9 @@ pub mod types {
         pub flashblock: ProcessorStats,
         pub moon: ProcessorStats,
         pub blocksprint: ProcessorStats,
+        pub landx: ProcessorStats,
+        pub manka: ProcessorStats,
+        pub blockrush: ProcessorStats,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
