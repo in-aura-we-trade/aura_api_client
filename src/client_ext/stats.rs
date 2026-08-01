@@ -123,6 +123,9 @@ impl fmt::Display for TxnProcessorsStats {
         writeln!(f, "FlashBlock       | {}", self.flashblock)?;
         writeln!(f, "Blocksprint      | {}", self.blocksprint)?;
         writeln!(f, "Moon             | {}", self.moon)?;
+        writeln!(f, "Landx            | {}", self.landx)?;
+        writeln!(f, "Manka            | {}", self.manka)?;
+        writeln!(f, "Blockrush        | {}", self.blockrush)?;
         writeln!(f, "</pre>")
     }
 }
