@@ -64,6 +64,9 @@ pub const FLASHBLOCK: bool = false;
 pub const BLOCKSPRINT: bool = true;
 pub const AURA_REVERT: bool = true;
 pub const MOON: bool = false;
+pub const BLOCKRUSH: bool = false;
+pub const MANKA: bool = true;
+pub const LANDX: bool = true;
 
 pub const LIMIT_ORDER_EXP_DUR_DAYS_MAX: u64 = 14;
 pub const LIMIT_ORDER_EXP_DUR_DAYS: u64 = 7;

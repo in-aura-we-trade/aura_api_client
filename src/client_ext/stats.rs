@@ -2,9 +2,9 @@ use decisol::Lamports;
 use fastnum::{UD128, udec128};
 
 use crate::consts::{
-    ASTRA, AURA, AURA_REVERT, BLOCK_RAZOR, BLOCKSPRINT, BLOXROUTE, CIRCULAR, FALCON, FLASHBLOCK,
-    HELIUS, JITO_BUNDLED, JITO_VALIDATORS, MOON, NEXT_BLOCK, NODE1, NOZOMI, RAIDEN, SLOT0, SOYAS,
-    STELLIUM, TPU_PEN,
+    ASTRA, AURA, AURA_REVERT, BLOCK_RAZOR, BLOCKRUSH, BLOCKSPRINT, BLOXROUTE, CIRCULAR, FALCON,
+    FLASHBLOCK, HELIUS, JITO_BUNDLED, JITO_VALIDATORS, LANDX, MANKA, MOON, NEXT_BLOCK, NODE1,
+    NOZOMI, RAIDEN, SLOT0, SOYAS, STELLIUM, TPU_PEN,
 };
 use crate::types::{ProcKind, ProcessorStats, TxnProcessors, TxnProcessorsStats};
 use core::fmt;
@@ -31,6 +31,9 @@ impl fmt::Display for ProcKind {
             ProcKind::FlashBlock => "FlashBlock",
             ProcKind::Moon => "Moon",
             ProcKind::Blocksprint => "Blocksprint",
+            ProcKind::Landx => "Landx",
+            ProcKind::Manka => "Manka",
+            ProcKind::Blockrush => "Blockrush",
         };
         write!(f, "{name}")
     }
@@ -60,6 +63,9 @@ impl Default for TxnProcessors {
             moon: MOON,
             blocksprint: BLOCKSPRINT,
             aura_revert: AURA_REVERT,
+            landx: LANDX,
+            manka: MANKA,
+            blockrush: BLOCKRUSH,
         }
     }
 }
