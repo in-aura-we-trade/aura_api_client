@@ -57,6 +57,11 @@ pub mod aura_rpc {
             request: ::tonic::Request<Address>,
         ) -> ::core::result::Result<::tonic::Response<TokenPool>, ::tonic::Status>;
 
+        async fn get_pool_info(
+            &self,
+            request: ::tonic::Request<Address>,
+        ) -> ::core::result::Result<::tonic::Response<TokenPool>, ::tonic::Status>;
+
         async fn get_token_meta(
             &self,
             request: ::tonic::Request<Address>,
