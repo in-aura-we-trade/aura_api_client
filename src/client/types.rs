@@ -978,6 +978,23 @@ pub mod types {
         pub sell_mode: bool,
         pub buy_user_nonce: UserNonceStrategy,
         pub sell_user_nonce: UserNonceStrategy,
+        pub pump_create_v2: bool,
+        pub txn_legacy: bool,
+        pub txn_v0: bool,
+        pub txn_v1: bool,
+        pub min_compute_unit_limit: u32,
+        pub max_compute_unit_limit: u32,
+        pub min_compute_unit_price: u64,
+        pub max_compute_unit_price: u64,
+        pub min_account_data_size: u32,
+        pub max_account_data_size: u32,
+        pub mint_prefix: u32,
+        pub mint_suffix: u32,
+        pub use_compute_unit_limit: bool,
+        pub use_compute_unit_price: bool,
+        pub use_account_data_size: bool,
+        pub use_mint_prefix: bool,
+        pub use_mint_suffix: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1195,6 +1212,57 @@ pub mod types {
         ),
         SetWallet(
             Address,
+        ),
+        PumpCreateV2(
+            bool,
+        ),
+        TxnLegacy(
+            bool,
+        ),
+        TxnV0(
+            bool,
+        ),
+        TxnV1(
+            bool,
+        ),
+        MinComputeUnitLimit(
+            u32,
+        ),
+        MaxComputeUnitLimit(
+            u32,
+        ),
+        MinComputeUnitPrice(
+            u64,
+        ),
+        MaxComputeUnitPrice(
+            u64,
+        ),
+        MinAccountDataSize(
+            u32,
+        ),
+        MaxAccountDataSize(
+            u32,
+        ),
+        MintPrefix(
+            u32,
+        ),
+        MintSuffix(
+            u32,
+        ),
+        UseComputeUnitLimit(
+            bool,
+        ),
+        UseComputeUnitPrice(
+            bool,
+        ),
+        UseAccountDataSize(
+            bool,
+        ),
+        UseMintPrefix(
+            bool,
+        ),
+        UseMintSuffix(
+            bool,
         ),
     }
 

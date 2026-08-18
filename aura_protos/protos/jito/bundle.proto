@@ -1,0 +1,17 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package bundle;
+
+import "packet.proto";
+import "shared.proto";
+
+message Bundle {
+  optional shared.Header header = 2;
+  repeated packet.Packet packets = 3;
+}
+
+message BundleUuid {
+  optional Bundle bundle = 1;
+  string uuid = 2;
+}
+

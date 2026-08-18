@@ -107,6 +107,39 @@ pub const AURA_API_LINK: &str = "http://trade.aura.rehab:40051";
 pub const AURA_SENDER_LINK: &str = "http://sender.aura.rehab:50054";
 pub const AURA_TXN_LINK: &str = "http://txn.aura.rehab:50053";
 
+/// Public request and spam-ban policy for an Aura API rate-limit scope.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct ApiRateLimit {
+    /// Maximum accepted requests in one one-second bucket.
+    pub requests_per_second: u32,
+    /// Maximum accepted requests in one one-minute bucket.
+    pub requests_per_minute: u32,
+    /// One-second request count that triggers a temporary ban, inclusively.
+    pub per_second_ban_threshold: u32,
+    /// One-minute request count that triggers a temporary ban, inclusively.
+    pub per_minute_ban_threshold: u32,
+    /// Duration of a temporary ban.
+    pub ban_secs: u64,
+}
+
+/// Rate-limit policy applied to an authenticated API key.
+pub const API_KEY_RATE_LIMIT: ApiRateLimit = ApiRateLimit {
+    requests_per_second: 4,
+    requests_per_minute: 60,
+    per_second_ban_threshold: 10,
+    per_minute_ban_threshold: 150,
+    ban_secs: 24 * 3600,
+};
+
+/// Rate-limit policy applied to a non-local client IP address.
+pub const API_IP_RATE_LIMIT: ApiRateLimit = ApiRateLimit {
+    requests_per_second: 4,
+    requests_per_minute: 60,
+    per_second_ban_threshold: 10,
+    per_minute_ban_threshold: 150,
+    ban_secs: 24 * 3600,
+};
+
 pub const MINIMUM_DELAY_SLOTS: u8 = 2;
 
 pub const fn pump_buy_v2_cu() -> u32 {

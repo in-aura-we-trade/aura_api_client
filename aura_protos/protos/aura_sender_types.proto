@@ -58,7 +58,7 @@ message TxnData {
 }
 
 message TxnMeta {
-  bool include_dont_front = 1;
+  optional solana.Address include_dont_front = 1;
   optional uint32 max_cu = 2;
   optional uint32 max_loaded_data = 3;
   optional uint64 max_tip = 4;

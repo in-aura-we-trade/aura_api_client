@@ -1,0 +1,30 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package packet;
+
+message Meta {
+  uint64 size = 1;
+  string addr = 2;
+  uint32 port = 3;
+  optional PacketFlags flags = 4;
+  uint64 sender_stake = 5;
+}
+
+message Packet {
+  bytes data = 1;
+  optional Meta meta = 2;
+}
+
+message PacketBatch {
+  repeated Packet packets = 1;
+}
+
+message PacketFlags {
+  bool discard = 1;
+  bool forwarded = 2;
+  bool repair = 3;
+  bool simple_vote_tx = 4;
+  bool tracer_packet = 5;
+  bool from_staked_node = 6;
+}
+

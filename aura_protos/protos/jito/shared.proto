@@ -1,0 +1,19 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package shared;
+
+import "google_protobuf.proto";
+
+message Header {
+  optional google_protobuf.Timestamp ts = 1;
+}
+
+message Heartbeat {
+  uint64 count = 1;
+}
+
+message Socket {
+  string ip = 1;
+  int64 port = 2;
+}
+

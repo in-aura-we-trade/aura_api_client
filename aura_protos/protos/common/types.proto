@@ -541,6 +541,23 @@ message SnipeTaskFlags {
   bool sell_mode = 24;
   UserNonceStrategy buy_user_nonce = 25;
   UserNonceStrategy sell_user_nonce = 26;
+  bool pump_create_v2 = 27;
+  bool txn_legacy = 28;
+  bool txn_v0 = 29;
+  bool txn_v1 = 30;
+  uint32 min_compute_unit_limit = 31;
+  uint32 max_compute_unit_limit = 32;
+  uint64 min_compute_unit_price = 33;
+  uint64 max_compute_unit_price = 34;
+  uint32 min_account_data_size = 35;
+  uint32 max_account_data_size = 36;
+  uint32 mint_prefix = 37;
+  uint32 mint_suffix = 38;
+  bool use_compute_unit_limit = 39;
+  bool use_compute_unit_price = 40;
+  bool use_account_data_size = 41;
+  bool use_mint_prefix = 42;
+  bool use_mint_suffix = 43;
 }
 
 message SnipeTaskId {
@@ -1140,6 +1157,23 @@ message SnipeUpdateField {
     UserNonceStrategy buy_nonce = 52;
     UserNonceStrategy sell_nonce = 53;
     solana.Address set_wallet = 54;
+    bool pump_create_v2 = 55;
+    bool txn_legacy = 56;
+    bool txn_v0 = 57;
+    bool txn_v1 = 58;
+    uint32 min_compute_unit_limit = 59;
+    uint32 max_compute_unit_limit = 60;
+    uint64 min_compute_unit_price = 61;
+    uint64 max_compute_unit_price = 62;
+    uint32 min_account_data_size = 63;
+    uint32 max_account_data_size = 64;
+    uint32 mint_prefix = 65;
+    uint32 mint_suffix = 66;
+    bool use_compute_unit_limit = 67;
+    bool use_compute_unit_price = 68;
+    bool use_account_data_size = 69;
+    bool use_mint_prefix = 70;
+    bool use_mint_suffix = 71;
   }
 }
 

@@ -1,0 +1,17 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package searcher;
+
+import "bundle.proto";
+
+message SendBundleRequest {
+  optional bundle.Bundle bundle = 1;
+}
+
+message SendBundleResponse {
+  string uuid = 1;
+}
+
+service SearcherService {
+  rpc SendBundle(SendBundleRequest) returns (SendBundleResponse);
+}
