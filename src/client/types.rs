@@ -85,6 +85,14 @@ pub mod types {
         ),
     }
 
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
+    #[proto_message]
+    pub enum AutoUnwrapWsol {
+        Partial,
+        None,
+        All,
+    }
+
     #[derive(Clone, Debug)]
     #[proto_message]
     pub enum BeAction {
@@ -558,6 +566,13 @@ pub mod types {
         pub ray_cpmm_sell: u32,
         pub ray_ll_buy: u32,
         pub ray_ll_sell: u32,
+        pub token_2022_offset: u32,
+        pub pump_first_buy_offset: u32,
+        pub wsol: WsolSettings,
+        pub pump_amm_first_buy_offset: u32,
+        pub ray_amm_first_buy_offset: u32,
+        pub ray_cpmm_first_buy_offset: u32,
+        pub ray_ll_first_buy_offset: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -650,6 +665,9 @@ pub mod types {
     pub struct LimitConfirmState {
         pub order_id: OrderId,
         pub meta: OrderMeta,
+        pub user_id: UserId,
+        pub mint: Address,
+        pub wallet: Address,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -995,6 +1013,8 @@ pub mod types {
         pub use_account_data_size: bool,
         pub use_mint_prefix: bool,
         pub use_mint_suffix: bool,
+        pub not_mint_prefix: bool,
+        pub not_mint_suffix: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1262,6 +1282,12 @@ pub mod types {
             bool,
         ),
         UseMintSuffix(
+            bool,
+        ),
+        NotMintPrefix(
+            bool,
+        ),
+        NotMintSuffix(
             bool,
         ),
     }
@@ -1781,6 +1807,13 @@ pub mod types {
         pub owner: Address,
         pub kind: TokenAccountKindUi,
         pub amount: u64,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
+    #[proto_message]
+    pub struct WsolSettings {
+        pub auto_wrap: bool,
+        pub auto_unwrap: AutoUnwrapWsol,
     }
 
 }

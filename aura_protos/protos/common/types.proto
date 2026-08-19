@@ -17,6 +17,12 @@ enum Action {
   CLEAR = 2;
 }
 
+enum AutoUnwrapWsol {
+  PARTIAL = 0;
+  NONE = 1;
+  ALL = 2;
+}
+
 enum CopyTradeBuyMode {
   BUY_ONLY_LIMITS = 0;
   BUY_FIXED = 1;
@@ -177,6 +183,13 @@ message AtomicDexCU {
   uint32 ray_cpmm_sell = 10;
   uint32 ray_ll_buy = 11;
   uint32 ray_ll_sell = 12;
+  uint32 token_2022_offset = 13;
+  uint32 pump_first_buy_offset = 14;
+  WsolSettings wsol = 15;
+  uint32 pump_amm_first_buy_offset = 16;
+  uint32 ray_amm_first_buy_offset = 17;
+  uint32 ray_cpmm_first_buy_offset = 18;
+  uint32 ray_ll_first_buy_offset = 19;
 }
 
 message BeUserAction {
@@ -362,6 +375,9 @@ message GetUsersReq {}
 message LimitConfirmState {
   OrderId order_id = 1;
   OrderMeta meta = 2;
+  UserId user_id = 3;
+  solana.Address mint = 4;
+  solana.Address wallet = 5;
 }
 
 message LimitOrder {
@@ -558,6 +574,8 @@ message SnipeTaskFlags {
   bool use_account_data_size = 41;
   bool use_mint_prefix = 42;
   bool use_mint_suffix = 43;
+  bool not_mint_prefix = 44;
+  bool not_mint_suffix = 45;
 }
 
 message SnipeTaskId {
@@ -877,6 +895,11 @@ message WrapWsolRequest {
   uint64 amount = 3;
 }
 
+message WsolSettings {
+  bool auto_wrap = 1;
+  AutoUnwrapWsol auto_unwrap = 2;
+}
+
 message ArbProfitCheckSol {}
 message ArbProfitCheck {
   oneof value {
@@ -1174,6 +1197,8 @@ message SnipeUpdateField {
     bool use_account_data_size = 69;
     bool use_mint_prefix = 70;
     bool use_mint_suffix = 71;
+    bool not_mint_prefix = 72;
+    bool not_mint_suffix = 73;
   }
 }
 

@@ -43,6 +43,13 @@ pub const RAY_CPMM_SELL_CU: u32 = 57_000;
 pub const RAY_LL_BUY_CU: u32 = 130_000;
 pub const RAY_LL_SELL_CU: u32 = 92_000;
 
+pub const TOKEN_2022_OFFSET: u32 = 0;
+pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
+pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 0;
+pub const RAY_AMM_FIRST_BUY_OFFSET: u32 = 0;
+pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 0;
+pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
+
 pub const JITO_VALIDATORS: bool = true;
 pub const JITO_BUNDLED: bool = false;
 pub const AURA: bool = true;
@@ -77,11 +84,16 @@ pub const SLIPPAGE_DEFAULT: UD128 = udec128!(0.2);
 
 pub const MIN_POS_VALUE_FILTER: u64 = 100_000;
 
-pub const BUY_TIPS_LAMPORTS: u64 = 100_000;
+pub const BUY_TIPS_LAMPORTS: u64 = 1_000_000;
 pub const BUY_FEE_LAMPORTS: u64 = 1_000_000;
 
 pub const SELL_FEE_LAMPORTS: u64 = 1_000_000;
-pub const SELL_TIPS_LAMPORTS: u64 = 100_000;
+pub const SELL_TIPS_LAMPORTS: u64 = 1_000_000;
+
+pub const AUTO_ORDER_AMOUNT_PERC_DEFAULT: UD128 = udec128!(0.5);
+pub const AUTO_ORDER_TARGET_PRICE_PERC_DEFAULT: UD128 = udec128!(1.3);
+pub const DEV_SELL_TRIGGER_PERC_MIN_DEFAULT: UD128 = udec128!(0.01);
+pub const DEV_SELL_TRIGGER_QUOTE_MIN_LAMPORTS_DEFAULT: u64 = 100_000;
 
 pub const MAX_PRICE_IMPACT_DEF: UD128 = udec128!(0.5);
 
@@ -90,6 +102,7 @@ pub const AURA_PROGRAM: Address = address!("AURAsuSzLv3v8SX3Y7emMFzGTWiepJK3Sm4x
 pub const MAX_SLOT_LATENCY_DEF: u8 = 10;
 
 pub const MAX_WALLETS: usize = 5;
+pub const NONCE_ACCOUNT_RENT_LAMPORTS: u64 = 1_447_680;
 pub const CT_CFG_MAX_TRACKED_WALLETS: usize = 16;
 pub const CFG_MAX_BLACKLIST: usize = 32;
 pub const CT_MAX_CFGS_PER_USER: usize = 32;
@@ -147,4 +160,22 @@ pub const fn pump_buy_v2_cu() -> u32 {
 }
 pub const fn pump_sell_v2_cu() -> u32 {
     PUMP_SELL_V2_CU
+}
+pub const fn token_2022_offset() -> u32 {
+    TOKEN_2022_OFFSET
+}
+pub const fn pump_first_buy_offset() -> u32 {
+    PUMP_FIRST_BUY_OFFSET
+}
+pub const fn pump_amm_first_buy_offset() -> u32 {
+    PUMP_AMM_FIRST_BUY_OFFSET
+}
+pub const fn ray_amm_first_buy_offset() -> u32 {
+    RAY_AMM_FIRST_BUY_OFFSET
+}
+pub const fn ray_cpmm_first_buy_offset() -> u32 {
+    RAY_CPMM_FIRST_BUY_OFFSET
+}
+pub const fn ray_ll_first_buy_offset() -> u32 {
+    RAY_LL_FIRST_BUY_OFFSET
 }
