@@ -327,6 +327,9 @@ message CtTaskFlags {
   bool use_compute_unit_limit = 47;
   bool use_compute_unit_price = 48;
   bool use_account_data_size = 49;
+  bool txn_legacy = 50;
+  bool txn_v0 = 51;
+  bool txn_v1 = 52;
 }
 
 message CtTaskId {
@@ -1109,6 +1112,9 @@ message CtUpdateField {
     bool use_compute_unit_limit = 72;
     bool use_compute_unit_price = 73;
     bool use_account_data_size = 74;
+    bool txn_legacy = 75;
+    bool txn_v0 = 76;
+    bool txn_v1 = 77;
   }
 }
 

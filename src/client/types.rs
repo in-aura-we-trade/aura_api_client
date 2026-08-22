@@ -318,6 +318,9 @@ pub mod types {
         pub use_compute_unit_limit: bool,
         pub use_compute_unit_price: bool,
         pub use_account_data_size: bool,
+        pub txn_legacy: bool,
+        pub txn_v0: bool,
+        pub txn_v1: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -594,6 +597,15 @@ pub mod types {
             bool,
         ),
         UseAccountDataSize(
+            bool,
+        ),
+        TxnLegacy(
+            bool,
+        ),
+        TxnV0(
+            bool,
+        ),
+        TxnV1(
             bool,
         ),
     }
