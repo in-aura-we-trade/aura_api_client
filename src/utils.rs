@@ -14,6 +14,120 @@ use solana_address::Address;
 
 use solana_signature::Signature;
 
+const MINT_AFFIX_MAX_LEN: usize = 7;
+const MINT_AFFIX_LEN_BYTE: usize = 7;
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct MintAffix(u64);
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct InvalidMintAffix;
+
+impl MintAffix {
+    pub fn parse(value: &str) -> Result<Self, InvalidMintAffix> {
+        let bytes = value.as_bytes();
+        if !(1..=MINT_AFFIX_MAX_LEN).contains(&bytes.len())
+            || !bytes.iter().copied().all(is_base58_byte)
+        {
+            return Err(InvalidMintAffix);
+        }
+        let mut packed = [0; 8];
+        packed[..bytes.len()].copy_from_slice(bytes);
+        packed[MINT_AFFIX_LEN_BYTE] = bytes.len() as u8;
+        Ok(Self(u64::from_le_bytes(packed)))
+    }
+
+    pub const fn value(self) -> u64 {
+        self.0
+    }
+
+    pub fn into_parts(self) -> ([u8; MINT_AFFIX_MAX_LEN], usize) {
+        let packed = self.0.to_le_bytes();
+        let mut bytes = [0; MINT_AFFIX_MAX_LEN];
+        bytes.copy_from_slice(&packed[..MINT_AFFIX_MAX_LEN]);
+        (bytes, packed[MINT_AFFIX_LEN_BYTE] as usize)
+    }
+}
+
+impl TryFrom<u64> for MintAffix {
+    type Error = InvalidMintAffix;
+
+    fn try_from(value: u64) -> Result<Self, Self::Error> {
+        let mut packed = value.to_le_bytes();
+        let len = packed[MINT_AFFIX_LEN_BYTE] as usize;
+        if len == 0
+            && packed[4..MINT_AFFIX_LEN_BYTE].iter().all(|byte| *byte == 0)
+            && packed[..4].iter().copied().all(is_base58_byte)
+        {
+            packed[MINT_AFFIX_LEN_BYTE] = 4;
+            return Ok(Self(u64::from_le_bytes(packed)));
+        }
+        if !(1..=MINT_AFFIX_MAX_LEN).contains(&len)
+            || packed[len..MINT_AFFIX_LEN_BYTE]
+                .iter()
+                .any(|byte| *byte != 0)
+            || !packed[..len].iter().copied().all(is_base58_byte)
+        {
+            return Err(InvalidMintAffix);
+        }
+        Ok(Self(value))
+    }
+}
+
+impl TryFrom<&str> for MintAffix {
+    type Error = InvalidMintAffix;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        Self::parse(value)
+    }
+}
+
+impl TryFrom<String> for MintAffix {
+    type Error = InvalidMintAffix;
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        Self::parse(&value)
+    }
+}
+
+impl From<MintAffix> for u64 {
+    fn from(value: MintAffix) -> Self {
+        value.value()
+    }
+}
+
+impl core::str::FromStr for MintAffix {
+    type Err = InvalidMintAffix;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        Self::parse(value)
+    }
+}
+
+impl core::fmt::Display for MintAffix {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        let (bytes, len) = self.into_parts();
+        // Valid Base58 bytes are ASCII and therefore valid UTF-8.
+        f.write_str(core::str::from_utf8(&bytes[..len]).expect("validated ASCII mint affix"))
+    }
+}
+
+impl core::fmt::Display for InvalidMintAffix {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        f.write_str("mint affix must contain 1 to 7 Base58 characters")
+    }
+}
+
+impl std::error::Error for InvalidMintAffix {}
+
+#[inline]
+const fn is_base58_byte(byte: u8) -> bool {
+    matches!(
+        byte,
+        b'1'..=b'9' | b'A'..=b'H' | b'J'..=b'N' | b'P'..=b'Z' | b'a'..=b'k' | b'm'..=b'z'
+    )
+}
+
 pub fn bps_dec_unlim(bps: u64) -> UD128 {
     let bps = UD128::from(bps);
     bps / udec128!(10_000)
@@ -240,5 +354,40 @@ pub fn duration_formatter(num: &TimeDelta) -> String {
         format!("{}h", num.num_hours())
     } else {
         format!("{}d", num.num_days())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::MintAffix;
+
+    #[test]
+    fn mint_affix_round_trips_variable_lengths() {
+        for value in ["9", "pump", "9cAmw2G"] {
+            let affix = MintAffix::parse(value).unwrap();
+            assert_eq!(affix.to_string(), value);
+            assert_eq!(MintAffix::try_from(affix.value()).unwrap(), affix);
+            assert_eq!(affix.value().to_le_bytes()[7], value.len() as u8);
+        }
+    }
+
+    #[test]
+    fn mint_affix_upgrades_legacy_four_byte_values() {
+        let legacy = u32::from_le_bytes(*b"pump") as u64;
+        let affix = MintAffix::try_from(legacy).unwrap();
+
+        assert_eq!(affix.to_string(), "pump");
+        assert_eq!(affix.value().to_le_bytes()[7], 4);
+    }
+
+    #[test]
+    fn mint_affix_rejects_invalid_values() {
+        for value in ["", "12345678", "0", "O", "I", "l"] {
+            assert!(MintAffix::parse(value).is_err(), "accepted {value:?}");
+        }
+
+        let mut non_canonical = MintAffix::parse("pump").unwrap().value().to_le_bytes();
+        non_canonical[4] = b'x';
+        assert!(MintAffix::try_from(u64::from_le_bytes(non_canonical)).is_err());
     }
 }

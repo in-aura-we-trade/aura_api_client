@@ -321,6 +321,12 @@ pub mod types {
         pub txn_legacy: bool,
         pub txn_v0: bool,
         pub txn_v1: bool,
+        pub mint_prefix: u64,
+        pub mint_suffix: u64,
+        pub use_mint_prefix: bool,
+        pub use_mint_suffix: bool,
+        pub not_mint_prefix: bool,
+        pub not_mint_suffix: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -606,6 +612,24 @@ pub mod types {
             bool,
         ),
         TxnV1(
+            bool,
+        ),
+        MintPrefix(
+            u64,
+        ),
+        MintSuffix(
+            u64,
+        ),
+        UseMintPrefix(
+            bool,
+        ),
+        UseMintSuffix(
+            bool,
+        ),
+        NotMintPrefix(
+            bool,
+        ),
+        NotMintSuffix(
             bool,
         ),
     }
@@ -1109,8 +1133,8 @@ pub mod types {
         pub max_compute_unit_price: u64,
         pub min_account_data_size: u32,
         pub max_account_data_size: u32,
-        pub mint_prefix: u32,
-        pub mint_suffix: u32,
+        pub mint_prefix: u64,
+        pub mint_suffix: u64,
         pub use_compute_unit_limit: bool,
         pub use_compute_unit_price: bool,
         pub use_account_data_size: bool,
@@ -1375,10 +1399,10 @@ pub mod types {
             u32,
         ),
         MintPrefix(
-            u32,
+            u64,
         ),
         MintSuffix(
-            u32,
+            u64,
         ),
         UseComputeUnitLimit(
             bool,

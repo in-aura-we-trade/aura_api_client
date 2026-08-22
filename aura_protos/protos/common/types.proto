@@ -330,6 +330,12 @@ message CtTaskFlags {
   bool txn_legacy = 50;
   bool txn_v0 = 51;
   bool txn_v1 = 52;
+  uint64 mint_prefix = 53;
+  uint64 mint_suffix = 54;
+  bool use_mint_prefix = 55;
+  bool use_mint_suffix = 56;
+  bool not_mint_prefix = 57;
+  bool not_mint_suffix = 58;
 }
 
 message CtTaskId {
@@ -617,8 +623,8 @@ message SnipeTaskFlags {
   uint64 max_compute_unit_price = 34;
   uint32 min_account_data_size = 35;
   uint32 max_account_data_size = 36;
-  uint32 mint_prefix = 37;
-  uint32 mint_suffix = 38;
+  uint64 mint_prefix = 37;
+  uint64 mint_suffix = 38;
   bool use_compute_unit_limit = 39;
   bool use_compute_unit_price = 40;
   bool use_account_data_size = 41;
@@ -1115,6 +1121,12 @@ message CtUpdateField {
     bool txn_legacy = 75;
     bool txn_v0 = 76;
     bool txn_v1 = 77;
+    uint64 mint_prefix = 78;
+    uint64 mint_suffix = 79;
+    bool use_mint_prefix = 80;
+    bool use_mint_suffix = 81;
+    bool not_mint_prefix = 82;
+    bool not_mint_suffix = 83;
   }
 }
 
@@ -1270,8 +1282,8 @@ message SnipeUpdateField {
     uint64 max_compute_unit_price = 62;
     uint32 min_account_data_size = 63;
     uint32 max_account_data_size = 64;
-    uint32 mint_prefix = 65;
-    uint32 mint_suffix = 66;
+    uint64 mint_prefix = 65;
+    uint64 mint_suffix = 66;
     bool use_compute_unit_limit = 67;
     bool use_compute_unit_price = 68;
     bool use_account_data_size = 69;
