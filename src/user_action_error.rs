@@ -21,6 +21,12 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::NoTransactionSignatures => {
                 "All transaction processors returned no signature - increase your tip or choose Aura processor"
             }
+            SwapFailure::NoEnabledEvents => {
+                "Config was turned off because neither creation nor migration events are enabled."
+            }
+            SwapFailure::NoEnabledActions => {
+                "Config was turned off because it has no enabled executable action."
+            }
         }
     }
 }

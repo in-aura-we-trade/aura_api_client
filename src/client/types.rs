@@ -1485,6 +1485,8 @@ pub mod types {
         PriceImpactExceeded,
         WalletNotFound,
         NoTransactionSignatures,
+        NoEnabledEvents,
+        NoEnabledActions,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

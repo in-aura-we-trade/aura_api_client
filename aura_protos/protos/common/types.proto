@@ -139,6 +139,8 @@ enum SwapFailure {
   PRICE_IMPACT_EXCEEDED = 3;
   WALLET_NOT_FOUND = 4;
   NO_TRANSACTION_SIGNATURES = 5;
+  NO_ENABLED_EVENTS = 6;
+  NO_ENABLED_ACTIONS = 7;
 }
 
 enum TokenAccountKindUi {
