@@ -111,6 +111,9 @@ pub mod types {
         Pong(
             Pong,
         ),
+        Error(
+            UserActionError,
+        ),
     }
 
     #[derive(Clone, Debug)]
@@ -297,6 +300,24 @@ pub mod types {
         pub sell_migration_filter: CtMigrationFilter,
         pub buy_user_nonce: UserNonceStrategy,
         pub sell_user_nonce: UserNonceStrategy,
+        pub pump_cashback: bool,
+        pub pump_amm_mayhem: bool,
+        pub pump_amm_cashback: bool,
+        pub quote_sol: bool,
+        pub quote_usdc: bool,
+        pub quote_usdt: bool,
+        pub quote_usd1: bool,
+        pub pump_create_v2: bool,
+        pub token_type: TokenTypeFilter,
+        pub min_compute_unit_limit: u32,
+        pub max_compute_unit_limit: u32,
+        pub min_compute_unit_price: u64,
+        pub max_compute_unit_price: u64,
+        pub min_account_data_size: u32,
+        pub max_account_data_size: u32,
+        pub use_compute_unit_limit: bool,
+        pub use_compute_unit_price: bool,
+        pub use_account_data_size: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -521,6 +542,60 @@ pub mod types {
         SetWallet(
             Address,
         ),
+        PumpCashback(
+            bool,
+        ),
+        PumpAmmMayhem(
+            bool,
+        ),
+        PumpAmmCashback(
+            bool,
+        ),
+        QuoteSol(
+            bool,
+        ),
+        QuoteUsdc(
+            bool,
+        ),
+        QuoteUsdt(
+            bool,
+        ),
+        QuoteUsd1(
+            bool,
+        ),
+        PumpCreateV2(
+            bool,
+        ),
+        TokenType(
+            TokenTypeFilter,
+        ),
+        MinComputeUnitLimit(
+            u32,
+        ),
+        MaxComputeUnitLimit(
+            u32,
+        ),
+        MinComputeUnitPrice(
+            u64,
+        ),
+        MaxComputeUnitPrice(
+            u64,
+        ),
+        MinAccountDataSize(
+            u32,
+        ),
+        MaxAccountDataSize(
+            u32,
+        ),
+        UseComputeUnitLimit(
+            bool,
+        ),
+        UseComputeUnitPrice(
+            bool,
+        ),
+        UseAccountDataSize(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -668,6 +743,22 @@ pub mod types {
         pub user_id: UserId,
         pub mint: Address,
         pub wallet: Address,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub enum LimitOrderFailure {
+        DurableNonceUnavailable,
+        BuyPriceImpactOrSlippageExceeded,
+        InsufficientBalance,
+        ZeroAmount,
+        NoPool,
+        NoActivePool,
+        NoTransactionSignatures,
+        TransactionTimedOut,
+        TransactionFailed,
+        InvalidOrderOrWallet,
+        BatchRejected,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1015,6 +1106,14 @@ pub mod types {
         pub use_mint_suffix: bool,
         pub not_mint_prefix: bool,
         pub not_mint_suffix: bool,
+        pub pump_cashback: bool,
+        pub pump_amm_mayhem: bool,
+        pub pump_amm_cashback: bool,
+        pub quote_sol: bool,
+        pub quote_usdc: bool,
+        pub quote_usdt: bool,
+        pub quote_usd1: bool,
+        pub token_type: TokenTypeFilter,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1290,6 +1389,30 @@ pub mod types {
         NotMintSuffix(
             bool,
         ),
+        PumpCashback(
+            bool,
+        ),
+        PumpAmmMayhem(
+            bool,
+        ),
+        PumpAmmCashback(
+            bool,
+        ),
+        QuoteSol(
+            bool,
+        ),
+        QuoteUsdc(
+            bool,
+        ),
+        QuoteUsdt(
+            bool,
+        ),
+        QuoteUsd1(
+            bool,
+        ),
+        TokenType(
+            TokenTypeFilter,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1315,6 +1438,17 @@ pub mod types {
             QuoteLamports,
         ),
         SellInit,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub enum SwapFailure {
+        DurableNonceUnavailable,
+        InsufficientBalance,
+        ZeroAmount,
+        PriceImpactExceeded,
+        WalletNotFound,
+        NoTransactionSignatures,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1482,6 +1616,14 @@ pub mod types {
         pub buy_n: u32,
         pub sell_n: u32,
         pub last_traded_slot: u64,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub enum TokenTypeFilter {
+        All,
+        Token,
+        Token2022,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1725,6 +1867,35 @@ pub mod types {
         Pong(
             Pong,
         ),
+        Error(
+            UserActionError,
+        ),
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub enum UserActionError {
+        Swap {
+            mint: Address,
+            reason: SwapFailure,
+        },
+        LimitOrder {
+            mint: Address,
+            order_id: ::core::option::Option<OrderId>,
+            reason: LimitOrderFailure,
+        },
+        Snipe {
+            mint: Address,
+            task_id: SnipeTaskId,
+            task_name: ::proto_rs::alloc::string::String,
+            reason: SwapFailure,
+        },
+        Copytrade {
+            mint: Address,
+            cfg_id: CtTaskId,
+            config_name: ::proto_rs::alloc::string::String,
+            reason: SwapFailure,
+        },
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

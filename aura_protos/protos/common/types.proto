@@ -64,6 +64,20 @@ enum FollowSwaps {
   CUSTOM = 3;
 }
 
+enum LimitOrderFailure {
+  DURABLE_NONCE_UNAVAILABLE = 0;
+  BUY_PRICE_IMPACT_OR_SLIPPAGE_EXCEEDED = 1;
+  INSUFFICIENT_BALANCE = 2;
+  ZERO_AMOUNT = 3;
+  NO_POOL = 4;
+  NO_ACTIVE_POOL = 5;
+  NO_TRANSACTION_SIGNATURES = 6;
+  TRANSACTION_TIMED_OUT = 7;
+  TRANSACTION_FAILED = 8;
+  INVALID_ORDER_OR_WALLET = 9;
+  BATCH_REJECTED = 10;
+}
+
 enum MarketExecuteMode {
   ALWAYS = 0;
   ONLY_IN_PROFIT = 1;
@@ -118,9 +132,24 @@ enum SnipeSellAmount {
   INIT = 2;
 }
 
+enum SwapFailure {
+  DURABLE_NONCE_UNAVAILABLE = 0;
+  INSUFFICIENT_BALANCE = 1;
+  ZERO_AMOUNT = 2;
+  PRICE_IMPACT_EXCEEDED = 3;
+  WALLET_NOT_FOUND = 4;
+  NO_TRANSACTION_SIGNATURES = 5;
+}
+
 enum TokenAccountKindUi {
   ATA = 0;
   PDA = 1;
+}
+
+enum TokenTypeFilter {
+  ALL = 0;
+  TOKEN = 1;
+  TOKEN2022 = 2;
 }
 
 enum TradeType {
@@ -280,6 +309,24 @@ message CtTaskFlags {
   CtMigrationFilter sell_migration_filter = 29;
   UserNonceStrategy buy_user_nonce = 30;
   UserNonceStrategy sell_user_nonce = 31;
+  bool pump_cashback = 32;
+  bool pump_amm_mayhem = 33;
+  bool pump_amm_cashback = 34;
+  bool quote_sol = 35;
+  bool quote_usdc = 36;
+  bool quote_usdt = 37;
+  bool quote_usd1 = 38;
+  bool pump_create_v2 = 39;
+  TokenTypeFilter token_type = 40;
+  uint32 min_compute_unit_limit = 41;
+  uint32 max_compute_unit_limit = 42;
+  uint64 min_compute_unit_price = 43;
+  uint64 max_compute_unit_price = 44;
+  uint32 min_account_data_size = 45;
+  uint32 max_account_data_size = 46;
+  bool use_compute_unit_limit = 47;
+  bool use_compute_unit_price = 48;
+  bool use_account_data_size = 49;
 }
 
 message CtTaskId {
@@ -576,6 +623,14 @@ message SnipeTaskFlags {
   bool use_mint_suffix = 43;
   bool not_mint_prefix = 44;
   bool not_mint_suffix = 45;
+  bool pump_cashback = 46;
+  bool pump_amm_mayhem = 47;
+  bool pump_amm_cashback = 48;
+  bool quote_sol = 49;
+  bool quote_usdc = 50;
+  bool quote_usdt = 51;
+  bool quote_usd1 = 52;
+  TokenTypeFilter token_type = 53;
 }
 
 message SnipeTaskId {
@@ -917,6 +972,7 @@ message BeAction {
     TokenLimitOrders order_event = 3;
     Ping ping = 4;
     Pong pong = 5;
+    UserActionError error = 6;
   }
 }
 
@@ -1035,6 +1091,24 @@ message CtUpdateField {
     UserNonceStrategy buy_nonce = 54;
     UserNonceStrategy sell_nonce = 55;
     solana.Address set_wallet = 56;
+    bool pump_cashback = 57;
+    bool pump_amm_mayhem = 58;
+    bool pump_amm_cashback = 59;
+    bool quote_sol = 60;
+    bool quote_usdc = 61;
+    bool quote_usdt = 62;
+    bool quote_usd1 = 63;
+    bool pump_create_v2 = 64;
+    TokenTypeFilter token_type = 65;
+    uint32 min_compute_unit_limit = 66;
+    uint32 max_compute_unit_limit = 67;
+    uint64 min_compute_unit_price = 68;
+    uint64 max_compute_unit_price = 69;
+    uint32 min_account_data_size = 70;
+    uint32 max_account_data_size = 71;
+    bool use_compute_unit_limit = 72;
+    bool use_compute_unit_price = 73;
+    bool use_account_data_size = 74;
   }
 }
 
@@ -1199,6 +1273,14 @@ message SnipeUpdateField {
     bool use_mint_suffix = 71;
     bool not_mint_prefix = 72;
     bool not_mint_suffix = 73;
+    bool pump_cashback = 74;
+    bool pump_amm_mayhem = 75;
+    bool pump_amm_cashback = 76;
+    bool quote_sol = 77;
+    bool quote_usdc = 78;
+    bool quote_usdt = 79;
+    bool quote_usd1 = 80;
+    TokenTypeFilter token_type = 81;
   }
 }
 
@@ -1339,6 +1421,40 @@ message UserAction {
     TokenTradeState token_trade_stats = 4;
     Ping ping = 5;
     Pong pong = 6;
+    UserActionError error = 7;
+  }
+}
+
+message UserActionErrorSwap {
+  solana.Address mint = 1;
+  SwapFailure reason = 2;
+}
+
+message UserActionErrorLimitOrder {
+  solana.Address mint = 1;
+  optional OrderId order_id = 2;
+  LimitOrderFailure reason = 3;
+}
+
+message UserActionErrorSnipe {
+  solana.Address mint = 1;
+  SnipeTaskId task_id = 2;
+  string task_name = 3;
+  SwapFailure reason = 4;
+}
+
+message UserActionErrorCopytrade {
+  solana.Address mint = 1;
+  CtTaskId cfg_id = 2;
+  string config_name = 3;
+  SwapFailure reason = 4;
+}
+message UserActionError {
+  oneof value {
+    UserActionErrorSwap swap = 1;
+    UserActionErrorLimitOrder limit_order = 2;
+    UserActionErrorSnipe snipe = 3;
+    UserActionErrorCopytrade copytrade = 4;
   }
 }
 

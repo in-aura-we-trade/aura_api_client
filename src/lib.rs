@@ -2,6 +2,8 @@
 pub mod client;
 #[cfg(feature = "api-types")]
 pub use client::types;
+#[cfg(feature = "api-types")]
+mod user_action_error;
 
 #[cfg(feature = "client-generic")]
 pub use client_ext::UserCtxInterceptor;
