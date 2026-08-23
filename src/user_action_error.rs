@@ -27,6 +27,9 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::NoEnabledActions => {
                 "Config was turned off because it has no enabled executable action."
             }
+            SwapFailure::AttemptsExhausted => {
+                "Config was turned off after 100 consecutive matches produced no successful action."
+            }
         }
     }
 }

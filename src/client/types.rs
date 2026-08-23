@@ -1487,6 +1487,7 @@ pub mod types {
         NoTransactionSignatures,
         NoEnabledEvents,
         NoEnabledActions,
+        AttemptsExhausted,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

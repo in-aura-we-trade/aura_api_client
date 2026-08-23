@@ -141,6 +141,7 @@ enum SwapFailure {
   NO_TRANSACTION_SIGNATURES = 5;
   NO_ENABLED_EVENTS = 6;
   NO_ENABLED_ACTIONS = 7;
+  ATTEMPTS_EXHAUSTED = 8;
 }
 
 enum TokenAccountKindUi {
