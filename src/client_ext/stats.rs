@@ -3,7 +3,7 @@ use fastnum::{UD128, udec128};
 
 use crate::consts::{
     ASTRA, AURA, AURA_REVERT, BLOCK_RAZOR, BLOCKRUSH, BLOCKSPRINT, BLOXROUTE, CIRCULAR, FALCON,
-    FLASHBLOCK, HELIUS, JITO_VALIDATORS, LANDX, MANKA, MOON, NEXT_BLOCK, NODE1, NOZOMI, RAIDEN,
+    FLASHBLOCK, HELIUS, JITO_VALIDATORS, LANDX, MANKA, MERIDIAN, NEXT_BLOCK, NODE1, NOZOMI, RAIDEN,
     SLOT0, SOYAS, STELLIUM,
 };
 use crate::types::{ProcKind, ProcessorStats, TxnProcessors, TxnProcessorsStats};
@@ -29,7 +29,7 @@ impl fmt::Display for ProcKind {
             ProcKind::Raiden => "Raiden",
             ProcKind::Circular => "Circular",
             ProcKind::FlashBlock => "FlashBlock",
-            ProcKind::Moon => "Moon",
+            ProcKind::Meridian => "Meridian",
             ProcKind::Blocksprint => "Blocksprint",
             ProcKind::Landx => "Landx",
             ProcKind::Manka => "Manka",
@@ -58,7 +58,7 @@ impl Default for TxnProcessors {
             raiden: RAIDEN,
             circular: CIRCULAR,
             flash_block: FLASHBLOCK,
-            moon: MOON,
+            meridian: MERIDIAN,
             blocksprint: BLOCKSPRINT,
             aura_revert: AURA_REVERT,
             landx: LANDX,
@@ -120,7 +120,7 @@ impl fmt::Display for TxnProcessorsStats {
         writeln!(f, "Raiden           | {}", self.raiden)?;
         writeln!(f, "FlashBlock       | {}", self.flashblock)?;
         writeln!(f, "Blocksprint      | {}", self.blocksprint)?;
-        writeln!(f, "Moon             | {}", self.moon)?;
+        writeln!(f, "Meridian         | {}", self.meridian)?;
         writeln!(f, "Landx            | {}", self.landx)?;
         writeln!(f, "Manka            | {}", self.manka)?;
         writeln!(f, "Blockrush        | {}", self.blockrush)?;

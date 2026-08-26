@@ -8,6 +8,8 @@ pub mod aura_utils_rpc {
     use crate::types::DexCu;
     use crate::types::Done;
     use crate::types::GetDexCu;
+    use crate::types::GetVersionReq;
+    use crate::types::GetVersionResp;
     use crate::types::MakeWithdrawReq;
     use crate::types::MakeWithdrawResp;
     use crate::types::OpenTaRequest;
@@ -27,6 +29,11 @@ pub mod aura_utils_rpc {
 
     #[proto_rpc(rpc_package = "aura_utils_rpc", rpc_server = false, rpc_client = true, rpc_client_ctx = "UserCtxInterceptor")]
     pub trait AuraUtilsRpc {
+        async fn get_version(
+            &self,
+            request: ::tonic::Request<GetVersionReq>,
+        ) -> ::core::result::Result<::tonic::Response<GetVersionResp>, ::tonic::Status>;
+
         async fn change_api_key(
             &self,
             request: ::tonic::Request<ApiKeyReq>,

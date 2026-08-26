@@ -115,7 +115,7 @@ enum ProcKind {
   RAIDEN = 14;
   CIRCULAR = 15;
   FLASH_BLOCK = 16;
-  MOON = 17;
+  MERIDIAN = 17;
   BLOCKSPRINT = 18;
   LANDX = 19;
   MANKA = 20;
@@ -438,6 +438,14 @@ message GetUserResp {
 }
 
 message GetUsersReq {}
+
+message GetVersionReq {}
+
+message GetVersionResp {
+  string api_version = 1;
+  string extension_version = 2;
+  uint64 slot = 3;
+}
 
 message LimitConfirmState {
   OrderId order_id = 1;
@@ -851,7 +859,7 @@ message TxnProcessors {
   bool raiden = 14;
   bool circular = 15;
   bool flash_block = 16;
-  bool moon = 17;
+  bool meridian = 17;
   bool blocksprint = 18;
   bool aura_revert = 19;
   bool landx = 20;
@@ -877,7 +885,7 @@ message TxnProcessorsStats {
   ProcessorStats raiden = 15;
   ProcessorStats circular = 16;
   ProcessorStats flashblock = 17;
-  ProcessorStats moon = 18;
+  ProcessorStats meridian = 18;
   ProcessorStats blocksprint = 19;
   ProcessorStats landx = 20;
   ProcessorStats manka = 21;

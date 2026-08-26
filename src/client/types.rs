@@ -788,6 +788,18 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct GetVersionReq;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct GetVersionResp {
+        pub api_version: ::proto_rs::alloc::string::String,
+        pub extension_version: ::proto_rs::alloc::string::String,
+        pub slot: u64,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct LimitConfirmState {
         pub order_id: OrderId,
         pub meta: OrderMeta,
@@ -1008,7 +1020,7 @@ pub mod types {
         Raiden,
         Circular,
         FlashBlock,
-        Moon,
+        Meridian,
         Blocksprint,
         Landx,
         Manka,
@@ -1819,8 +1831,8 @@ pub mod types {
         pub circular: bool,
         #[serde(default = "crate::serde_true")]
         pub flash_block: bool,
-        #[serde(default = "crate::serde_true")]
-        pub moon: bool,
+        #[serde(default = "crate::serde_true", alias = "moon")]
+        pub meridian: bool,
         #[serde(default = "crate::serde_true")]
         pub blocksprint: bool,
         pub aura_revert: bool,
@@ -1852,7 +1864,7 @@ pub mod types {
         pub raiden: ProcessorStats,
         pub circular: ProcessorStats,
         pub flashblock: ProcessorStats,
-        pub moon: ProcessorStats,
+        pub meridian: ProcessorStats,
         pub blocksprint: ProcessorStats,
         pub landx: ProcessorStats,
         pub manka: ProcessorStats,
