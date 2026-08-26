@@ -236,6 +236,12 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct CreateReferralNicknameReq {
+        pub nickname: ::proto_rs::alloc::string::String,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct CtCfgId {
         pub id: CtTaskId,
         pub name: ::proto_rs::alloc::string::String,
@@ -327,6 +333,7 @@ pub mod types {
         pub use_mint_suffix: bool,
         pub not_mint_prefix: bool,
         pub not_mint_suffix: bool,
+        pub meteora_dlmm: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -632,6 +639,9 @@ pub mod types {
         NotMintSuffix(
             bool,
         ),
+        MeteoraDlmm(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -694,6 +704,7 @@ pub mod types {
         RayAmm,
         RayCpmm,
         RayLl,
+        MeteoraDlmm,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -756,6 +767,10 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct GetLimitOrders;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct GetReferralInfoReq;
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -1041,11 +1056,19 @@ pub mod types {
         pub slot_latency: u8,
     }
 
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct ReferralInfo {
+        pub nickname: ::core::option::Option<::std::string::String>,
+        pub referrer_nickname: ::core::option::Option<::std::string::String>,
+        pub referrals: ::proto_rs::alloc::vec::Vec<UserId>,
+    }
+
     #[derive(Debug)]
     #[proto_message]
     pub struct RegisterUserReq {
         pub keypair: Keypair,
-        pub ref_id: ::core::option::Option<UserId>,
+        pub referral: ::core::option::Option<::std::string::String>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1150,6 +1173,8 @@ pub mod types {
         pub quote_usdt: bool,
         pub quote_usd1: bool,
         pub token_type: TokenTypeFilter,
+        pub meteora_dlmm: bool,
+        pub shred: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1448,6 +1473,12 @@ pub mod types {
         ),
         TokenType(
             TokenTypeFilter,
+        ),
+        MeteoraDlmm(
+            bool,
+        ),
+        Shred(
+            bool,
         ),
     }
 
@@ -1766,7 +1797,6 @@ pub mod types {
     #[proto_message]
     pub struct TxnProcessors {
         pub jito_validators: bool,
-        pub jito_bundled: bool,
         pub aura: bool,
         pub bloxroute: bool,
         pub nozomi: bool,
@@ -1775,7 +1805,6 @@ pub mod types {
         pub astra: bool,
         pub block_razor: bool,
         pub node1: bool,
-        pub tpu_penetrator: bool,
         #[serde(default = "crate::serde_true")]
         pub helius: bool,
         #[serde(default = "crate::serde_true")]

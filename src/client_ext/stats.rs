@@ -3,8 +3,8 @@ use fastnum::{UD128, udec128};
 
 use crate::consts::{
     ASTRA, AURA, AURA_REVERT, BLOCK_RAZOR, BLOCKRUSH, BLOCKSPRINT, BLOXROUTE, CIRCULAR, FALCON,
-    FLASHBLOCK, HELIUS, JITO_BUNDLED, JITO_VALIDATORS, LANDX, MANKA, MOON, NEXT_BLOCK, NODE1,
-    NOZOMI, RAIDEN, SLOT0, SOYAS, STELLIUM, TPU_PEN,
+    FLASHBLOCK, HELIUS, JITO_VALIDATORS, LANDX, MANKA, MOON, NEXT_BLOCK, NODE1, NOZOMI, RAIDEN,
+    SLOT0, SOYAS, STELLIUM,
 };
 use crate::types::{ProcKind, ProcessorStats, TxnProcessors, TxnProcessorsStats};
 use core::fmt;
@@ -43,7 +43,6 @@ impl Default for TxnProcessors {
     fn default() -> Self {
         Self {
             jito_validators: JITO_VALIDATORS,
-            jito_bundled: JITO_BUNDLED,
             aura: AURA,
             bloxroute: BLOXROUTE,
             nozomi: NOZOMI,
@@ -54,7 +53,6 @@ impl Default for TxnProcessors {
             node1: NODE1,
             helius: HELIUS,
             stellium: STELLIUM,
-            tpu_penetrator: TPU_PEN,
             soyas: SOYAS,
             falcon: FALCON,
             raiden: RAIDEN,

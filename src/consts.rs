@@ -51,7 +51,6 @@ pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
 
 pub const JITO_VALIDATORS: bool = true;
-pub const JITO_BUNDLED: bool = false;
 pub const AURA: bool = true;
 pub const BLOXROUTE: bool = false;
 pub const NOZOMI: bool = true;
@@ -62,7 +61,6 @@ pub const BLOCK_RAZOR: bool = false;
 pub const NODE1: bool = false;
 pub const HELIUS: bool = true;
 pub const STELLIUM: bool = true;
-pub const TPU_PEN: bool = false;
 pub const SOYAS: bool = true;
 pub const FALCON: bool = true;
 pub const RAIDEN: bool = false;

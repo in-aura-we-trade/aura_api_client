@@ -50,6 +50,7 @@ enum DexType {
   RAY_AMM = 2;
   RAY_CPMM = 3;
   RAY_LL = 4;
+  METEORA_DLMM = 5;
 }
 
 enum Direction {
@@ -262,6 +263,10 @@ message CreateNoncesResp {
   solana.Signature sig = 1;
 }
 
+message CreateReferralNicknameReq {
+  string nickname = 1;
+}
+
 message CtCfgIdProto {
   CtTaskId id = 1;
   string name = 2;
@@ -339,6 +344,7 @@ message CtTaskFlags {
   bool use_mint_suffix = 56;
   bool not_mint_prefix = 57;
   bool not_mint_suffix = 58;
+  bool meteora_dlmm = 59;
 }
 
 message CtTaskId {
@@ -422,6 +428,8 @@ message GetCfgIds {}
 message GetDexCu {}
 
 message GetLimitOrders {}
+
+message GetReferralInfoReq {}
 
 message GetUserReq {}
 
@@ -561,9 +569,15 @@ message RawOrder {
   uint32 slot_latency = 8;
 }
 
+message ReferralInfo {
+  optional string nickname = 1;
+  optional string referrer_nickname = 2;
+  repeated UserId referrals = 3;
+}
+
 message RegisterUserReq {
   solana.Keypair keypair = 1;
-  optional UserId ref_id = 2;
+  optional string referral = 2;
 }
 
 message RemoveWallet {
@@ -643,6 +657,8 @@ message SnipeTaskFlags {
   bool quote_usdt = 51;
   bool quote_usd1 = 52;
   TokenTypeFilter token_type = 53;
+  bool meteora_dlmm = 54;
+  bool shred = 55;
 }
 
 message SnipeTaskId {
@@ -820,29 +836,27 @@ message TurnOnAll {}
 
 message TxnProcessors {
   bool jito_validators = 1;
-  bool jito_bundled = 2;
-  bool aura = 3;
-  bool bloxroute = 4;
-  bool nozomi = 5;
-  bool next_block = 6;
-  bool slot0 = 7;
-  bool astra = 8;
-  bool block_razor = 9;
-  bool node1 = 10;
-  bool tpu_penetrator = 11;
-  bool helius = 12;
-  bool stellium = 13;
-  bool soyas = 14;
-  bool falcon = 15;
-  bool raiden = 16;
-  bool circular = 17;
-  bool flash_block = 18;
-  bool moon = 19;
-  bool blocksprint = 20;
-  bool aura_revert = 21;
-  bool landx = 22;
-  bool manka = 23;
-  bool blockrush = 24;
+  bool aura = 2;
+  bool bloxroute = 3;
+  bool nozomi = 4;
+  bool next_block = 5;
+  bool slot0 = 6;
+  bool astra = 7;
+  bool block_razor = 8;
+  bool node1 = 9;
+  bool helius = 10;
+  bool stellium = 11;
+  bool soyas = 12;
+  bool falcon = 13;
+  bool raiden = 14;
+  bool circular = 15;
+  bool flash_block = 16;
+  bool moon = 17;
+  bool blocksprint = 18;
+  bool aura_revert = 19;
+  bool landx = 20;
+  bool manka = 21;
+  bool blockrush = 22;
 }
 
 message TxnProcessorsStats {
@@ -1130,6 +1144,7 @@ message CtUpdateField {
     bool use_mint_suffix = 81;
     bool not_mint_prefix = 82;
     bool not_mint_suffix = 83;
+    bool meteora_dlmm = 84;
   }
 }
 
@@ -1302,6 +1317,8 @@ message SnipeUpdateField {
     bool quote_usdt = 79;
     bool quote_usd1 = 80;
     TokenTypeFilter token_type = 81;
+    bool meteora_dlmm = 82;
+    bool shred = 83;
   }
 }
 

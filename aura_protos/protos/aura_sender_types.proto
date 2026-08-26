@@ -21,13 +21,8 @@ message HeliusMeta {
   bool sqwos_only = 1;
 }
 
-message JitoMeta {
-  bool grpc = 1;
-  bool rpc = 2;
-}
-
 message SendProcessors {
-  JitoMeta jito = 1;
+  bool jito = 1;
   AuraMeta aura = 2;
   bool bloxroute = 3;
   bool nozomi = 4;
@@ -43,11 +38,11 @@ message SendProcessors {
   bool raiden = 14;
   bool circular = 15;
   bool flash_block = 16;
-  bool moon = 17;
-  bool blocksprint = 18;
-  bool landx = 19;
-  bool manka = 20;
-  bool blockrush = 21;
+  bool blocksprint = 17;
+  bool landx = 18;
+  bool manka = 19;
+  bool blockrush = 20;
+  bool meridian = 21;
 }
 
 message TxnData {
