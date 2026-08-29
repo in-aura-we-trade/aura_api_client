@@ -694,6 +694,9 @@ pub mod types {
         pub ray_amm_first_buy_offset: u32,
         pub ray_cpmm_first_buy_offset: u32,
         pub ray_ll_first_buy_offset: u32,
+        pub meteora_dlmm_buy: u32,
+        pub meteora_dlmm_sell: u32,
+        pub meteora_dlmm_first_buy_offset: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]

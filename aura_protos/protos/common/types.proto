@@ -223,6 +223,9 @@ message AtomicDexCU {
   uint32 ray_amm_first_buy_offset = 17;
   uint32 ray_cpmm_first_buy_offset = 18;
   uint32 ray_ll_first_buy_offset = 19;
+  uint32 meteora_dlmm_buy = 20;
+  uint32 meteora_dlmm_sell = 21;
+  uint32 meteora_dlmm_first_buy_offset = 22;
 }
 
 message BeUserAction {

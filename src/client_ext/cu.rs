@@ -1,6 +1,7 @@
 use crate::{
     consts::{
-        PUMP_AMM_BUY_CU, PUMP_AMM_FIRST_BUY_OFFSET, PUMP_AMM_SELL_CU, PUMP_BUY_CU, PUMP_BUY_V2_CU,
+        METEORA_DLMM_BUY_CU, METEORA_DLMM_FIRST_BUY_OFFSET, METEORA_DLMM_SELL_CU, PUMP_AMM_BUY_CU,
+        PUMP_AMM_FIRST_BUY_OFFSET, PUMP_AMM_SELL_CU, PUMP_BUY_CU, PUMP_BUY_V2_CU,
         PUMP_FIRST_BUY_OFFSET, PUMP_SELL_CU, PUMP_SELL_V2_CU, RAY_AMM_BUY_CU,
         RAY_AMM_FIRST_BUY_OFFSET, RAY_AMM_SELL_CU, RAY_CPMM_BUY_CU, RAY_CPMM_FIRST_BUY_OFFSET,
         RAY_CPMM_SELL_CU, RAY_LL_BUY_CU, RAY_LL_FIRST_BUY_OFFSET, RAY_LL_SELL_CU,
@@ -21,6 +22,8 @@ impl DexCu {
         ray_cpmm_sell: RAY_CPMM_SELL_CU,
         ray_ll_buy: RAY_LL_BUY_CU,
         ray_ll_sell: RAY_LL_SELL_CU,
+        meteora_dlmm_buy: METEORA_DLMM_BUY_CU,
+        meteora_dlmm_sell: METEORA_DLMM_SELL_CU,
         pump_buy_v2: PUMP_BUY_V2_CU,
         pump_sell_v2: PUMP_SELL_V2_CU,
         token_2022_offset: TOKEN_2022_OFFSET,
@@ -29,6 +32,7 @@ impl DexCu {
         ray_amm_first_buy_offset: RAY_AMM_FIRST_BUY_OFFSET,
         ray_cpmm_first_buy_offset: RAY_CPMM_FIRST_BUY_OFFSET,
         ray_ll_first_buy_offset: RAY_LL_FIRST_BUY_OFFSET,
+        meteora_dlmm_first_buy_offset: METEORA_DLMM_FIRST_BUY_OFFSET,
         wsol: WsolSettings {
             auto_wrap: true,
             auto_unwrap: crate::types::AutoUnwrapWsol::Partial,

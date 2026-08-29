@@ -3,7 +3,8 @@ use decisol::{UD128, udec128};
 use solana_address::{Address, address};
 
 pub const AURA_MIN_TIP: u64 = 1_000_000; //0.001
-pub const AURA_REVERT_MIN_TIP: u64 = 100_000_000; //0.1
+pub const AURA_REVERT_MIN_TIP: u64 = 1_000_000; //0.001
+pub const AURA_REVERT_ONLY_MIN_TIP: u64 = 100_000_000; //0.1
 pub const AURA_FEE_PUBKEYS: &[Address] = &[
     address!("AURAfdCVLzjnaeDGELTSXNyQwugaTm7QkxirQqq1MPZ6"),
     address!("AURAx5Apw8sY3aSpD54nfAGM2aL2ErQi83Yupf9vRjGF"),
@@ -43,12 +44,16 @@ pub const RAY_CPMM_SELL_CU: u32 = 57_000;
 pub const RAY_LL_BUY_CU: u32 = 130_000;
 pub const RAY_LL_SELL_CU: u32 = 92_000;
 
+pub const METEORA_DLMM_BUY_CU: u32 = 50_000;
+pub const METEORA_DLMM_SELL_CU: u32 = 50_000;
+
 pub const TOKEN_2022_OFFSET: u32 = 0;
 pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
 pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_AMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
+pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5000;
 
 pub const JITO_VALIDATORS: bool = true;
 pub const AURA: bool = true;
@@ -176,4 +181,13 @@ pub const fn ray_cpmm_first_buy_offset() -> u32 {
 }
 pub const fn ray_ll_first_buy_offset() -> u32 {
     RAY_LL_FIRST_BUY_OFFSET
+}
+pub const fn meteora_dlmm_buy_cu() -> u32 {
+    METEORA_DLMM_BUY_CU
+}
+pub const fn meteora_dlmm_sell_cu() -> u32 {
+    METEORA_DLMM_SELL_CU
+}
+pub const fn meteora_dlmm_first_buy_offset() -> u32 {
+    METEORA_DLMM_FIRST_BUY_OFFSET
 }
