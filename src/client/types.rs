@@ -1597,6 +1597,7 @@ pub mod types {
     pub struct TokenBalanceSealed {
         pub balance: u64,
         pub slot: u64,
+        pub account_exists: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

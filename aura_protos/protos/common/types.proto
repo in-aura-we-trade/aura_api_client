@@ -729,6 +729,7 @@ message TokenBalanceInner {
 message TokenBalanceRaw {
   uint64 balance = 1;
   uint64 slot = 2;
+  bool account_exists = 3;
 }
 
 message TokenLimitOrders {
