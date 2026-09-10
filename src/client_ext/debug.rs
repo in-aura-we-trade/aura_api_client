@@ -12,12 +12,13 @@ impl fmt::Debug for ParsedTradeUi {
                 quote,
                 mc_usd,
                 price_usd,
+                ..
             } => {
                 writeln!(f, "Buy {{")?;
                 writeln!(f, "  mint: {mint},")?;
                 writeln!(f, "  ticker: \"{ticker}\",")?;
                 writeln!(f, "  base: {base},")?;
-                writeln!(f, "  quote: {quote},")?;
+                writeln!(f, "  quote: {quote:?},")?;
 
                 if let Some(v) = mc_usd {
                     writeln!(f, "  mc_usd: {v},")?;
@@ -25,7 +26,7 @@ impl fmt::Debug for ParsedTradeUi {
                     writeln!(f, "  mc_usd: None,")?;
                 }
 
-                writeln!(f, "  price_usd: {price_usd},")?;
+                writeln!(f, "  price_usd: {price_usd:?},")?;
                 write!(f, "}}")
             }
 
@@ -37,12 +38,13 @@ impl fmt::Debug for ParsedTradeUi {
                 pnl,
                 mc_usd,
                 price_usd,
+                ..
             } => {
                 writeln!(f, "Sell {{")?;
                 writeln!(f, "  mint: {mint},")?;
                 writeln!(f, "  ticker: \"{ticker}\",")?;
                 writeln!(f, "  base: {base},")?;
-                writeln!(f, "  quote: {quote},")?;
+                writeln!(f, "  quote: {quote:?},")?;
 
                 if let Some(v) = pnl {
                     writeln!(f, "  pnl: {v},")?;
@@ -56,7 +58,7 @@ impl fmt::Debug for ParsedTradeUi {
                     writeln!(f, "  mc_usd: None,")?;
                 }
 
-                writeln!(f, "  price_usd: {price_usd},")?;
+                writeln!(f, "  price_usd: {price_usd:?},")?;
                 write!(f, "}}")
             }
         }

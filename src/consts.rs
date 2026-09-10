@@ -46,6 +46,13 @@ pub const RAY_LL_SELL_CU: u32 = 92_000;
 
 pub const METEORA_DLMM_BUY_CU: u32 = 100_000;
 pub const METEORA_DLMM_SELL_CU: u32 = 100_000;
+// Ordinary single-hop total, including router/preparation/fee overhead.
+// Mainnet 3eZuftNv... at slot 445986839 spent 48,108 CU in CLMM itself.
+// Dense tick-crossing stress cases can exceed this policy cap inside Raydium;
+// they must not inflate ordinary trade defaults.
+pub const RAY_CLMM_MAX_CU: u32 = 100_000;
+pub const RAY_CLMM_BUY_CU: u32 = RAY_CLMM_MAX_CU;
+pub const RAY_CLMM_SELL_CU: u32 = RAY_CLMM_MAX_CU;
 
 pub const TOKEN_2022_OFFSET: u32 = 0;
 pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
@@ -54,6 +61,7 @@ pub const RAY_AMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 0;
 pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
 pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5000;
+pub const RAY_CLMM_FIRST_BUY_OFFSET: u32 = 0;
 
 pub const JITO_VALIDATORS: bool = true;
 pub const AURA: bool = true;
@@ -185,9 +193,18 @@ pub const fn ray_ll_first_buy_offset() -> u32 {
 pub const fn meteora_dlmm_buy_cu() -> u32 {
     METEORA_DLMM_BUY_CU
 }
+pub const fn ray_clmm_buy_cu() -> u32 {
+    RAY_CLMM_BUY_CU
+}
 pub const fn meteora_dlmm_sell_cu() -> u32 {
     METEORA_DLMM_SELL_CU
 }
+pub const fn ray_clmm_sell_cu() -> u32 {
+    RAY_CLMM_SELL_CU
+}
 pub const fn meteora_dlmm_first_buy_offset() -> u32 {
     METEORA_DLMM_FIRST_BUY_OFFSET
+}
+pub const fn ray_clmm_first_buy_offset() -> u32 {
+    RAY_CLMM_FIRST_BUY_OFFSET
 }

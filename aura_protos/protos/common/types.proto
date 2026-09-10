@@ -51,6 +51,7 @@ enum DexType {
   RAY_CPMM = 3;
   RAY_LL = 4;
   METEORA_DLMM = 5;
+  RAY_CLMM = 6;
 }
 
 enum Direction {
@@ -78,6 +79,9 @@ enum LimitOrderFailure {
   INVALID_ORDER_OR_WALLET = 9;
   BATCH_REJECTED = 10;
   DLMM_TWO_HOP_ARRAY_LIMIT = 11;
+  UNFAVORABLE_SOL_QUOTE_RATE = 12;
+  UNFAVORABLE_USD_QUOTE_RATE = 13;
+  NO_KNOWN_QUOTE_ROUTE = 14;
 }
 
 enum MarketExecuteMode {
@@ -145,6 +149,9 @@ enum SwapFailure {
   NO_ENABLED_ACTIONS = 7;
   ATTEMPTS_EXHAUSTED = 8;
   DLMM_TWO_HOP_ARRAY_LIMIT = 9;
+  UNFAVORABLE_SOL_QUOTE_RATE = 10;
+  UNFAVORABLE_USD_QUOTE_RATE = 11;
+  NO_KNOWN_QUOTE_ROUTE = 12;
 }
 
 enum TokenAccountKindUi {
@@ -228,6 +235,9 @@ message AtomicDexCU {
   uint32 meteora_dlmm_buy = 20;
   uint32 meteora_dlmm_sell = 21;
   uint32 meteora_dlmm_first_buy_offset = 22;
+  uint32 ray_clmm_buy = 23;
+  uint32 ray_clmm_sell = 24;
+  uint32 ray_clmm_first_buy_offset = 25;
 }
 
 message BeUserAction {
@@ -352,6 +362,7 @@ message CtTaskFlags {
   bool meteora_dlmm = 59;
   bool quote_custom = 60;
   bool last_trade_only = 61;
+  bool ray_clmm = 62;
 }
 
 message CtTaskId {
@@ -686,6 +697,7 @@ message SnipeTaskFlags {
   bool meteora_dlmm = 54;
   bool shred = 55;
   bool quote_custom = 56;
+  bool ray_clmm = 57;
 }
 
 message SnipeTaskId {
@@ -859,6 +871,17 @@ message TradeExpenses {
 message TradeFilters {
   optional fastnum.UD128 min_mcap = 1;
   optional fastnum.UD128 max_mcap = 2;
+}
+
+message TradeHopUi {
+  solana.Address mint = 1;
+  string ticker = 2;
+  decisol.SolanaLamports base = 3;
+  decisol.SolanaLamports native_quote = 4;
+  solana.Address quote_mint = 5;
+  TradeType side = 6;
+  optional fastnum.UD128 mc_usd = 7;
+  optional fastnum.UD128 price_usd = 8;
 }
 
 message TradeResponse {
@@ -1187,6 +1210,7 @@ message CtUpdateField {
     bool meteora_dlmm = 84;
     bool quote_custom = 85;
     bool last_trade_only = 86;
+    bool ray_clmm = 87;
   }
 }
 
@@ -1260,6 +1284,7 @@ message ParsedTradeUiBuy {
   optional decisol.SolanaLamports native_quote = 7;
   optional solana.Address quote_mint = 8;
   optional TradeExpenses expenses = 9;
+  repeated TradeHopUi hops = 10;
 }
 
 message ParsedTradeUiSell {
@@ -1273,6 +1298,7 @@ message ParsedTradeUiSell {
   optional decisol.SolanaLamports native_quote = 8;
   optional solana.Address quote_mint = 9;
   optional TradeExpenses expenses = 10;
+  repeated TradeHopUi hops = 11;
 }
 message ParsedTradeUi {
   oneof value {
@@ -1368,6 +1394,7 @@ message SnipeUpdateField {
     bool meteora_dlmm = 82;
     bool shred = 83;
     bool quote_custom = 84;
+    bool ray_clmm = 85;
   }
 }
 
@@ -1550,4 +1577,3 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
-

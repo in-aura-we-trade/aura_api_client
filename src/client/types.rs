@@ -336,6 +336,7 @@ pub mod types {
         pub meteora_dlmm: bool,
         pub quote_custom: bool,
         pub last_trade_only: bool,
+        pub ray_clmm: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -650,6 +651,9 @@ pub mod types {
         LastTradeOnly(
             bool,
         ),
+        RayClmm(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -705,6 +709,9 @@ pub mod types {
         pub meteora_dlmm_buy: u32,
         pub meteora_dlmm_sell: u32,
         pub meteora_dlmm_first_buy_offset: u32,
+        pub ray_clmm_buy: u32,
+        pub ray_clmm_sell: u32,
+        pub ray_clmm_first_buy_offset: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -716,6 +723,7 @@ pub mod types {
         RayCpmm,
         RayLl,
         MeteoraDlmm,
+        RayClmm,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -834,6 +842,9 @@ pub mod types {
         InvalidOrderOrWallet,
         BatchRejected,
         DlmmTwoHopArrayLimit,
+        UnfavorableSolQuoteRate,
+        UnfavorableUsdQuoteRate,
+        NoKnownQuoteRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -991,6 +1002,7 @@ pub mod types {
             native_quote: ::core::option::Option<SolanaLamports>,
             quote_mint: ::core::option::Option<Address>,
             expenses: ::core::option::Option<TradeExpenses>,
+            hops: ::proto_rs::alloc::vec::Vec<TradeHopUi>,
         },
         Sell {
             mint: Address,
@@ -1003,6 +1015,7 @@ pub mod types {
             native_quote: ::core::option::Option<SolanaLamports>,
             quote_mint: ::core::option::Option<Address>,
             expenses: ::core::option::Option<TradeExpenses>,
+            hops: ::proto_rs::alloc::vec::Vec<TradeHopUi>,
         },
     }
 
@@ -1219,6 +1232,7 @@ pub mod types {
         pub meteora_dlmm: bool,
         pub shred: bool,
         pub quote_custom: bool,
+        pub ray_clmm: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1527,6 +1541,9 @@ pub mod types {
         QuoteCustom(
             bool,
         ),
+        RayClmm(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1567,6 +1584,9 @@ pub mod types {
         NoEnabledActions,
         AttemptsExhausted,
         DlmmTwoHopArrayLimit,
+        UnfavorableSolQuoteRate,
+        UnfavorableUsdQuoteRate,
+        NoKnownQuoteRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1780,6 +1800,19 @@ pub mod types {
     pub struct TradeFilters {
         pub min_mcap: ::core::option::Option<UD128>,
         pub max_mcap: ::core::option::Option<UD128>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct TradeHopUi {
+        pub mint: Address,
+        pub ticker: ::proto_rs::alloc::string::String,
+        pub base: SolanaLamports,
+        pub native_quote: SolanaLamports,
+        pub quote_mint: Address,
+        pub side: TradeType,
+        pub mc_usd: ::core::option::Option<UD128>,
+        pub price_usd: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

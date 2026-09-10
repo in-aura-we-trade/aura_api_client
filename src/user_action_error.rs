@@ -33,6 +33,15 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::DlmmTwoHopArrayLimit => {
                 "Insufficient DLMM liquidity within the one-bin-array limit for this two-hop swap. More bin-array accounts exceed the configured account budget. Reduce the swap amount."
             }
+            SwapFailure::UnfavorableSolQuoteRate => {
+                "Swap aborted: SOL/WSOL would buy over 5% less custom quote than an equivalent USD budget, and this wallet has insufficient USD for the better route. Add the USD token used by that route (USDC, USDT or USD1), or acquire the custom quote first."
+            }
+            SwapFailure::UnfavorableUsdQuoteRate => {
+                "Swap aborted: USD (USDC, USDT or USD1) would buy over 5% less custom quote than an equivalent SOL/WSOL budget, and this wallet has insufficient spendable SOL/WSOL for the better route. Add SOL/WSOL for that route, or acquire the custom quote first."
+            }
+            SwapFailure::NoKnownQuoteRoute => {
+                "Swap aborted: no eligible sell route to SOL/WSOL, USDC, USDT or USD1 is available within two swaps."
+            }
         }
     }
 }
@@ -81,6 +90,15 @@ impl From<&LimitOrderFailure> for &'static str {
             }
             LimitOrderFailure::DlmmTwoHopArrayLimit => {
                 "Order was deleted because the two-hop swap has insufficient DLMM liquidity within its one-bin-array account limit. Reduce the swap amount."
+            }
+            LimitOrderFailure::UnfavorableSolQuoteRate => {
+                "Order was deleted because SOL/WSOL would buy over 5% less custom quote than an equivalent USD budget, and this wallet has insufficient USD for the better route. Add the USD token used by that route (USDC, USDT or USD1), or acquire the custom quote first."
+            }
+            LimitOrderFailure::UnfavorableUsdQuoteRate => {
+                "Order was deleted because USD (USDC, USDT or USD1) would buy over 5% less custom quote than an equivalent SOL/WSOL budget, and this wallet has insufficient spendable SOL/WSOL for the better route. Add SOL/WSOL for that route, or acquire the custom quote first."
+            }
+            LimitOrderFailure::NoKnownQuoteRoute => {
+                "Sell could not execute: no eligible route to SOL/WSOL, USDC, USDT or USD1 is available within two swaps."
             }
         }
     }
