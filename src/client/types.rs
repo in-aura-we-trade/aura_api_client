@@ -985,18 +985,24 @@ pub mod types {
             mint: Address,
             ticker: ::proto_rs::alloc::string::String,
             base: SolanaLamports,
-            quote: QuoteLamports,
+            quote: ::core::option::Option<QuoteLamports>,
             mc_usd: ::core::option::Option<UD128>,
-            price_usd: UD128,
+            price_usd: ::core::option::Option<UD128>,
+            native_quote: ::core::option::Option<SolanaLamports>,
+            quote_mint: ::core::option::Option<Address>,
+            expenses: ::core::option::Option<TradeExpenses>,
         },
         Sell {
             mint: Address,
             ticker: ::proto_rs::alloc::string::String,
             base: SolanaLamports,
-            quote: QuoteLamports,
+            quote: ::core::option::Option<QuoteLamports>,
             pnl: ::core::option::Option<UD128>,
             mc_usd: ::core::option::Option<UD128>,
-            price_usd: UD128,
+            price_usd: ::core::option::Option<UD128>,
+            native_quote: ::core::option::Option<SolanaLamports>,
+            quote_mint: ::core::option::Option<Address>,
+            expenses: ::core::option::Option<TradeExpenses>,
         },
     }
 
@@ -1074,6 +1080,10 @@ pub mod types {
         pub sol_buy: Sol,
         pub sol_sell: Sol,
         pub sol_sell_unknown: Sol,
+        pub network_spent: Lamports,
+        pub tip_spent: Lamports,
+        pub aura_spent: Lamports,
+        pub valuation_incomplete: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1717,8 +1727,9 @@ pub mod types {
         pub sell_n: u32,
         pub last_traded_slot: u64,
         pub quote: QuoteState,
-        pub total_quote_position: QuoteLamports,
+        pub total_quote_position: ::core::option::Option<QuoteLamports>,
         pub mint: Address,
+        pub pnl: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1754,6 +1765,14 @@ pub mod types {
         pub pre_quote_balance: SolanaLamports,
         pub liq: LiqState,
         pub migration: bool,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct TradeExpenses {
+        pub network: Lamports,
+        pub tip: Lamports,
+        pub aura: Lamports,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

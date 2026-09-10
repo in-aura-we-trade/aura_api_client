@@ -578,6 +578,10 @@ message QuoteState {
   decisol.Sol sol_buy = 4;
   decisol.Sol sol_sell = 5;
   decisol.Sol sol_sell_unknown = 6;
+  decisol.Lamports network_spent = 7;
+  decisol.Lamports tip_spent = 8;
+  decisol.Lamports aura_spent = 9;
+  bool valuation_incomplete = 10;
 }
 
 message RawOrder {
@@ -818,8 +822,9 @@ message TokenTradeState {
   uint32 sell_n = 8;
   uint64 last_traded_slot = 9;
   QuoteState quote = 10;
-  decisol.QuoteLamports total_quote_position = 11;
+  optional decisol.QuoteLamports total_quote_position = 11;
   solana.Address mint = 12;
+  optional fastnum.UD128 pnl = 13;
 }
 
 message TokenTradeStateInner {
@@ -843,6 +848,12 @@ message Trade {
   decisol.SolanaLamports pre_quote_balance = 9;
   LiqState liq = 10;
   bool migration = 11;
+}
+
+message TradeExpenses {
+  decisol.Lamports network = 1;
+  decisol.Lamports tip = 2;
+  decisol.Lamports aura = 3;
 }
 
 message TradeFilters {
@@ -1243,19 +1254,25 @@ message ParsedTradeUiBuy {
   solana.Address mint = 1;
   string ticker = 2;
   decisol.SolanaLamports base = 3;
-  decisol.QuoteLamports quote = 4;
+  optional decisol.QuoteLamports quote = 4;
   optional fastnum.UD128 mc_usd = 5;
-  fastnum.UD128 price_usd = 6;
+  optional fastnum.UD128 price_usd = 6;
+  optional decisol.SolanaLamports native_quote = 7;
+  optional solana.Address quote_mint = 8;
+  optional TradeExpenses expenses = 9;
 }
 
 message ParsedTradeUiSell {
   solana.Address mint = 1;
   string ticker = 2;
   decisol.SolanaLamports base = 3;
-  decisol.QuoteLamports quote = 4;
+  optional decisol.QuoteLamports quote = 4;
   optional fastnum.UD128 pnl = 5;
   optional fastnum.UD128 mc_usd = 6;
-  fastnum.UD128 price_usd = 7;
+  optional fastnum.UD128 price_usd = 7;
+  optional decisol.SolanaLamports native_quote = 8;
+  optional solana.Address quote_mint = 9;
+  optional TradeExpenses expenses = 10;
 }
 message ParsedTradeUi {
   oneof value {
