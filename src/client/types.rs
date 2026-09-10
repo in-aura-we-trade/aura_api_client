@@ -334,6 +334,8 @@ pub mod types {
         pub not_mint_prefix: bool,
         pub not_mint_suffix: bool,
         pub meteora_dlmm: bool,
+        pub quote_custom: bool,
+        pub last_trade_only: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -642,6 +644,12 @@ pub mod types {
         MeteoraDlmm(
             bool,
         ),
+        QuoteCustom(
+            bool,
+        ),
+        LastTradeOnly(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -825,6 +833,7 @@ pub mod types {
         TransactionFailed,
         InvalidOrderOrWallet,
         BatchRejected,
+        DlmmTwoHopArrayLimit,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1049,6 +1058,15 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct QuoteConversion {
+        pub denomination_mint: Address,
+        pub rate: UD128,
+        pub valuation_pool: ::core::option::Option<Address>,
+        pub observed_at_ms: u64,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct QuoteState {
         pub usd_buy: Usd,
         pub usd_sell: Usd,
@@ -1190,6 +1208,7 @@ pub mod types {
         pub token_type: TokenTypeFilter,
         pub meteora_dlmm: bool,
         pub shred: bool,
+        pub quote_custom: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1495,6 +1514,9 @@ pub mod types {
         Shred(
             bool,
         ),
+        QuoteCustom(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1534,6 +1556,7 @@ pub mod types {
         NoEnabledEvents,
         NoEnabledActions,
         AttemptsExhausted,
+        DlmmTwoHopArrayLimit,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1598,6 +1621,7 @@ pub mod types {
         pub balance: u64,
         pub slot: u64,
         pub account_exists: bool,
+        pub trading_restricted: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1628,9 +1652,13 @@ pub mod types {
         pub migration_status: MigrationStatus,
         pub price: UD128,
         pub base_liq_raw: SolanaLamports,
-        pub quote_liq_raw: QuoteLamports,
+        pub quote_liq_raw: SolanaLamports,
         pub base_liq_v: SolanaLamports,
-        pub quote_liq_v: QuoteLamports,
+        pub quote_liq_v: SolanaLamports,
+        pub quote_mint: Address,
+        pub market_cap: ::core::option::Option<UD128>,
+        pub liquidity_quote: UD128,
+        pub quote_conversion: ::core::option::Option<QuoteConversion>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1720,10 +1748,10 @@ pub mod types {
         pub trader: Address,
         pub dex_data: DexType,
         pub base: SolanaLamports,
-        pub quote: QuoteLamports,
+        pub quote: SolanaLamports,
         pub side: TradeType,
         pub pre_base_balance: SolanaLamports,
-        pub pre_quote_balance: QuoteLamports,
+        pub pre_quote_balance: SolanaLamports,
         pub liq: LiqState,
         pub migration: bool,
     }
@@ -1979,6 +2007,10 @@ pub mod types {
             cfg_id: CtTaskId,
             config_name: ::proto_rs::alloc::string::String,
             reason: SwapFailure,
+        },
+        NonceRecovery {
+            wallet: Address,
+            message: ::proto_rs::alloc::string::String,
         },
     }
 

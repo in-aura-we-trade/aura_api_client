@@ -44,8 +44,8 @@ pub const RAY_CPMM_SELL_CU: u32 = 57_000;
 pub const RAY_LL_BUY_CU: u32 = 130_000;
 pub const RAY_LL_SELL_CU: u32 = 92_000;
 
-pub const METEORA_DLMM_BUY_CU: u32 = 50_000;
-pub const METEORA_DLMM_SELL_CU: u32 = 50_000;
+pub const METEORA_DLMM_BUY_CU: u32 = 100_000;
+pub const METEORA_DLMM_SELL_CU: u32 = 100_000;
 
 pub const TOKEN_2022_OFFSET: u32 = 0;
 pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
@@ -114,8 +114,8 @@ pub const SNIPE_CFG_MAX_TRACKED_MINTS: usize = 16;
 pub const SNIPE_CFG_MAX_TRACKED_DEVS: usize = 16;
 pub const SNIPE_MAX_CFGS: usize = 16;
 
-pub const AURA_TG_GROUP_LINK: &str = "https://t.me/trade_with_aura_bot";
-pub const AURA_TG_BOT_LINK: &str = "https://t.me/trade_with_aura";
+pub const AURA_TG_GROUP_LINK: &str = "https://t.me/trade_with_aura";
+pub const AURA_TG_BOT_LINK: &str = "https://t.me/trade_with_aura_bot";
 pub const AURA_MANUAL_LINK: &str = "https://aura-15.gitbook.io/aura-user-manual";
 pub const AURA_SITE_LINK: &str = "https://aura.rehab";
 

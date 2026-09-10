@@ -77,6 +77,7 @@ enum LimitOrderFailure {
   TRANSACTION_FAILED = 8;
   INVALID_ORDER_OR_WALLET = 9;
   BATCH_REJECTED = 10;
+  DLMM_TWO_HOP_ARRAY_LIMIT = 11;
 }
 
 enum MarketExecuteMode {
@@ -143,6 +144,7 @@ enum SwapFailure {
   NO_ENABLED_EVENTS = 6;
   NO_ENABLED_ACTIONS = 7;
   ATTEMPTS_EXHAUSTED = 8;
+  DLMM_TWO_HOP_ARRAY_LIMIT = 9;
 }
 
 enum TokenAccountKindUi {
@@ -348,6 +350,8 @@ message CtTaskFlags {
   bool not_mint_prefix = 57;
   bool not_mint_suffix = 58;
   bool meteora_dlmm = 59;
+  bool quote_custom = 60;
+  bool last_trade_only = 61;
 }
 
 message CtTaskId {
@@ -560,6 +564,13 @@ message Pubkeys {
   repeated solana.Address values = 1;
 }
 
+message QuoteConversion {
+  solana.Address denomination_mint = 1;
+  fastnum.UD128 rate = 2;
+  optional solana.Address valuation_pool = 3;
+  uint64 observed_at_ms = 4;
+}
+
 message QuoteState {
   decisol.Usd usd_buy = 1;
   decisol.Usd usd_sell = 2;
@@ -670,6 +681,7 @@ message SnipeTaskFlags {
   TokenTypeFilter token_type = 53;
   bool meteora_dlmm = 54;
   bool shred = 55;
+  bool quote_custom = 56;
 }
 
 message SnipeTaskId {
@@ -730,6 +742,7 @@ message TokenBalanceRaw {
   uint64 balance = 1;
   uint64 slot = 2;
   bool account_exists = 3;
+  bool trading_restricted = 4;
 }
 
 message TokenLimitOrders {
@@ -754,9 +767,13 @@ message TokenPool {
   MigrationStatus migration_status = 4;
   fastnum.UD128 price = 5;
   decisol.SolanaLamports base_liq_raw = 6;
-  decisol.QuoteLamports quote_liq_raw = 7;
+  decisol.SolanaLamports quote_liq_raw = 7;
   decisol.SolanaLamports base_liq_v = 8;
-  decisol.QuoteLamports quote_liq_v = 9;
+  decisol.SolanaLamports quote_liq_v = 9;
+  solana.Address quote_mint = 10;
+  optional fastnum.UD128 market_cap = 11;
+  fastnum.UD128 liquidity_quote = 12;
+  optional QuoteConversion quote_conversion = 13;
 }
 
 message TokenPosition {
@@ -820,10 +837,10 @@ message Trade {
   solana.Address trader = 3;
   DexType dex_data = 4;
   decisol.SolanaLamports base = 5;
-  decisol.QuoteLamports quote = 6;
+  decisol.SolanaLamports quote = 6;
   TradeType side = 7;
   decisol.SolanaLamports pre_base_balance = 8;
-  decisol.QuoteLamports pre_quote_balance = 9;
+  decisol.SolanaLamports pre_quote_balance = 9;
   LiqState liq = 10;
   bool migration = 11;
 }
@@ -1157,6 +1174,8 @@ message CtUpdateField {
     bool not_mint_prefix = 82;
     bool not_mint_suffix = 83;
     bool meteora_dlmm = 84;
+    bool quote_custom = 85;
+    bool last_trade_only = 86;
   }
 }
 
@@ -1331,6 +1350,7 @@ message SnipeUpdateField {
     TokenTypeFilter token_type = 81;
     bool meteora_dlmm = 82;
     bool shred = 83;
+    bool quote_custom = 84;
   }
 }
 
@@ -1499,12 +1519,18 @@ message UserActionErrorCopytrade {
   string config_name = 3;
   SwapFailure reason = 4;
 }
+
+message UserActionErrorNonceRecovery {
+  solana.Address wallet = 1;
+  string message = 2;
+}
 message UserActionError {
   oneof value {
     UserActionErrorSwap swap = 1;
     UserActionErrorLimitOrder limit_order = 2;
     UserActionErrorSnipe snipe = 3;
     UserActionErrorCopytrade copytrade = 4;
+    UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
 

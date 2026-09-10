@@ -14,6 +14,7 @@ pub mod client_ext;
 #[path = "client_ext/debug.rs"]
 mod client_ext_debug;
 pub mod consts;
+pub mod links;
 pub mod order_ext;
 #[cfg(feature = "private_client")]
 mod private_client;

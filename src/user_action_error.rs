@@ -30,6 +30,9 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::AttemptsExhausted => {
                 "Config was turned off after 100 consecutive matches produced no successful action."
             }
+            SwapFailure::DlmmTwoHopArrayLimit => {
+                "Insufficient DLMM liquidity within the one-bin-array limit for this two-hop swap. More bin-array accounts exceed the configured account budget. Reduce the swap amount."
+            }
         }
     }
 }
@@ -76,6 +79,9 @@ impl From<&LimitOrderFailure> for &'static str {
             LimitOrderFailure::BatchRejected => {
                 "Orders were not placed because active orders already exist or the account reached its order limit."
             }
+            LimitOrderFailure::DlmmTwoHopArrayLimit => {
+                "Order was deleted because the two-hop swap has insufficient DLMM liquidity within its one-bin-array account limit. Reduce the swap amount."
+            }
         }
     }
 }
@@ -91,6 +97,9 @@ impl Display for UserActionError {
         match self {
             UserActionError::Swap { mint, reason } => {
                 write!(f, "Swap failed\n{reason}\n\nMint: {mint}")
+            }
+            UserActionError::NonceRecovery { wallet, message } => {
+                write!(f, "Durable nonce setup\n{message}\n\nWallet: {wallet}")
             }
             UserActionError::LimitOrder {
                 mint,
