@@ -82,6 +82,8 @@ enum LimitOrderFailure {
   UNFAVORABLE_SOL_QUOTE_RATE = 12;
   UNFAVORABLE_USD_QUOTE_RATE = 13;
   NO_KNOWN_QUOTE_ROUTE = 14;
+  CLMM_ROUTE_UNAVAILABLE = 15;
+  CLMM_TWO_HOP_ARRAY_LIMIT = 16;
 }
 
 enum MarketExecuteMode {
@@ -152,6 +154,8 @@ enum SwapFailure {
   UNFAVORABLE_SOL_QUOTE_RATE = 10;
   UNFAVORABLE_USD_QUOTE_RATE = 11;
   NO_KNOWN_QUOTE_ROUTE = 12;
+  CLMM_ROUTE_UNAVAILABLE = 13;
+  CLMM_TWO_HOP_ARRAY_LIMIT = 14;
 }
 
 enum TokenAccountKindUi {
@@ -790,6 +794,7 @@ message TokenPool {
   optional fastnum.UD128 market_cap = 11;
   fastnum.UD128 liquidity_quote = 12;
   optional QuoteConversion quote_conversion = 13;
+  optional string quote_symbol = 14;
 }
 
 message TokenPosition {

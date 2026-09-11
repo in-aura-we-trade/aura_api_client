@@ -42,6 +42,12 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::NoKnownQuoteRoute => {
                 "Swap aborted: no eligible sell route to SOL/WSOL, USDC, USDT or USD1 is available within two swaps."
             }
+            SwapFailure::ClmmRouteUnavailable => {
+                "Swap aborted: a complete CLMM tick-array route is unavailable for this amount."
+            }
+            SwapFailure::ClmmTwoHopArrayLimit => {
+                "Insufficient CLMM liquidity within the one-tick-array limit for this two-hop swap. Reduce the swap amount."
+            }
         }
     }
 }
@@ -99,6 +105,12 @@ impl From<&LimitOrderFailure> for &'static str {
             }
             LimitOrderFailure::NoKnownQuoteRoute => {
                 "Sell could not execute: no eligible route to SOL/WSOL, USDC, USDT or USD1 is available within two swaps."
+            }
+            LimitOrderFailure::ClmmRouteUnavailable => {
+                "Order could not execute: a complete CLMM tick-array route is unavailable for this amount."
+            }
+            LimitOrderFailure::ClmmTwoHopArrayLimit => {
+                "Order could not execute: insufficient CLMM liquidity within the one-tick-array limit for this two-hop swap. Reduce the swap amount."
             }
         }
     }

@@ -845,6 +845,8 @@ pub mod types {
         UnfavorableSolQuoteRate,
         UnfavorableUsdQuoteRate,
         NoKnownQuoteRoute,
+        ClmmRouteUnavailable,
+        ClmmTwoHopArrayLimit,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1587,6 +1589,8 @@ pub mod types {
         UnfavorableSolQuoteRate,
         UnfavorableUsdQuoteRate,
         NoKnownQuoteRoute,
+        ClmmRouteUnavailable,
+        ClmmTwoHopArrayLimit,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1689,6 +1693,7 @@ pub mod types {
         pub market_cap: ::core::option::Option<UD128>,
         pub liquidity_quote: UD128,
         pub quote_conversion: ::core::option::Option<QuoteConversion>,
+        pub quote_symbol: ::core::option::Option<::std::string::String>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
