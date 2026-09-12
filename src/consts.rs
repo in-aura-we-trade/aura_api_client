@@ -119,7 +119,10 @@ pub const CFG_MAX_BLACKLIST: usize = 32;
 pub const CT_MAX_CFGS_PER_USER: usize = 32;
 
 pub const SNIPE_CFG_MAX_TRACKED_MINTS: usize = 16;
-pub const SNIPE_CFG_MAX_TRACKED_DEVS: usize = 16;
+pub const SNIPE_CFG_MAX_TRACKED_DEVS: usize = 1_000;
+pub const SNIPE_USER_MAX_TRACKED_DEVS: usize = 1_000;
+pub const SNIPE_CFG_MAX_BLACKLIST: usize = 1_000;
+pub const SNIPE_USER_MAX_BLACKLIST: usize = 1_000;
 pub const SNIPE_MAX_CFGS: usize = 16;
 
 pub const AURA_TG_GROUP_LINK: &str = "https://t.me/trade_with_aura";

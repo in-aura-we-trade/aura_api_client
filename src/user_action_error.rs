@@ -46,8 +46,15 @@ impl From<&SwapFailure> for &'static str {
                 "Swap aborted: a complete CLMM tick-array route is unavailable for this amount."
             }
             SwapFailure::ClmmTwoHopArrayLimit => {
-                "Insufficient CLMM liquidity within the one-tick-array limit for this two-hop swap. Reduce the swap amount."
+                "Insufficient CLMM liquidity within the two-tick-array limit for this two-hop swap. Reduce the swap amount."
             }
+            SwapFailure::SwapBudgetTooSmall => {
+                "The swap amount is too small to cover the application fee."
+            }
+            SwapFailure::InvalidRoute => {
+                "Swap aborted: the route does not match its pool, wallet, settings or intermediate token account."
+            }
+            SwapFailure::NoBuyRoute => "Swap aborted: no eligible buy route is available.",
         }
     }
 }
@@ -110,7 +117,16 @@ impl From<&LimitOrderFailure> for &'static str {
                 "Order could not execute: a complete CLMM tick-array route is unavailable for this amount."
             }
             LimitOrderFailure::ClmmTwoHopArrayLimit => {
-                "Order could not execute: insufficient CLMM liquidity within the one-tick-array limit for this two-hop swap. Reduce the swap amount."
+                "Order could not execute: insufficient CLMM liquidity within the two-tick-array limit for this two-hop swap. Reduce the swap amount."
+            }
+            LimitOrderFailure::SwapBudgetTooSmall => {
+                "Order could not execute: the swap amount is too small to cover the application fee."
+            }
+            LimitOrderFailure::InvalidRoute => {
+                "Order could not execute: the route does not match its pool, wallet, settings or intermediate token account."
+            }
+            LimitOrderFailure::NoBuyRoute => {
+                "Order could not execute: no eligible buy route is available."
             }
         }
     }
@@ -150,11 +166,37 @@ impl Display for UserActionError {
                 cfg_id: _,
                 config_name,
                 reason,
-            } => write!(
-                f,
-                "Copytrade failed\nConfig: {config_name}\n{reason}\n\nMint: {mint}"
-            ),
+                balance_shortfall,
+            } => {
+                write!(f, "Copytrade failed\nConfig: {config_name}\n{reason}")?;
+                if let Some(balance) = balance_shortfall {
+                    write!(f, "\n{balance}")?;
+                }
+                write!(f, "\n\nMint: {mint}")
+            }
         }
+    }
+}
+
+impl Display for crate::types::BalanceShortfall {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        let mint = self.quote_mint.to_string();
+        let quote = match mint.as_str() {
+            "So11111111111111111111111111111111111111112" => "SOL",
+            "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" => "USDC",
+            "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB" => "USDT",
+            "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB" => "USD1",
+            _ => mint.as_str(),
+        };
+        write!(
+            f,
+            "Required: {} {quote}; available: {} {quote}",
+            self.required, self.available
+        )?;
+        if self.native_only {
+            f.write_str(" (native SOL only)")?;
+        }
+        Ok(())
     }
 }
 

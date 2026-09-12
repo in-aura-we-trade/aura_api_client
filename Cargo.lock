@@ -276,8 +276,8 @@ dependencies = [
 
 [[package]]
 name = "decisol"
-version = "1.0.0"
-source = "git+https://github.com/4r33x/decisol#c6ae083dbe891b8fa1f84a371b9ff8401bc0ded8"
+version = "1.0.1"
+source = "git+https://github.com/4r33x/decisol#cbbf99e26bab65ecaa361519491d6530d099d30d"
 dependencies = [
  "fastnum",
  "inventory",

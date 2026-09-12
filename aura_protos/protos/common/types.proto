@@ -84,6 +84,9 @@ enum LimitOrderFailure {
   NO_KNOWN_QUOTE_ROUTE = 14;
   CLMM_ROUTE_UNAVAILABLE = 15;
   CLMM_TWO_HOP_ARRAY_LIMIT = 16;
+  SWAP_BUDGET_TOO_SMALL = 17;
+  INVALID_ROUTE = 18;
+  NO_BUY_ROUTE = 19;
 }
 
 enum MarketExecuteMode {
@@ -156,6 +159,9 @@ enum SwapFailure {
   NO_KNOWN_QUOTE_ROUTE = 12;
   CLMM_ROUTE_UNAVAILABLE = 13;
   CLMM_TWO_HOP_ARRAY_LIMIT = 14;
+  SWAP_BUDGET_TOO_SMALL = 15;
+  INVALID_ROUTE = 16;
+  NO_BUY_ROUTE = 17;
 }
 
 enum TokenAccountKindUi {
@@ -242,6 +248,13 @@ message AtomicDexCU {
   uint32 ray_clmm_buy = 23;
   uint32 ray_clmm_sell = 24;
   uint32 ray_clmm_first_buy_offset = 25;
+}
+
+message BalanceShortfall {
+  solana.Address quote_mint = 1;
+  fastnum.UD128 required = 2;
+  fastnum.UD128 available = 3;
+  bool native_only = 4;
 }
 
 message BeUserAction {
@@ -495,6 +508,10 @@ message LiqState {
   uint64 token_v = 4;
 }
 
+message LruAddressuint321000 {
+  repeated LruPairAddressuint32 items = 1;
+}
+
 message LruAddressuint3232 {
   repeated LruPairAddressuint32 items = 1;
 }
@@ -740,6 +757,8 @@ message SnipeTaskValues {
   TxnProcessors buy_procs = 23;
   TxnProcessors sell_procs = 24;
   solana.Address wallet = 25;
+  uint32 max_buys_per_dev = 26;
+  LruAddressuint321000 dev_buys = 27;
 }
 
 message SnipeUpdate {
@@ -1400,6 +1419,7 @@ message SnipeUpdateField {
     bool shred = 83;
     bool quote_custom = 84;
     bool ray_clmm = 85;
+    uint32 max_buys_per_dev = 86;
   }
 }
 
@@ -1425,6 +1445,7 @@ message SwapAmount {
 message TargetPrice {
   fastnum.UD128 price = 1;
   Direction direction = 2;
+  optional decisol.QuoteKind denomination = 3;
 }
 
 message TargetProfit {
@@ -1437,12 +1458,14 @@ message TargetMovingPerc {
   fastnum.UD128 price_perc = 1;
   optional fastnum.UD128 local_ath = 2;
   Direction direction = 3;
+  optional decisol.QuoteKind denomination = 4;
 }
 
 message TargetPricePerc {
   fastnum.UD128 price_perc = 1;
   optional fastnum.UD128 price = 2;
   Direction direction = 3;
+  optional decisol.QuoteKind denomination = 4;
 }
 
 message TargetMcap {
@@ -1567,6 +1590,7 @@ message UserActionErrorCopytrade {
   CtTaskId cfg_id = 2;
   string config_name = 3;
   SwapFailure reason = 4;
+  optional BalanceShortfall balance_shortfall = 5;
 }
 
 message UserActionErrorNonceRecovery {

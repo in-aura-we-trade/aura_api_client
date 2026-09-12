@@ -161,6 +161,7 @@ impl Target {
             Target::Price {
                 price: _,
                 direction,
+                ..
             }
             | Target::Profit {
                 direction,
@@ -171,11 +172,13 @@ impl Target {
                 price_perc: _,
                 local_ath: _,
                 direction,
+                ..
             }
             | Target::PricePerc {
                 price_perc: _,
                 price: _,
                 direction,
+                ..
             }
             | Target::Mcap {
                 mcap: _,
@@ -202,11 +205,20 @@ pub enum OrderKindTrigger {
     //-100% mapped to 0-1
     Profit(UD128),
     Price(UD128),
+    PriceUsd(UD128),
     PricePerc(UD128),
     Mcap(UD128),
 }
 
 impl OrderKindTrigger {
+    fn price(value: UD128, denomination: Option<decisol::QuoteKind>) -> Self {
+        if matches!(denomination, Some(decisol::QuoteKind::Usd)) {
+            Self::PriceUsd(value)
+        } else {
+            Self::Price(value)
+        }
+    }
+
     pub fn to_string_ui(&self, sol_price: UD128) -> String {
         match self {
             OrderKindTrigger::Profit(decimal) => {
@@ -227,6 +239,9 @@ impl OrderKindTrigger {
                     (decimal.to_signed() - dec128!(1)) * dec128!(100)
                 )
             }
+            OrderKindTrigger::PriceUsd(decimal) => {
+                format!("🎯{}$ price", price_formatter(*decimal, 4, false))
+            }
             OrderKindTrigger::Mcap(v) => format!("🎯{}$ mcap", mc_formatter(*v)),
         }
     }
@@ -234,6 +249,7 @@ impl OrderKindTrigger {
         match self {
             OrderKindTrigger::Profit(decimal) => decimal.to_signed(),
             OrderKindTrigger::Price(decimal) => decimal.to_signed(),
+            OrderKindTrigger::PriceUsd(decimal) => decimal.to_signed(),
             OrderKindTrigger::PricePerc(decimal) => decimal.to_signed(),
             OrderKindTrigger::Mcap(decimal) => decimal.to_signed(),
         }
@@ -436,8 +452,8 @@ impl RawOrder {
                     mode: mode.clone(),
                 },
             },
-            Target::Price { price, direction } => {
-                let trigger = OrderKindTrigger::Price(*price);
+            Target::Price { price, direction, denomination } => {
+                let trigger = OrderKindTrigger::price(*price, *denomination);
                 self.kind_from_direction_side(*direction, trigger)
             }
             Target::Mcap {
@@ -452,9 +468,10 @@ impl RawOrder {
                 price_perc,
                 price,
                 direction,
+                denomination,
             } => {
                 let trigger = match price {
-                    Some(v) => OrderKindTrigger::Price(*v),
+                    Some(v) => OrderKindTrigger::price(*v, *denomination),
                     None => OrderKindTrigger::PricePerc(*price_perc),
                 };
                 self.kind_from_direction_side(*direction, trigger)
@@ -472,9 +489,10 @@ impl RawOrder {
                 price_perc,
                 local_ath,
                 direction,
+                denomination,
             } => {
                 let trigger = match local_ath {
-                    Some(v) => OrderKindTrigger::Price(*price_perc * *v),
+                    Some(v) => OrderKindTrigger::price(*price_perc * *v, *denomination),
                     None => OrderKindTrigger::PricePerc(*price_perc),
                 };
                 match direction {
@@ -618,6 +636,13 @@ impl MarketOrdersDeduperKind {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn usd_price_label_does_not_change_with_sol_rate() {
+        let price = super::OrderKindTrigger::price(decisol::udec128!(2), Some(decisol::QuoteKind::Usd));
+        assert_eq!(price.to_string_ui(decisol::udec128!(100)), price.to_string_ui(decisol::udec128!(200)));
+        assert_eq!(price.to_string_ui(decisol::UD128::NAN), price.to_string_ui(decisol::udec128!(100)));
+    }
+
     use proto_rs::{ProtoDecoder, bytes::Bytes};
 
     use crate::types::{ApiLimitOrder, UpdateTokenLimitOrders};

@@ -6,6 +6,7 @@ pub mod types {
     use chrono::Utc;
     use crate::UserId;
     use decisol::Lamports;
+    use decisol::QuoteKind;
     use decisol::QuoteLamports;
     use decisol::QuoteLamportsKind;
     use decisol::Sol;
@@ -91,6 +92,15 @@ pub mod types {
         Partial,
         None,
         All,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct BalanceShortfall {
+        pub quote_mint: Address,
+        pub required: UD128,
+        pub available: UD128,
+        pub native_only: bool,
     }
 
     #[derive(Clone, Debug)]
@@ -847,6 +857,9 @@ pub mod types {
         NoKnownQuoteRoute,
         ClmmRouteUnavailable,
         ClmmTwoHopArrayLimit,
+        SwapBudgetTooSmall,
+        InvalidRoute,
+        NoBuyRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1279,6 +1292,8 @@ pub mod types {
         pub buy_procs: TxnProcessors,
         pub sell_procs: TxnProcessors,
         pub wallet: Address,
+        pub max_buys_per_dev: u8,
+        pub dev_buys: Lru<Address, u32, 1000>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1546,6 +1561,9 @@ pub mod types {
         RayClmm(
             bool,
         ),
+        MaxBuysPerDev(
+            u8,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1591,6 +1609,9 @@ pub mod types {
         NoKnownQuoteRoute,
         ClmmRouteUnavailable,
         ClmmTwoHopArrayLimit,
+        SwapBudgetTooSmall,
+        InvalidRoute,
+        NoBuyRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1599,6 +1620,7 @@ pub mod types {
         Price {
             price: UD128,
             direction: Direction,
+            denomination: ::core::option::Option<QuoteKind>,
         },
         Profit {
             init_profit_perc: UD128,
@@ -1609,11 +1631,13 @@ pub mod types {
             price_perc: UD128,
             local_ath: ::core::option::Option<UD128>,
             direction: Direction,
+            denomination: ::core::option::Option<QuoteKind>,
         },
         PricePerc {
             price_perc: UD128,
             price: ::core::option::Option<UD128>,
             direction: Direction,
+            denomination: ::core::option::Option<QuoteKind>,
         },
         Mcap {
             mcap: UD128,
@@ -2064,6 +2088,7 @@ pub mod types {
             cfg_id: CtTaskId,
             config_name: ::proto_rs::alloc::string::String,
             reason: SwapFailure,
+            balance_shortfall: ::core::option::Option<BalanceShortfall>,
         },
         NonceRecovery {
             wallet: Address,
