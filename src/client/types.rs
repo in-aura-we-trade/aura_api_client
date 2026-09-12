@@ -391,6 +391,7 @@ pub mod types {
         pub max_slot_latency_buy: u8,
         pub max_slot_latency_sell: u8,
         pub wallet: Address,
+        pub quote_whitelist: CustomQuoteWhitelist,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -664,6 +665,19 @@ pub mod types {
         RayClmm(
             bool,
         ),
+        UseQuoteWhitelist(
+            bool,
+        ),
+        QuoteWhitelist(
+            ConfigPubkeys,
+        ),
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct CustomQuoteWhitelist {
+        pub enabled: bool,
+        pub addresses: ::proto_rs::alloc::vec::Vec<Address>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1294,6 +1308,7 @@ pub mod types {
         pub wallet: Address,
         pub max_buys_per_dev: u8,
         pub dev_buys: Lru<Address, u32, 1000>,
+        pub quote_whitelist: CustomQuoteWhitelist,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1563,6 +1578,12 @@ pub mod types {
         ),
         MaxBuysPerDev(
             u8,
+        ),
+        UseQuoteWhitelist(
+            bool,
+        ),
+        QuoteWhitelist(
+            ConfigPubkeys,
         ),
     }
 

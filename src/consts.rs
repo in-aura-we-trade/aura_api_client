@@ -116,6 +116,7 @@ pub const MAX_WALLETS: usize = 5;
 pub const NONCE_ACCOUNT_RENT_LAMPORTS: u64 = 1_447_680;
 pub const CT_CFG_MAX_TRACKED_WALLETS: usize = 16;
 pub const CFG_MAX_BLACKLIST: usize = 32;
+pub const CFG_MAX_QUOTE_WHITELIST: usize = 32;
 pub const CT_MAX_CFGS_PER_USER: usize = 32;
 
 pub const SNIPE_CFG_MAX_TRACKED_MINTS: usize = 16;

@@ -418,11 +418,17 @@ message CtTaskValues {
   uint32 max_slot_latency_buy = 23;
   uint32 max_slot_latency_sell = 24;
   solana.Address wallet = 25;
+  CustomQuoteWhitelist quote_whitelist = 26;
 }
 
 message CtUpdate {
   CtTaskId cfg_id = 1;
   repeated CtUpdateField updates = 2;
+}
+
+message CustomQuoteWhitelist {
+  bool enabled = 1;
+  repeated solana.Address addresses = 2;
 }
 
 message DeleteLimitOrdersResponse {
@@ -759,6 +765,7 @@ message SnipeTaskValues {
   solana.Address wallet = 25;
   uint32 max_buys_per_dev = 26;
   LruAddressuint321000 dev_buys = 27;
+  CustomQuoteWhitelist quote_whitelist = 28;
 }
 
 message SnipeUpdate {
@@ -1235,6 +1242,8 @@ message CtUpdateField {
     bool quote_custom = 85;
     bool last_trade_only = 86;
     bool ray_clmm = 87;
+    bool use_quote_whitelist = 88;
+    ConfigPubkeys quote_whitelist = 89;
   }
 }
 
@@ -1420,6 +1429,8 @@ message SnipeUpdateField {
     bool quote_custom = 84;
     bool ray_clmm = 85;
     uint32 max_buys_per_dev = 86;
+    bool use_quote_whitelist = 87;
+    ConfigPubkeys quote_whitelist = 88;
   }
 }
 
