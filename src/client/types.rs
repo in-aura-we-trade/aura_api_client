@@ -135,6 +135,12 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct ClaimCashbackRequest {
+        pub owner: Address,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct ClearAll;
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -144,6 +150,13 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct ClearLimitOrdersResponse;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct CloseEmptyTokenAccountsRequest {
+        pub owner: Address,
+        pub blacklist_quotes: bool,
+    }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -309,7 +322,7 @@ pub mod types {
         pub min_buy: u64,
         pub max_buy: u64,
         pub config_limits: bool,
-        pub buys_left: i8,
+        pub buys_left: i16,
         pub follow_buys: FollowSwaps,
         pub follow_sells: FollowSwaps,
         pub buy_migration_filter: CtMigrationFilter,
@@ -671,6 +684,9 @@ pub mod types {
         QuoteWhitelist(
             ConfigPubkeys,
         ),
+        ResetTokenBuys(
+            Pubkeys,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -768,6 +784,7 @@ pub mod types {
         pub balances: WalletBalances,
         pub accounts_state: WalletUtilAccountsInfo,
         pub wallets: ::proto_rs::alloc::vec::Vec<Address>,
+        pub cashback: ::core::option::Option<WalletCashbackUi>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1226,7 +1243,7 @@ pub mod types {
         pub buy_mintable: bool,
         pub use_mcap: bool,
         pub config_limits: bool,
-        pub buys_left: i8,
+        pub buys_left: i16,
         pub buy_mode: bool,
         pub sell_mode: bool,
         pub buy_user_nonce: UserNonceStrategy,
@@ -1584,6 +1601,12 @@ pub mod types {
         ),
         QuoteWhitelist(
             ConfigPubkeys,
+        ),
+        ResetDevBuys(
+            Pubkeys,
+        ),
+        ResetMintActions(
+            Pubkeys,
         ),
     }
 
@@ -2168,6 +2191,15 @@ pub mod types {
         pub usdc_pda: TokenBalanceSealed,
         pub usd1_pda: TokenBalanceSealed,
         pub usdt_pda: TokenBalanceSealed,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct WalletCashbackUi {
+        pub approx_net_usd: UD128,
+        pub claimable_accounts: u32,
+        pub unpriced_accounts: u32,
+        pub pending_accounts: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

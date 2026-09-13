@@ -16,6 +16,8 @@ service AuraUtilsRpc {
   rpc WrapWsol(types.WrapWsolRequest) returns (solana.Signature);
   rpc UnwrapWsol(types.UnwrapWsolRequest) returns (solana.Signature);
   rpc OpenTa(types.OpenTaRequest) returns (solana.Signature);
+  rpc CloseEmptyTokenAccounts(types.CloseEmptyTokenAccountsRequest) returns (decisol.Lamports);
+  rpc ClaimCashback(types.ClaimCashbackRequest) returns (solana.Signature);
   rpc OpenUtilAccs(solana.Address) returns (solana.Signature);
   rpc MakeWithdraw(types.MakeWithdrawReq) returns (types.MakeWithdrawResp);
   rpc CreateNonces(types.CreateNoncesReq) returns (types.CreateNoncesResp);

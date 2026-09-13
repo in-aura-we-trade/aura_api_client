@@ -262,11 +262,20 @@ message BeUserAction {
   BeAction value = 2;
 }
 
+message ClaimCashbackRequest {
+  solana.Address owner = 1;
+}
+
 message ClearAll {}
 
 message ClearLimitOrders {}
 
 message ClearLimitOrdersResponse {}
+
+message CloseEmptyTokenAccountsRequest {
+  solana.Address owner = 1;
+  bool blacklist_quotes = 2;
+}
 
 message ConfigPubkeys {
   Action act = 1;
@@ -448,6 +457,7 @@ message FetchFullWalletsInfo {
   WalletBalances balances = 2;
   WalletUtilAccountsInfo accounts_state = 3;
   repeated solana.Address wallets = 4;
+  optional WalletCashbackUi cashback = 5;
 }
 
 message FetchFullWalletsInfoReq {}
@@ -1047,6 +1057,13 @@ message WalletBalances {
   TokenBalanceRaw usdt_pda = 9;
 }
 
+message WalletCashbackUi {
+  fastnum.UD128 approx_net_usd = 1;
+  uint32 claimable_accounts = 2;
+  uint32 unpriced_accounts = 3;
+  uint32 pending_accounts = 4;
+}
+
 message WalletTaInfo {
   bool wsol_ata = 1;
   bool usdc_ata = 2;
@@ -1244,6 +1261,7 @@ message CtUpdateField {
     bool ray_clmm = 87;
     bool use_quote_whitelist = 88;
     ConfigPubkeys quote_whitelist = 89;
+    Pubkeys reset_token_buys = 90;
   }
 }
 
@@ -1431,6 +1449,8 @@ message SnipeUpdateField {
     uint32 max_buys_per_dev = 86;
     bool use_quote_whitelist = 87;
     ConfigPubkeys quote_whitelist = 88;
+    Pubkeys reset_dev_buys = 89;
+    Pubkeys reset_mint_actions = 90;
   }
 }
 
@@ -1617,3 +1637,4 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
+

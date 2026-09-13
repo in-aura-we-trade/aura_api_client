@@ -3,6 +3,8 @@ pub mod aura_utils_rpc {
     use proto_rs::proto_rpc;
     use crate::types::ApiKeyReq;
     use crate::types::ApiKeyResp;
+    use crate::types::ClaimCashbackRequest;
+    use crate::types::CloseEmptyTokenAccountsRequest;
     use crate::types::CreateNoncesReq;
     use crate::types::CreateNoncesResp;
     use crate::types::DexCu;
@@ -72,6 +74,16 @@ pub mod aura_utils_rpc {
         async fn open_ta(
             &self,
             request: ::tonic::Request<OpenTaRequest>,
+        ) -> ::core::result::Result<::tonic::Response<Signature>, ::tonic::Status>;
+
+        async fn close_empty_token_accounts(
+            &self,
+            request: ::tonic::Request<CloseEmptyTokenAccountsRequest>,
+        ) -> ::core::result::Result<::tonic::Response<Lamports>, ::tonic::Status>;
+
+        async fn claim_cashback(
+            &self,
+            request: ::tonic::Request<ClaimCashbackRequest>,
         ) -> ::core::result::Result<::tonic::Response<Signature>, ::tonic::Status>;
 
         async fn open_util_accs(

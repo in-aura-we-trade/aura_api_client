@@ -31,7 +31,7 @@ impl From<&SwapFailure> for &'static str {
                 "Config was turned off after 100 consecutive matches produced no successful action."
             }
             SwapFailure::DlmmTwoHopArrayLimit => {
-                "Insufficient DLMM liquidity within the one-bin-array limit for this two-hop swap. More bin-array accounts exceed the configured account budget. Reduce the swap amount."
+                "Insufficient DLMM liquidity within the three-bin-array limit for this two-hop swap. More bin-array accounts exceed the configured account budget. Reduce the swap amount."
             }
             SwapFailure::UnfavorableSolQuoteRate => {
                 "Swap aborted: SOL/WSOL would buy over 5% less custom quote than an equivalent USD budget, and this wallet has insufficient USD for the better route. Add the USD token used by that route (USDC, USDT or USD1), or acquire the custom quote first."
@@ -46,7 +46,7 @@ impl From<&SwapFailure> for &'static str {
                 "Swap aborted: a complete CLMM tick-array route is unavailable for this amount."
             }
             SwapFailure::ClmmTwoHopArrayLimit => {
-                "Insufficient CLMM liquidity within the two-tick-array limit for this two-hop swap. Reduce the swap amount."
+                "Insufficient CLMM liquidity within the three-tick-array limit for this two-hop swap. Reduce the swap amount."
             }
             SwapFailure::SwapBudgetTooSmall => {
                 "The swap amount is too small to cover the application fee."
@@ -102,7 +102,7 @@ impl From<&LimitOrderFailure> for &'static str {
                 "Orders were not placed because active orders already exist or the account reached its order limit."
             }
             LimitOrderFailure::DlmmTwoHopArrayLimit => {
-                "Order was deleted because the two-hop swap has insufficient DLMM liquidity within its one-bin-array account limit. Reduce the swap amount."
+                "Order was deleted because the two-hop swap has insufficient DLMM liquidity within its three-bin-array account limit. Reduce the swap amount."
             }
             LimitOrderFailure::UnfavorableSolQuoteRate => {
                 "Order was deleted because SOL/WSOL would buy over 5% less custom quote than an equivalent USD budget, and this wallet has insufficient USD for the better route. Add the USD token used by that route (USDC, USDT or USD1), or acquire the custom quote first."
@@ -117,7 +117,7 @@ impl From<&LimitOrderFailure> for &'static str {
                 "Order could not execute: a complete CLMM tick-array route is unavailable for this amount."
             }
             LimitOrderFailure::ClmmTwoHopArrayLimit => {
-                "Order could not execute: insufficient CLMM liquidity within the two-tick-array limit for this two-hop swap. Reduce the swap amount."
+                "Order could not execute: insufficient CLMM liquidity within the three-tick-array limit for this two-hop swap. Reduce the swap amount."
             }
             LimitOrderFailure::SwapBudgetTooSmall => {
                 "Order could not execute: the swap amount is too small to cover the application fee."
