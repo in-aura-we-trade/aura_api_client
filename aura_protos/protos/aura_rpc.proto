@@ -6,6 +6,8 @@ import "solana.proto";
 import "types.proto";
 
 service AuraRpc {
+  rpc SellAll(types.SellAllRequest) returns (types.SellAllResult);
+  rpc RestoreWalletMarkets(types.RestoreWalletMarketsReq) returns (types.RestoreWalletMarketsResult);
   rpc UserActivity(types.UserActionEventSub) returns (stream types.UserAction);
   rpc UserPing(types.Ping) returns (types.Pong);
   rpc Trade(types.MarketTrade) returns (types.TradeResponse);

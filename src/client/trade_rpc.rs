@@ -25,6 +25,14 @@ pub mod aura_rpc {
 
     #[proto_rpc(rpc_package = "aura_rpc", rpc_server = false, rpc_client = true, rpc_client_ctx = "UserCtxInterceptor")]
     pub trait AuraRpc {
+        async fn sell_all(
+            &self,
+            request: ::tonic::Request<crate::types::SellAllRequest>,
+        ) -> ::core::result::Result<::tonic::Response<crate::types::SellAllResult>, ::tonic::Status>;
+        async fn restore_wallet_markets(
+            &self,
+            request: ::tonic::Request<crate::types::RestoreWalletMarketsReq>,
+        ) -> ::core::result::Result<::tonic::Response<crate::types::RestoreWalletMarketsResult>, ::tonic::Status>;
         type UserActivityStream: ::tonic::codegen::tokio_stream::Stream<Item = ::core::result::Result<UserAction, ::tonic::Status>> + ::core::marker::Send;
 
         async fn user_activity(

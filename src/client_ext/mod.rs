@@ -71,6 +71,7 @@ impl TradeStateUpdate {
 }
 impl ConfirmTradeKind {
     pub fn mint(&self) -> &Address {
+        static EMPTY_BULK_MINT: Address = solana_address::address!("So11111111111111111111111111111111111111112");
         match self {
             ConfirmTradeKind::Snipe {
                 task_id: _,
@@ -82,6 +83,7 @@ impl ConfirmTradeKind {
             } => mint,
             ConfirmTradeKind::LimitOrder { token, order: _ } => token,
             ConfirmTradeKind::Swap { token, trade_ty: _ } => token,
+            ConfirmTradeKind::BulkSell { tokens, .. } => tokens.first().unwrap_or(&EMPTY_BULK_MINT),
             ConfirmTradeKind::Migration { token, trade_ty: _ } => token,
             ConfirmTradeKind::Dev {
                 token,

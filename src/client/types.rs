@@ -219,6 +219,10 @@ pub mod types {
             signer: Address,
             profit_check: ArbProfitCheck,
         },
+        BulkSell {
+            tokens: ::proto_rs::alloc::vec::Vec<Address>,
+            aura_fees: ::proto_rs::alloc::vec::Vec<Lamports>,
+        },
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -785,11 +789,39 @@ pub mod types {
         pub accounts_state: WalletUtilAccountsInfo,
         pub wallets: ::proto_rs::alloc::vec::Vec<Address>,
         pub cashback: ::core::option::Option<WalletCashbackUi>,
+        pub cleanup: ::core::option::Option<WalletCleanupUi>,
+        pub market_restore_available: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct FetchFullWalletsInfoReq;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct RestoreWalletMarketsReq;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct SellAllRequest {
+        pub wallet: Option<Address>,
+        pub sell_known_quotes: bool,
+        pub base_mints: Vec<Address>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct SellAllResult {
+        pub sells_queued: u32,
+        pub total_amount_out: decisol::D128,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct RestoreWalletMarketsResult {
+        pub attempted_mints: u32,
+        pub restored_markets: u32,
+    }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -2200,6 +2232,15 @@ pub mod types {
         pub claimable_accounts: u32,
         pub unpriced_accounts: u32,
         pub pending_accounts: u32,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct WalletCleanupUi {
+        pub protected_lamports: Lamports,
+        pub protected_accounts: u32,
+        pub all_lamports: Lamports,
+        pub all_accounts: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

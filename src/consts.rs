@@ -28,9 +28,9 @@ pub const OPEN_NONCE_CU: u32 = 10_000;
 pub const PUMP_BUY_CU: u32 = 115_000;
 pub const PUMP_SELL_CU: u32 = 95_000;
 
-pub const PUMP_BUY_V2_CU: u32 = 140_000;
+pub const PUMP_BUY_V2_CU: u32 = 170_000;
 
-pub const PUMP_SELL_V2_CU: u32 = 135_000;
+pub const PUMP_SELL_V2_CU: u32 = 150_000;
 
 pub const PUMP_AMM_BUY_CU: u32 = 150_000;
 pub const PUMP_AMM_SELL_CU: u32 = 140_000;
@@ -63,28 +63,28 @@ pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
 pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5000;
 pub const RAY_CLMM_FIRST_BUY_OFFSET: u32 = 0;
 
-pub const JITO_VALIDATORS: bool = true;
+pub const JITO_VALIDATORS: bool = false;
 pub const AURA: bool = true;
 pub const BLOXROUTE: bool = false;
-pub const NOZOMI: bool = true;
+pub const NOZOMI: bool = false;
 pub const NEXT_BLOCK: bool = false;
-pub const SLOT0: bool = true;
-pub const ASTRA: bool = true;
+pub const SLOT0: bool = false;
+pub const ASTRA: bool = false;
 pub const BLOCK_RAZOR: bool = false;
 pub const NODE1: bool = false;
-pub const HELIUS: bool = true;
-pub const STELLIUM: bool = true;
-pub const SOYAS: bool = true;
-pub const FALCON: bool = true;
+pub const HELIUS: bool = false;
+pub const STELLIUM: bool = false;
+pub const SOYAS: bool = false;
+pub const FALCON: bool = false;
 pub const RAIDEN: bool = false;
-pub const CIRCULAR: bool = true;
+pub const CIRCULAR: bool = false;
 pub const FLASHBLOCK: bool = false;
-pub const BLOCKSPRINT: bool = true;
-pub const AURA_REVERT: bool = true;
-pub const MERIDIAN: bool = true;
+pub const BLOCKSPRINT: bool = false;
+pub const AURA_REVERT: bool = false;
+pub const MERIDIAN: bool = false;
 pub const BLOCKRUSH: bool = false;
-pub const MANKA: bool = true;
-pub const LANDX: bool = true;
+pub const MANKA: bool = false;
+pub const LANDX: bool = false;
 
 pub const LIMIT_ORDER_EXP_DUR_DAYS_MAX: u64 = 14;
 pub const LIMIT_ORDER_EXP_DUR_DAYS: u64 = 7;

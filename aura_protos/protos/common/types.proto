@@ -458,9 +458,29 @@ message FetchFullWalletsInfo {
   WalletUtilAccountsInfo accounts_state = 3;
   repeated solana.Address wallets = 4;
   optional WalletCashbackUi cashback = 5;
+  optional WalletCleanupUi cleanup = 6;
+  bool market_restore_available = 7;
 }
 
 message FetchFullWalletsInfoReq {}
+
+message RestoreWalletMarketsReq {}
+
+message SellAllRequest {
+  optional solana.Address wallet = 1;
+  bool sell_known_quotes = 2;
+  repeated solana.Address base_mints = 3;
+}
+
+message SellAllResult {
+  uint32 sells_queued = 1;
+  fastnum.D128 total_amount_out = 2;
+}
+
+message RestoreWalletMarketsResult {
+  uint32 attempted_mints = 1;
+  uint32 restored_markets = 2;
+}
 
 message FetchInfo {}
 
@@ -1064,6 +1084,13 @@ message WalletCashbackUi {
   uint32 pending_accounts = 4;
 }
 
+message WalletCleanupUi {
+  decisol.Lamports protected_lamports = 1;
+  uint32 protected_accounts = 2;
+  decisol.Lamports all_lamports = 3;
+  uint32 all_accounts = 4;
+}
+
 message WalletTaInfo {
   bool wsol_ata = 1;
   bool usdc_ata = 2;
@@ -1157,6 +1184,10 @@ message ConfirmTradeKindArb {
   solana.Address signer = 2;
   ArbProfitCheck profit_check = 3;
 }
+message ConfirmTradeKindBulkSell {
+  repeated solana.Address tokens = 1;
+  repeated decisol.Lamports aura_fees = 2;
+}
 message ConfirmTradeKind {
   oneof value {
     ConfirmTradeKindSnipe snipe = 1;
@@ -1166,6 +1197,7 @@ message ConfirmTradeKind {
     ConfirmTradeKindDev dev = 5;
     ConfirmTradeKindCopytrade copytrade = 6;
     ConfirmTradeKindArb arb = 7;
+    ConfirmTradeKindBulkSell bulk_sell = 8;
   }
 }
 
@@ -1637,4 +1669,3 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
-
