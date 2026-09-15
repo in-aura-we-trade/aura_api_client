@@ -54,6 +54,32 @@ pub const RAY_CLMM_MAX_CU: u32 = 100_000;
 pub const RAY_CLMM_BUY_CU: u32 = RAY_CLMM_MAX_CU;
 pub const RAY_CLMM_SELL_CU: u32 = RAY_CLMM_MAX_CU;
 
+pub const METEORA_DBC_BUY_CU: u32 = 100_000;
+pub const METEORA_DBC_SELL_CU: u32 = 100_000;
+pub const METEORA_DAMM_V2_BUY_CU: u32 = 75_000;
+pub const METEORA_DAMM_V2_SELL_CU: u32 = 75_000;
+pub const METEORA_DBC_FIRST_BUY_OFFSET: u32 = 0;
+pub const METEORA_DAMM_V2_FIRST_BUY_OFFSET: u32 = 0;
+
+pub const fn meteora_dbc_buy_cu() -> u32 {
+    METEORA_DBC_BUY_CU
+}
+pub const fn meteora_dbc_sell_cu() -> u32 {
+    METEORA_DBC_SELL_CU
+}
+pub const fn meteora_dbc_first_buy_offset() -> u32 {
+    METEORA_DBC_FIRST_BUY_OFFSET
+}
+pub const fn meteora_damm_v2_buy_cu() -> u32 {
+    METEORA_DAMM_V2_BUY_CU
+}
+pub const fn meteora_damm_v2_sell_cu() -> u32 {
+    METEORA_DAMM_V2_SELL_CU
+}
+pub const fn meteora_damm_v2_first_buy_offset() -> u32 {
+    METEORA_DAMM_V2_FIRST_BUY_OFFSET
+}
+
 pub const TOKEN_2022_OFFSET: u32 = 0;
 pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
 pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 0;
@@ -88,7 +114,7 @@ pub const LANDX: bool = false;
 
 pub const LIMIT_ORDER_EXP_DUR_DAYS_MAX: u64 = 14;
 pub const LIMIT_ORDER_EXP_DUR_DAYS: u64 = 7;
-pub const MAX_USER_ORDERS: usize = 200;
+pub const MAX_USER_ORDERS: usize = 1000;
 pub const MIN_WITHDRAW_AMOUNT: u64 = 3_000_000;
 
 pub const SLIPPAGE_DEFAULT: UD128 = udec128!(0.2);

@@ -8,6 +8,10 @@ pub mod aura_rpc {
     use crate::types::MarketTrade;
     use crate::types::Ping;
     use crate::types::Pong;
+    use crate::types::RestoreWalletMarketsReq;
+    use crate::types::RestoreWalletMarketsResult;
+    use crate::types::SellAllRequest;
+    use crate::types::SellAllResult;
     use crate::types::TokenMeta;
     use crate::types::TokenPool;
     use crate::types::TokenPositions;
@@ -25,15 +29,17 @@ pub mod aura_rpc {
 
     #[proto_rpc(rpc_package = "aura_rpc", rpc_server = false, rpc_client = true, rpc_client_ctx = "UserCtxInterceptor")]
     pub trait AuraRpc {
+        type UserActivityStream: ::tonic::codegen::tokio_stream::Stream<Item = ::core::result::Result<UserAction, ::tonic::Status>> + ::core::marker::Send;
+
         async fn sell_all(
             &self,
-            request: ::tonic::Request<crate::types::SellAllRequest>,
-        ) -> ::core::result::Result<::tonic::Response<crate::types::SellAllResult>, ::tonic::Status>;
+            request: ::tonic::Request<SellAllRequest>,
+        ) -> ::core::result::Result<::tonic::Response<SellAllResult>, ::tonic::Status>;
+
         async fn restore_wallet_markets(
             &self,
-            request: ::tonic::Request<crate::types::RestoreWalletMarketsReq>,
-        ) -> ::core::result::Result<::tonic::Response<crate::types::RestoreWalletMarketsResult>, ::tonic::Status>;
-        type UserActivityStream: ::tonic::codegen::tokio_stream::Stream<Item = ::core::result::Result<UserAction, ::tonic::Status>> + ::core::marker::Send;
+            request: ::tonic::Request<RestoreWalletMarketsReq>,
+        ) -> ::core::result::Result<::tonic::Response<RestoreWalletMarketsResult>, ::tonic::Status>;
 
         async fn user_activity(
             &self,

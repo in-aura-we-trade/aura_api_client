@@ -52,6 +52,8 @@ enum DexType {
   RAY_LL = 4;
   METEORA_DLMM = 5;
   RAY_CLMM = 6;
+  METEORA_DBC = 7;
+  METEORA_DAMM_V2 = 8;
 }
 
 enum Direction {
@@ -248,6 +250,12 @@ message AtomicDexCU {
   uint32 ray_clmm_buy = 23;
   uint32 ray_clmm_sell = 24;
   uint32 ray_clmm_first_buy_offset = 25;
+  uint32 meteora_dbc_buy = 26;
+  uint32 meteora_dbc_sell = 27;
+  uint32 meteora_dbc_first_buy_offset = 28;
+  uint32 meteora_damm_v2_buy = 29;
+  uint32 meteora_damm_v2_sell = 30;
+  uint32 meteora_damm_v2_first_buy_offset = 31;
 }
 
 message BalanceShortfall {
@@ -389,6 +397,8 @@ message CtTaskFlags {
   bool quote_custom = 60;
   bool last_trade_only = 61;
   bool ray_clmm = 62;
+  bool meteora_dbc = 63;
+  bool meteora_damm_v2 = 64;
 }
 
 message CtTaskId {
@@ -463,24 +473,6 @@ message FetchFullWalletsInfo {
 }
 
 message FetchFullWalletsInfoReq {}
-
-message RestoreWalletMarketsReq {}
-
-message SellAllRequest {
-  optional solana.Address wallet = 1;
-  bool sell_known_quotes = 2;
-  repeated solana.Address base_mints = 3;
-}
-
-message SellAllResult {
-  uint32 sells_queued = 1;
-  fastnum.D128 total_amount_out = 2;
-}
-
-message RestoreWalletMarketsResult {
-  uint32 attempted_mints = 1;
-  uint32 restored_markets = 2;
-}
 
 message FetchInfo {}
 
@@ -679,6 +671,24 @@ message RemoveWallet {
   solana.Address new = 2;
 }
 
+message RestoreWalletMarketsReq {}
+
+message RestoreWalletMarketsResult {
+  uint32 attempted_mints = 1;
+  uint32 restored_markets = 2;
+}
+
+message SellAllRequest {
+  optional solana.Address wallet = 1;
+  bool sell_known_quotes = 2;
+  repeated solana.Address base_mints = 3;
+}
+
+message SellAllResult {
+  uint32 sells_queued = 1;
+  fastnum.D128 total_amount_out = 2;
+}
+
 message SnipeCfgIdProto {
   SnipeTaskId id = 1;
   string name = 2;
@@ -755,6 +765,8 @@ message SnipeTaskFlags {
   bool shred = 55;
   bool quote_custom = 56;
   bool ray_clmm = 57;
+  bool meteora_dbc = 58;
+  bool meteora_damm_v2 = 59;
 }
 
 message SnipeTaskId {
@@ -1184,6 +1196,7 @@ message ConfirmTradeKindArb {
   solana.Address signer = 2;
   ArbProfitCheck profit_check = 3;
 }
+
 message ConfirmTradeKindBulkSell {
   repeated solana.Address tokens = 1;
   repeated decisol.Lamports aura_fees = 2;
@@ -1294,6 +1307,8 @@ message CtUpdateField {
     bool use_quote_whitelist = 88;
     ConfigPubkeys quote_whitelist = 89;
     Pubkeys reset_token_buys = 90;
+    bool meteora_dbc = 91;
+    bool meteora_damm_v2 = 92;
   }
 }
 
@@ -1483,6 +1498,8 @@ message SnipeUpdateField {
     ConfigPubkeys quote_whitelist = 88;
     Pubkeys reset_dev_buys = 89;
     Pubkeys reset_mint_actions = 90;
+    bool meteora_dbc = 91;
+    bool meteora_damm_v2 = 92;
   }
 }
 
@@ -1669,3 +1686,4 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
+

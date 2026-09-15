@@ -5,6 +5,7 @@ pub mod types {
     use chrono::TimeDelta;
     use chrono::Utc;
     use crate::UserId;
+    use decisol::D128;
     use decisol::Lamports;
     use decisol::QuoteKind;
     use decisol::QuoteLamports;
@@ -364,6 +365,10 @@ pub mod types {
         pub quote_custom: bool,
         pub last_trade_only: bool,
         pub ray_clmm: bool,
+        #[serde(default = "crate::serde_true")]
+        pub meteora_dbc: bool,
+        #[serde(default = "crate::serde_true")]
+        pub meteora_damm_v2: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -691,6 +696,12 @@ pub mod types {
         ResetTokenBuys(
             Pubkeys,
         ),
+        MeteoraDbc(
+            bool,
+        ),
+        MeteoraDammV2(
+            bool,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -756,6 +767,18 @@ pub mod types {
         pub ray_clmm_buy: u32,
         pub ray_clmm_sell: u32,
         pub ray_clmm_first_buy_offset: u32,
+        #[serde(default = "crate::consts::meteora_dbc_buy_cu")]
+        pub meteora_dbc_buy: u32,
+        #[serde(default = "crate::consts::meteora_dbc_sell_cu")]
+        pub meteora_dbc_sell: u32,
+        #[serde(default = "crate::consts::meteora_dbc_first_buy_offset")]
+        pub meteora_dbc_first_buy_offset: u32,
+        #[serde(default = "crate::consts::meteora_damm_v2_buy_cu")]
+        pub meteora_damm_v2_buy: u32,
+        #[serde(default = "crate::consts::meteora_damm_v2_sell_cu")]
+        pub meteora_damm_v2_sell: u32,
+        #[serde(default = "crate::consts::meteora_damm_v2_first_buy_offset")]
+        pub meteora_damm_v2_first_buy_offset: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -768,6 +791,8 @@ pub mod types {
         RayLl,
         MeteoraDlmm,
         RayClmm,
+        MeteoraDbc,
+        MeteoraDammV2,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -796,32 +821,6 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct FetchFullWalletsInfoReq;
-
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-    #[proto_message]
-    pub struct RestoreWalletMarketsReq;
-
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-    #[proto_message]
-    pub struct SellAllRequest {
-        pub wallet: Option<Address>,
-        pub sell_known_quotes: bool,
-        pub base_mints: Vec<Address>,
-    }
-
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-    #[proto_message]
-    pub struct SellAllResult {
-        pub sells_queued: u32,
-        pub total_amount_out: decisol::D128,
-    }
-
-    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
-    #[proto_message]
-    pub struct RestoreWalletMarketsResult {
-        pub attempted_mints: u32,
-        pub restored_markets: u32,
-    }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -1214,6 +1213,32 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct RestoreWalletMarketsReq;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct RestoreWalletMarketsResult {
+        pub attempted_mints: u32,
+        pub restored_markets: u32,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct SellAllRequest {
+        pub wallet: ::core::option::Option<Address>,
+        pub sell_known_quotes: bool,
+        pub base_mints: ::proto_rs::alloc::vec::Vec<Address>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct SellAllResult {
+        pub sells_queued: u32,
+        pub total_amount_out: D128,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub enum SnipeBuyAmount {
         Fixed,
         PercSelf,
@@ -1311,6 +1336,10 @@ pub mod types {
         pub shred: bool,
         pub quote_custom: bool,
         pub ray_clmm: bool,
+        #[serde(default = "crate::serde_true")]
+        pub meteora_dbc: bool,
+        #[serde(default = "crate::serde_true")]
+        pub meteora_damm_v2: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -1639,6 +1668,12 @@ pub mod types {
         ),
         ResetMintActions(
             Pubkeys,
+        ),
+        MeteoraDbc(
+            bool,
+        ),
+        MeteoraDammV2(
+            bool,
         ),
     }
 

@@ -36,6 +36,12 @@ impl DexCu {
         ray_ll_first_buy_offset: RAY_LL_FIRST_BUY_OFFSET,
         meteora_dlmm_first_buy_offset: METEORA_DLMM_FIRST_BUY_OFFSET,
         ray_clmm_first_buy_offset: RAY_CLMM_FIRST_BUY_OFFSET,
+        meteora_dbc_buy: crate::consts::METEORA_DBC_BUY_CU,
+        meteora_dbc_sell: crate::consts::METEORA_DBC_SELL_CU,
+        meteora_dbc_first_buy_offset: crate::consts::METEORA_DBC_FIRST_BUY_OFFSET,
+        meteora_damm_v2_buy: crate::consts::METEORA_DAMM_V2_BUY_CU,
+        meteora_damm_v2_sell: crate::consts::METEORA_DAMM_V2_SELL_CU,
+        meteora_damm_v2_first_buy_offset: crate::consts::METEORA_DAMM_V2_FIRST_BUY_OFFSET,
         wsol: WsolSettings {
             auto_wrap: true,
             auto_unwrap: crate::types::AutoUnwrapWsol::Partial,
