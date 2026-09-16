@@ -667,6 +667,7 @@ message RawOrder {
 message ReferralInfo {
   optional string nickname = 1;
   optional string referrer_nickname = 2;
+  uint64 referrals_count = 4;
 }
 
 message RegisterUserReq {

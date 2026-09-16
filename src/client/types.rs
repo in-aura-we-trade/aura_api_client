@@ -1206,6 +1206,8 @@ pub mod types {
     pub struct ReferralInfo {
         pub nickname: ::core::option::Option<::std::string::String>,
         pub referrer_nickname: ::core::option::Option<::std::string::String>,
+        #[proto(tag = 4)]
+        pub referrals_count: u64,
     }
 
     #[derive(Debug)]
