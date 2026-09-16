@@ -55,6 +55,15 @@ impl From<&SwapFailure> for &'static str {
                 "Swap aborted: the route does not match its pool, wallet, settings or intermediate token account."
             }
             SwapFailure::NoBuyRoute => "Swap aborted: no eligible buy route is available.",
+            SwapFailure::TaxExceeded => {
+                "Swap skipped: additional route taxes exceed the configured maximum."
+            }
+            SwapFailure::TaxUnavailable => {
+                "Swap skipped: taxes for the selected route could not be calculated."
+            }
+            SwapFailure::UnfavorableRoute => {
+                "Swap skipped: the best funded route returns over 5% fewer tokens than an alternative market route for the same budget. Fund the better route or wait for prices to converge."
+            }
         }
     }
 }
@@ -127,6 +136,15 @@ impl From<&LimitOrderFailure> for &'static str {
             }
             LimitOrderFailure::NoBuyRoute => {
                 "Order could not execute: no eligible buy route is available."
+            }
+            LimitOrderFailure::TaxExceeded => {
+                "Order is waiting: additional route taxes exceed the configured maximum."
+            }
+            LimitOrderFailure::TaxUnavailable => {
+                "Order is waiting: taxes for the selected route could not be calculated."
+            }
+            LimitOrderFailure::UnfavorableRoute => {
+                "Order is waiting: the best funded route returns over 5% fewer tokens than an alternative market route for the same budget. Fund the better route or wait for prices to converge."
             }
         }
     }

@@ -2,6 +2,13 @@ use decisol::{UD128, udec128};
 
 use solana_address::{Address, address};
 
+/// Default additional route-tax ceiling (5%); None remains an explicit opt-out.
+pub const MAX_TAX_DEFAULT: UD128 = udec128!(0.05);
+
+pub const fn default_max_tax() -> Option<UD128> {
+    Some(MAX_TAX_DEFAULT)
+}
+
 pub const AURA_MIN_TIP: u64 = 1_000_000; //0.001
 pub const AURA_REVERT_MIN_TIP: u64 = 1_000_000; //0.001
 pub const AURA_REVERT_ONLY_MIN_TIP: u64 = 100_000_000; //0.1

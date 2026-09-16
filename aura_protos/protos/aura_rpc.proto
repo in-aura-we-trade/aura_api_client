@@ -16,6 +16,7 @@ service AuraRpc {
   rpc GetTokenMostLiqPool(solana.Address) returns (types.TokenPool);
   rpc GetPoolInfo(solana.Address) returns (types.TokenPool);
   rpc GetTokenMeta(solana.Address) returns (types.TokenMeta);
+  rpc GetReferralInfo(types.GetReferralInfoReq) returns (types.ReferralInfo);
   rpc GetTokenTradeStats(solana.Address) returns (types.TokenTradeState);
   rpc GetTokenPositions(types.TokenPositionsReq) returns (types.TokenPositions);
   rpc GetTokenPositionsUi(types.TokenPositionsUiReq) returns (types.TokenPositionsUi);

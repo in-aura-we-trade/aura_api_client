@@ -5,9 +5,11 @@ pub mod aura_rpc {
     use crate::types::FetchFullWalletsInfoReq;
     use crate::types::FetchInfo;
     use crate::types::FetchInfoResponse;
+    use crate::types::GetReferralInfoReq;
     use crate::types::MarketTrade;
     use crate::types::Ping;
     use crate::types::Pong;
+    use crate::types::ReferralInfo;
     use crate::types::RestoreWalletMarketsReq;
     use crate::types::RestoreWalletMarketsResult;
     use crate::types::SellAllRequest;
@@ -80,6 +82,11 @@ pub mod aura_rpc {
             &self,
             request: ::tonic::Request<Address>,
         ) -> ::core::result::Result<::tonic::Response<TokenMeta>, ::tonic::Status>;
+
+        async fn get_referral_info(
+            &self,
+            request: ::tonic::Request<GetReferralInfoReq>,
+        ) -> ::core::result::Result<::tonic::Response<ReferralInfo>, ::tonic::Status>;
 
         async fn get_token_trade_stats(
             &self,

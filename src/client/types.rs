@@ -414,6 +414,8 @@ pub mod types {
         pub max_slot_latency_sell: u8,
         pub wallet: Address,
         pub quote_whitelist: CustomQuoteWhitelist,
+        #[serde(default = "crate::consts::default_max_tax")]
+        pub max_tax: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -702,6 +704,9 @@ pub mod types {
         MeteoraDammV2(
             bool,
         ),
+        MaxTax {
+            maximum: ::core::option::Option<UD128>,
+        },
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -922,6 +927,9 @@ pub mod types {
         SwapBudgetTooSmall,
         InvalidRoute,
         NoBuyRoute,
+        TaxExceeded,
+        TaxUnavailable,
+        UnfavorableRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -995,6 +1003,8 @@ pub mod types {
         pub max_price_impact: ::core::option::Option<UD128>,
         pub limit_orders: ApiOrders,
         pub filters: TradeFilters,
+        #[serde(default = "crate::consts::default_max_tax")]
+        pub max_tax: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1187,6 +1197,8 @@ pub mod types {
         pub procs: TxnProcessors,
         pub nonce: UserNonceStrategy,
         pub slot_latency: u8,
+        #[serde(default = "crate::consts::default_max_tax")]
+        pub max_tax: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1194,7 +1206,6 @@ pub mod types {
     pub struct ReferralInfo {
         pub nickname: ::core::option::Option<::std::string::String>,
         pub referrer_nickname: ::core::option::Option<::std::string::String>,
-        pub referrals: ::proto_rs::alloc::vec::Vec<UserId>,
     }
 
     #[derive(Debug)]
@@ -1228,6 +1239,8 @@ pub mod types {
         pub wallet: ::core::option::Option<Address>,
         pub sell_known_quotes: bool,
         pub base_mints: ::proto_rs::alloc::vec::Vec<Address>,
+        #[serde(default = "crate::consts::default_max_tax")]
+        pub max_tax: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1387,6 +1400,8 @@ pub mod types {
         pub max_buys_per_dev: u8,
         pub dev_buys: Lru<Address, u32, 1000>,
         pub quote_whitelist: CustomQuoteWhitelist,
+        #[serde(default = "crate::consts::default_max_tax")]
+        pub max_tax: ::core::option::Option<UD128>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1675,6 +1690,9 @@ pub mod types {
         MeteoraDammV2(
             bool,
         ),
+        MaxTax {
+            maximum: ::core::option::Option<UD128>,
+        },
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1723,6 +1741,9 @@ pub mod types {
         SwapBudgetTooSmall,
         InvalidRoute,
         NoBuyRoute,
+        TaxExceeded,
+        TaxUnavailable,
+        UnfavorableRoute,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1810,6 +1831,7 @@ pub mod types {
         pub mint_auth: bool,
         pub freeze_auth: bool,
         pub socials: ::proto_rs::alloc::vec::Vec<Social>,
+        pub uri: ::proto_rs::alloc::string::String,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

@@ -89,6 +89,9 @@ enum LimitOrderFailure {
   SWAP_BUDGET_TOO_SMALL = 17;
   INVALID_ROUTE = 18;
   NO_BUY_ROUTE = 19;
+  TAX_EXCEEDED = 20;
+  TAX_UNAVAILABLE = 21;
+  UNFAVORABLE_ROUTE = 22;
 }
 
 enum MarketExecuteMode {
@@ -164,6 +167,9 @@ enum SwapFailure {
   SWAP_BUDGET_TOO_SMALL = 15;
   INVALID_ROUTE = 16;
   NO_BUY_ROUTE = 17;
+  TAX_EXCEEDED = 18;
+  TAX_UNAVAILABLE = 19;
+  UNFAVORABLE_ROUTE = 20;
 }
 
 enum TokenAccountKindUi {
@@ -438,6 +444,7 @@ message CtTaskValues {
   uint32 max_slot_latency_sell = 24;
   solana.Address wallet = 25;
   CustomQuoteWhitelist quote_whitelist = 26;
+  optional fastnum.UD128 max_tax = 27;
 }
 
 message CtUpdate {
@@ -585,6 +592,7 @@ message MarketTrade {
   optional fastnum.UD128 max_price_impact = 12;
   ApiOrders limit_orders = 13;
   TradeFilters filters = 14;
+  optional fastnum.UD128 max_tax = 15;
 }
 
 message OpenTaRequest {
@@ -653,12 +661,12 @@ message RawOrder {
   TxnProcessors procs = 6;
   UserNonceStrategy nonce = 7;
   uint32 slot_latency = 8;
+  optional fastnum.UD128 max_tax = 9;
 }
 
 message ReferralInfo {
   optional string nickname = 1;
   optional string referrer_nickname = 2;
-  repeated UserId referrals = 3;
 }
 
 message RegisterUserReq {
@@ -682,6 +690,7 @@ message SellAllRequest {
   optional solana.Address wallet = 1;
   bool sell_known_quotes = 2;
   repeated solana.Address base_mints = 3;
+  optional fastnum.UD128 max_tax = 4;
 }
 
 message SellAllResult {
@@ -808,6 +817,7 @@ message SnipeTaskValues {
   uint32 max_buys_per_dev = 26;
   LruAddressuint321000 dev_buys = 27;
   CustomQuoteWhitelist quote_whitelist = 28;
+  optional fastnum.UD128 max_tax = 29;
 }
 
 message SnipeUpdate {
@@ -846,6 +856,7 @@ message TokenMeta {
   bool mint_auth = 5;
   bool freeze_auth = 6;
   repeated Social socials = 7;
+  string uri = 8;
 }
 
 message TokenPool {
@@ -1214,7 +1225,9 @@ message ConfirmTradeKind {
   }
 }
 
-
+message CtUpdateFieldMaxTax {
+  optional fastnum.UD128 maximum = 1;
+}
 message CtUpdateField {
   oneof value {
     bool config_limits = 1;
@@ -1309,6 +1322,7 @@ message CtUpdateField {
     Pubkeys reset_token_buys = 90;
     bool meteora_dbc = 91;
     bool meteora_damm_v2 = 92;
+    CtUpdateFieldMaxTax max_tax = 93;
   }
 }
 
@@ -1405,7 +1419,9 @@ message ParsedTradeUi {
   }
 }
 
-
+message SnipeUpdateFieldMaxTax {
+  optional fastnum.UD128 maximum = 1;
+}
 message SnipeUpdateField {
   oneof value {
     bool buy_mode = 1;
@@ -1500,6 +1516,7 @@ message SnipeUpdateField {
     Pubkeys reset_mint_actions = 90;
     bool meteora_dbc = 91;
     bool meteora_damm_v2 = 92;
+    SnipeUpdateFieldMaxTax max_tax = 93;
   }
 }
 
