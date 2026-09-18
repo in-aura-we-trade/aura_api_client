@@ -92,6 +92,7 @@ enum LimitOrderFailure {
   TAX_EXCEEDED = 20;
   TAX_UNAVAILABLE = 21;
   UNFAVORABLE_ROUTE = 22;
+  STALE_DATA_PROTECTION = 23;
 }
 
 enum MarketExecuteMode {
@@ -170,6 +171,7 @@ enum SwapFailure {
   TAX_EXCEEDED = 18;
   TAX_UNAVAILABLE = 19;
   UNFAVORABLE_ROUTE = 20;
+  STALE_DATA_PROTECTION = 21;
 }
 
 enum TokenAccountKindUi {
@@ -289,6 +291,17 @@ message ClearLimitOrdersResponse {}
 message CloseEmptyTokenAccountsRequest {
   solana.Address owner = 1;
   bool blacklist_quotes = 2;
+}
+
+message CollectedCuStats {
+  CuFingerprint fingerprint = 1;
+  uint64 count = 2;
+  uint32 retained = 3;
+  uint32 min = 4;
+  uint32 max = 5;
+  uint32 p25 = 6;
+  uint32 p50 = 7;
+  uint32 p99 = 8;
 }
 
 message ConfigPubkeys {
@@ -452,6 +465,25 @@ message CtUpdate {
   repeated CtUpdateField updates = 2;
 }
 
+message CuFingerprint {
+  repeated CuTradeFingerprint trades = 1;
+  bool durable_nonce = 2;
+}
+
+message CuTokenProgram {
+  solana.Address program = 1;
+  optional bool tax = 2;
+}
+
+message CuTradeFingerprint {
+  CuTokenProgram base = 1;
+  CuTokenProgram quote = 2;
+  string dex = 3;
+  TradeType side = 4;
+  bool first_buy = 5;
+  uint64 instruction = 6;
+}
+
 message CustomQuoteWhitelist {
   bool enabled = 1;
   repeated solana.Address addresses = 2;
@@ -465,6 +497,11 @@ message DeleteOrders {
   solana.Address mint = 1;
   bool all = 2;
   repeated OrderId ids = 3;
+}
+
+message DexCuResponse {
+  AtomicDexCU user = 1;
+  repeated CollectedCuStats collected = 2;
 }
 
 message Done {}
@@ -1601,6 +1638,7 @@ message TokenAccountKind {
 message TradeStateUpdateLanded {
   solana.Signature signature = 1;
   TxnConfirmState state = 2;
+  optional CuFingerprint fingerprint = 3;
 }
 
 message TradeStateUpdateLost {

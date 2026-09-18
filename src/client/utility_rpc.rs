@@ -8,6 +8,7 @@ pub mod aura_utils_rpc {
     use crate::types::CreateNoncesReq;
     use crate::types::CreateNoncesResp;
     use crate::types::DexCu;
+    use crate::types::DexCuResponse;
     use crate::types::Done;
     use crate::types::GetDexCu;
     use crate::types::GetVersionReq;
@@ -114,7 +115,7 @@ pub mod aura_utils_rpc {
         async fn dex_cu_get(
             &self,
             request: ::tonic::Request<GetDexCu>,
-        ) -> ::core::result::Result<::tonic::Response<DexCu>, ::tonic::Status>;
+        ) -> ::core::result::Result<::tonic::Response<DexCuResponse>, ::tonic::Status>;
 
     }
 

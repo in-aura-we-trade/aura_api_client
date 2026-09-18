@@ -7,6 +7,9 @@ use crate::types::UserActionError;
 impl From<&SwapFailure> for &'static str {
     fn from(reason: &SwapFailure) -> Self {
         match reason {
+            SwapFailure::StaleDataProtection => {
+                "Action was attempted but not executed because stale data protection detected missing mint metadata. No transaction was sent."
+            }
             SwapFailure::DurableNonceUnavailable => {
                 "No durable nonce is available. Open a D.Nonce account or select a nonce strategy with fallback."
             }
@@ -77,6 +80,9 @@ impl Display for SwapFailure {
 impl From<&LimitOrderFailure> for &'static str {
     fn from(reason: &LimitOrderFailure) -> Self {
         match reason {
+            LimitOrderFailure::StaleDataProtection => {
+                "Order execution was attempted but not executed because stale data protection detected missing mint metadata. No transaction was sent; the order remains active."
+            }
             LimitOrderFailure::DurableNonceUnavailable => {
                 "Order was deleted because no durable nonce is available. Open a D.Nonce account or change its nonce strategy."
             }
@@ -177,7 +183,7 @@ impl Display for UserActionError {
                 reason,
             } => write!(
                 f,
-                "Snipe failed\nConfig: {task_name}\n{reason}\n\nMint: {mint}"
+                "Snipe failed\nTask: {task_name}\n{reason}\n\nMint: {mint}"
             ),
             UserActionError::Copytrade {
                 mint,

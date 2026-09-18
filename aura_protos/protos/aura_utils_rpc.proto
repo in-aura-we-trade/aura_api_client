@@ -23,5 +23,5 @@ service AuraUtilsRpc {
   rpc CreateNonces(types.CreateNoncesReq) returns (types.CreateNoncesResp);
   rpc UpdateNonces(types.UpdateNoncesReq) returns (types.UpdateNoncesResp);
   rpc DexCuSet(types.AtomicDexCU) returns (types.Done);
-  rpc DexCuGet(types.GetDexCu) returns (types.AtomicDexCU);
+  rpc DexCuGet(types.GetDexCu) returns (types.DexCuResponse);
 }

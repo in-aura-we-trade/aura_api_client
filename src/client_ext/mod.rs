@@ -55,6 +55,7 @@ impl TradeStateUpdate {
             TradeStateUpdate::Landed {
                 signature,
                 state: _,
+                ..
             } => std::slice::from_ref(signature).iter(),
             TradeStateUpdate::Lost { signatures } => signatures.iter(),
         }
@@ -64,7 +65,8 @@ impl TradeStateUpdate {
             self,
             Self::Landed {
                 signature: _,
-                state: _
+                state: _,
+                ..
             }
         )
     }

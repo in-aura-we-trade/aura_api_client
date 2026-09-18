@@ -161,6 +161,19 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct CollectedCuStats {
+        pub fingerprint: CuFingerprint,
+        pub count: u64,
+        pub retained: u32,
+        pub min: u32,
+        pub max: u32,
+        pub p25: u32,
+        pub p50: u32,
+        pub p99: u32,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct ConfigPubkeys {
         pub act: Action,
         pub pubkeys: ::proto_rs::alloc::vec::Vec<Address>,
@@ -711,6 +724,31 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct CuFingerprint {
+        pub trades: ::proto_rs::alloc::vec::Vec<CuTradeFingerprint>,
+        pub durable_nonce: bool,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct CuTokenProgram {
+        pub program: Address,
+        pub tax: ::core::option::Option<bool>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct CuTradeFingerprint {
+        pub base: CuTokenProgram,
+        pub quote: CuTokenProgram,
+        pub dex: ::proto_rs::alloc::string::String,
+        pub side: TradeType,
+        pub first_buy: bool,
+        pub instruction: u64,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct CustomQuoteWhitelist {
         pub enabled: bool,
         pub addresses: ::proto_rs::alloc::vec::Vec<Address>,
@@ -784,6 +822,13 @@ pub mod types {
         pub meteora_damm_v2_sell: u32,
         #[serde(default = "crate::consts::meteora_damm_v2_first_buy_offset")]
         pub meteora_damm_v2_first_buy_offset: u32,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct DexCuResponse {
+        pub user: DexCu,
+        pub collected: ::proto_rs::alloc::vec::Vec<CollectedCuStats>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
@@ -930,6 +975,7 @@ pub mod types {
         TaxExceeded,
         TaxUnavailable,
         UnfavorableRoute,
+        StaleDataProtection,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1746,6 +1792,7 @@ pub mod types {
         TaxExceeded,
         TaxUnavailable,
         UnfavorableRoute,
+        StaleDataProtection,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1991,6 +2038,7 @@ pub mod types {
         Landed {
             signature: Signature,
             state: TxnConfirmState,
+            fingerprint: ::core::option::Option<CuFingerprint>,
         },
         Lost {
             signatures: ::proto_rs::alloc::vec::Vec<Signature>,
