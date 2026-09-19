@@ -302,6 +302,7 @@ message CollectedCuStats {
   uint32 p25 = 6;
   uint32 p50 = 7;
   uint32 p99 = 8;
+  bool hit_limit = 9;
 }
 
 message ConfigPubkeys {
@@ -471,7 +472,7 @@ message CuFingerprint {
 }
 
 message CuTokenProgram {
-  solana.Address program = 1;
+  bool token_2022 = 3;
   optional bool tax = 2;
 }
 
@@ -888,7 +889,7 @@ message TokenLimitOrders {
 
 message TokenMeta {
   optional decisol.SolanaLamports supply = 1;
-  fastnum.UD128 tax_bps = 2;
+  optional fastnum.UD128 tax_bps = 2;
   string ticker = 3;
   string name = 4;
   bool mint_auth = 5;

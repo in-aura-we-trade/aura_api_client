@@ -32,39 +32,43 @@ pub const OPEN_TA_CU: u32 = 40_000;
 pub const OPEN_UTILS_CU: u32 = 100_000;
 pub const OPEN_NONCE_CU: u32 = 10_000;
 
-pub const PUMP_BUY_CU: u32 = 115_000;
-pub const PUMP_SELL_CU: u32 = 95_000;
+// Captured single-swap maxima + 15%, rounded up to 1,000 CU. These totals
+// cover token programs, tax flags and nonce modes together; first buys add the
+// venue offset below. Unobserved Pump v2, Ray AMM and Meteora DBC retain defaults.
+pub const PUMP_BUY_CU: u32 = 83_000; // 72,149
+pub const PUMP_SELL_CU: u32 = 81_000; // 69,726
 
 pub const PUMP_BUY_V2_CU: u32 = 170_000;
 
 pub const PUMP_SELL_V2_CU: u32 = 150_000;
 
-pub const PUMP_AMM_BUY_CU: u32 = 150_000;
-pub const PUMP_AMM_SELL_CU: u32 = 140_000;
+pub const PUMP_AMM_BUY_CU: u32 = 121_000; // 104,844
+pub const PUMP_AMM_SELL_CU: u32 = 116_000; // 100,051
 
 pub const RAY_AMM_BUY_CU: u32 = 49_000;
 pub const RAY_AMM_SELL_CU: u32 = 47_000;
 
-pub const RAY_CPMM_BUY_CU: u32 = 70_000;
-pub const RAY_CPMM_SELL_CU: u32 = 57_000;
+pub const RAY_CPMM_BUY_CU: u32 = 37_000; // 31,842
+pub const RAY_CPMM_SELL_CU: u32 = 39_000; // 33,911
 
-pub const RAY_LL_BUY_CU: u32 = 130_000;
-pub const RAY_LL_SELL_CU: u32 = 92_000;
+pub const RAY_LL_BUY_CU: u32 = 65_000; // 55,681
+pub const RAY_LL_SELL_CU: u32 = 62_000; // 53,810
 
-pub const METEORA_DLMM_BUY_CU: u32 = 100_000;
-pub const METEORA_DLMM_SELL_CU: u32 = 100_000;
+// Only first buys were captured: retain the 5k offset within the 70k total.
+pub const METEORA_DLMM_BUY_CU: u32 = 65_000;
+pub const METEORA_DLMM_SELL_CU: u32 = 53_000; // 45,747
 // Ordinary single-hop total, including router/preparation/fee overhead.
 // Mainnet 3eZuftNv... at slot 445986839 spent 48,108 CU in CLMM itself.
 // Dense tick-crossing stress cases can exceed this policy cap inside Raydium;
 // they must not inflate ordinary trade defaults.
 pub const RAY_CLMM_MAX_CU: u32 = 100_000;
-pub const RAY_CLMM_BUY_CU: u32 = RAY_CLMM_MAX_CU;
-pub const RAY_CLMM_SELL_CU: u32 = RAY_CLMM_MAX_CU;
+pub const RAY_CLMM_BUY_CU: u32 = 71_000; // 61,574 (first buys were lower)
+pub const RAY_CLMM_SELL_CU: u32 = 70_000; // 60,403
 
 pub const METEORA_DBC_BUY_CU: u32 = 100_000;
 pub const METEORA_DBC_SELL_CU: u32 = 100_000;
-pub const METEORA_DAMM_V2_BUY_CU: u32 = 75_000;
-pub const METEORA_DAMM_V2_SELL_CU: u32 = 75_000;
+pub const METEORA_DAMM_V2_BUY_CU: u32 = 25_000; // 20,954; first buy, zero offset
+pub const METEORA_DAMM_V2_SELL_CU: u32 = 21_000; // 17,536
 pub const METEORA_DBC_FIRST_BUY_OFFSET: u32 = 0;
 pub const METEORA_DAMM_V2_FIRST_BUY_OFFSET: u32 = 0;
 
@@ -88,13 +92,19 @@ pub const fn meteora_damm_v2_first_buy_offset() -> u32 {
 }
 
 pub const TOKEN_2022_OFFSET: u32 = 0;
-pub const PUMP_FIRST_BUY_OFFSET: u32 = 0;
-pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 0;
+pub const PUMP_FIRST_BUY_OFFSET: u32 = 26_000; // 94,746 -> 109k total
+pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 9_000; // 112,728 -> 130k total
 pub const RAY_AMM_FIRST_BUY_OFFSET: u32 = 0;
-pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 0;
-pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 0;
-pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5000;
+pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 13_000; // 42,636 -> 50k total
+pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 9_000; // 64,026 -> 74k total
+pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5_000; // 60,347 -> 70k total
 pub const RAY_CLMM_FIRST_BUY_OFFSET: u32 = 0;
+
+/// Subtract once for a connected two-hop swap, before the final CU cap.
+/// Minimum headroom across captured routes, retaining 15% on route maxima:
+/// DLMM sell + PumpAmm repeat buy = 53k + 121k;
+/// ceil(142,936 * 1.15) = 164,377; 9,623 rounds down to 9k.
+pub const TWO_HOP_CU_NEGATIVE_OFFSET: u32 = 9_000;
 
 pub const JITO_VALIDATORS: bool = false;
 pub const AURA: bool = true;

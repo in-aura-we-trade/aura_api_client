@@ -73,7 +73,8 @@ impl TradeStateUpdate {
 }
 impl ConfirmTradeKind {
     pub fn mint(&self) -> &Address {
-        static EMPTY_BULK_MINT: Address = solana_address::address!("So11111111111111111111111111111111111111112");
+        static EMPTY_BULK_MINT: Address =
+            solana_address::address!("So11111111111111111111111111111111111111112");
         match self {
             ConfirmTradeKind::Snipe {
                 task_id: _,

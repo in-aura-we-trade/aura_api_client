@@ -452,7 +452,11 @@ impl RawOrder {
                     mode: mode.clone(),
                 },
             },
-            Target::Price { price, direction, denomination } => {
+            Target::Price {
+                price,
+                direction,
+                denomination,
+            } => {
                 let trigger = OrderKindTrigger::price(*price, *denomination);
                 self.kind_from_direction_side(*direction, trigger)
             }
@@ -638,9 +642,16 @@ impl MarketOrdersDeduperKind {
 mod tests {
     #[test]
     fn usd_price_label_does_not_change_with_sol_rate() {
-        let price = super::OrderKindTrigger::price(decisol::udec128!(2), Some(decisol::QuoteKind::Usd));
-        assert_eq!(price.to_string_ui(decisol::udec128!(100)), price.to_string_ui(decisol::udec128!(200)));
-        assert_eq!(price.to_string_ui(decisol::UD128::NAN), price.to_string_ui(decisol::udec128!(100)));
+        let price =
+            super::OrderKindTrigger::price(decisol::udec128!(2), Some(decisol::QuoteKind::Usd));
+        assert_eq!(
+            price.to_string_ui(decisol::udec128!(100)),
+            price.to_string_ui(decisol::udec128!(200))
+        );
+        assert_eq!(
+            price.to_string_ui(decisol::UD128::NAN),
+            price.to_string_ui(decisol::udec128!(100))
+        );
     }
 
     use proto_rs::{ProtoDecoder, bytes::Bytes};

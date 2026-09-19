@@ -170,6 +170,7 @@ pub mod types {
         pub p25: u32,
         pub p50: u32,
         pub p99: u32,
+        pub hit_limit: bool,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -732,7 +733,8 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct CuTokenProgram {
-        pub program: Address,
+        #[proto(tag = 3)]
+        pub token_2022: bool,
         pub tax: ::core::option::Option<bool>,
     }
 
@@ -1874,7 +1876,7 @@ pub mod types {
     #[proto_message]
     pub struct TokenMeta {
         pub supply: ::core::option::Option<SolanaLamports>,
-        pub tax_bps: UD128,
+        pub tax_bps: ::core::option::Option<UD128>,
         pub ticker: ::proto_rs::alloc::string::String,
         pub name: ::proto_rs::alloc::string::String,
         pub mint_auth: bool,
