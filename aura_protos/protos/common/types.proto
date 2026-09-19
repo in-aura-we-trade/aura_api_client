@@ -245,25 +245,15 @@ message AtomicDexCU {
   uint32 ray_cpmm_sell = 10;
   uint32 ray_ll_buy = 11;
   uint32 ray_ll_sell = 12;
-  uint32 token_2022_offset = 13;
-  uint32 pump_first_buy_offset = 14;
   WsolSettings wsol = 15;
-  uint32 pump_amm_first_buy_offset = 16;
-  uint32 ray_amm_first_buy_offset = 17;
-  uint32 ray_cpmm_first_buy_offset = 18;
-  uint32 ray_ll_first_buy_offset = 19;
   uint32 meteora_dlmm_buy = 20;
   uint32 meteora_dlmm_sell = 21;
-  uint32 meteora_dlmm_first_buy_offset = 22;
   uint32 ray_clmm_buy = 23;
   uint32 ray_clmm_sell = 24;
-  uint32 ray_clmm_first_buy_offset = 25;
   uint32 meteora_dbc_buy = 26;
   uint32 meteora_dbc_sell = 27;
-  uint32 meteora_dbc_first_buy_offset = 28;
   uint32 meteora_damm_v2_buy = 29;
   uint32 meteora_damm_v2_sell = 30;
-  uint32 meteora_damm_v2_first_buy_offset = 31;
 }
 
 message BalanceShortfall {

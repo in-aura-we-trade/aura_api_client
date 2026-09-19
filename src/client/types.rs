@@ -787,43 +787,53 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
     #[proto_message]
     pub struct DexCu {
+        // Retired tags: 13, 14, 16..19, 22, 25, 28, 31. Never reuse.
+        #[proto(tag = 1)]
         pub pump_buy: u32,
+        #[proto(tag = 2)]
         pub pump_sell: u32,
+        #[proto(tag = 3)]
         pub pump_buy_v2: u32,
+        #[proto(tag = 4)]
         pub pump_sell_v2: u32,
+        #[proto(tag = 5)]
         pub pump_amm_buy: u32,
+        #[proto(tag = 6)]
         pub pump_amm_sell: u32,
+        #[proto(tag = 7)]
         pub ray_amm_buy: u32,
+        #[proto(tag = 8)]
         pub ray_amm_sell: u32,
+        #[proto(tag = 9)]
         pub ray_cpmm_buy: u32,
+        #[proto(tag = 10)]
         pub ray_cpmm_sell: u32,
+        #[proto(tag = 11)]
         pub ray_ll_buy: u32,
+        #[proto(tag = 12)]
         pub ray_ll_sell: u32,
-        pub token_2022_offset: u32,
-        pub pump_first_buy_offset: u32,
+        #[proto(tag = 15)]
         pub wsol: WsolSettings,
-        pub pump_amm_first_buy_offset: u32,
-        pub ray_amm_first_buy_offset: u32,
-        pub ray_cpmm_first_buy_offset: u32,
-        pub ray_ll_first_buy_offset: u32,
+        #[proto(tag = 20)]
         pub meteora_dlmm_buy: u32,
+        #[proto(tag = 21)]
         pub meteora_dlmm_sell: u32,
-        pub meteora_dlmm_first_buy_offset: u32,
+        #[proto(tag = 23)]
         pub ray_clmm_buy: u32,
+        #[proto(tag = 24)]
         pub ray_clmm_sell: u32,
-        pub ray_clmm_first_buy_offset: u32,
         #[serde(default = "crate::consts::meteora_dbc_buy_cu")]
+        #[proto(tag = 26)]
         pub meteora_dbc_buy: u32,
         #[serde(default = "crate::consts::meteora_dbc_sell_cu")]
+        #[proto(tag = 27)]
         pub meteora_dbc_sell: u32,
-        #[serde(default = "crate::consts::meteora_dbc_first_buy_offset")]
-        pub meteora_dbc_first_buy_offset: u32,
         #[serde(default = "crate::consts::meteora_damm_v2_buy_cu")]
+        #[proto(tag = 29)]
         pub meteora_damm_v2_buy: u32,
         #[serde(default = "crate::consts::meteora_damm_v2_sell_cu")]
+        #[proto(tag = 30)]
         pub meteora_damm_v2_sell: u32,
-        #[serde(default = "crate::consts::meteora_damm_v2_first_buy_offset")]
-        pub meteora_damm_v2_first_buy_offset: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

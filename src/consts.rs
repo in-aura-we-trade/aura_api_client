@@ -32,9 +32,10 @@ pub const OPEN_TA_CU: u32 = 40_000;
 pub const OPEN_UTILS_CU: u32 = 100_000;
 pub const OPEN_NONCE_CU: u32 = 10_000;
 
-// Captured single-swap maxima + 15%, rounded up to 1,000 CU. These totals
-// cover token programs, tax flags and nonce modes together; first buys add the
-// venue offset below. Unobserved Pump v2, Ray AMM and Meteora DBC retain defaults.
+// High-level fallback/user settings, originally seeded from captured maxima
+// plus 15%. Token-program, tax and first-account creation costs are now private
+// project_us policy; profiled CLMM/DLMM paths replace the default component.
+// Unobserved Pump v2, Ray AMM and Meteora DBC retain their fallback defaults.
 pub const PUMP_BUY_CU: u32 = 83_000; // 72,149
 pub const PUMP_SELL_CU: u32 = 81_000; // 69,726
 
@@ -54,7 +55,7 @@ pub const RAY_CPMM_SELL_CU: u32 = 39_000; // 33,911
 pub const RAY_LL_BUY_CU: u32 = 65_000; // 55,681
 pub const RAY_LL_SELL_CU: u32 = 62_000; // 53,810
 
-// Only first buys were captured: retain the 5k offset within the 70k total.
+// Fallback only; the private work model accounts for bins and account creation.
 pub const METEORA_DLMM_BUY_CU: u32 = 65_000;
 pub const METEORA_DLMM_SELL_CU: u32 = 53_000; // 45,747
 // Ordinary single-hop total, including router/preparation/fee overhead.
@@ -67,10 +68,8 @@ pub const RAY_CLMM_SELL_CU: u32 = 70_000; // 60,403
 
 pub const METEORA_DBC_BUY_CU: u32 = 100_000;
 pub const METEORA_DBC_SELL_CU: u32 = 100_000;
-pub const METEORA_DAMM_V2_BUY_CU: u32 = 25_000; // 20,954; first buy, zero offset
+pub const METEORA_DAMM_V2_BUY_CU: u32 = 25_000;
 pub const METEORA_DAMM_V2_SELL_CU: u32 = 21_000; // 17,536
-pub const METEORA_DBC_FIRST_BUY_OFFSET: u32 = 0;
-pub const METEORA_DAMM_V2_FIRST_BUY_OFFSET: u32 = 0;
 
 pub const fn meteora_dbc_buy_cu() -> u32 {
     METEORA_DBC_BUY_CU
@@ -78,27 +77,12 @@ pub const fn meteora_dbc_buy_cu() -> u32 {
 pub const fn meteora_dbc_sell_cu() -> u32 {
     METEORA_DBC_SELL_CU
 }
-pub const fn meteora_dbc_first_buy_offset() -> u32 {
-    METEORA_DBC_FIRST_BUY_OFFSET
-}
 pub const fn meteora_damm_v2_buy_cu() -> u32 {
     METEORA_DAMM_V2_BUY_CU
 }
 pub const fn meteora_damm_v2_sell_cu() -> u32 {
     METEORA_DAMM_V2_SELL_CU
 }
-pub const fn meteora_damm_v2_first_buy_offset() -> u32 {
-    METEORA_DAMM_V2_FIRST_BUY_OFFSET
-}
-
-pub const TOKEN_2022_OFFSET: u32 = 0;
-pub const PUMP_FIRST_BUY_OFFSET: u32 = 26_000; // 94,746 -> 109k total
-pub const PUMP_AMM_FIRST_BUY_OFFSET: u32 = 9_000; // 112,728 -> 130k total
-pub const RAY_AMM_FIRST_BUY_OFFSET: u32 = 0;
-pub const RAY_CPMM_FIRST_BUY_OFFSET: u32 = 13_000; // 42,636 -> 50k total
-pub const RAY_LL_FIRST_BUY_OFFSET: u32 = 9_000; // 64,026 -> 74k total
-pub const METEORA_DLMM_FIRST_BUY_OFFSET: u32 = 5_000; // 60,347 -> 70k total
-pub const RAY_CLMM_FIRST_BUY_OFFSET: u32 = 0;
 
 /// Subtract once for a connected two-hop swap, before the final CU cap.
 /// Minimum headroom across captured routes, retaining 15% on route maxima:
@@ -219,24 +203,6 @@ pub const fn pump_buy_v2_cu() -> u32 {
 pub const fn pump_sell_v2_cu() -> u32 {
     PUMP_SELL_V2_CU
 }
-pub const fn token_2022_offset() -> u32 {
-    TOKEN_2022_OFFSET
-}
-pub const fn pump_first_buy_offset() -> u32 {
-    PUMP_FIRST_BUY_OFFSET
-}
-pub const fn pump_amm_first_buy_offset() -> u32 {
-    PUMP_AMM_FIRST_BUY_OFFSET
-}
-pub const fn ray_amm_first_buy_offset() -> u32 {
-    RAY_AMM_FIRST_BUY_OFFSET
-}
-pub const fn ray_cpmm_first_buy_offset() -> u32 {
-    RAY_CPMM_FIRST_BUY_OFFSET
-}
-pub const fn ray_ll_first_buy_offset() -> u32 {
-    RAY_LL_FIRST_BUY_OFFSET
-}
 pub const fn meteora_dlmm_buy_cu() -> u32 {
     METEORA_DLMM_BUY_CU
 }
@@ -248,10 +214,4 @@ pub const fn meteora_dlmm_sell_cu() -> u32 {
 }
 pub const fn ray_clmm_sell_cu() -> u32 {
     RAY_CLMM_SELL_CU
-}
-pub const fn meteora_dlmm_first_buy_offset() -> u32 {
-    METEORA_DLMM_FIRST_BUY_OFFSET
-}
-pub const fn ray_clmm_first_buy_offset() -> u32 {
-    RAY_CLMM_FIRST_BUY_OFFSET
 }
