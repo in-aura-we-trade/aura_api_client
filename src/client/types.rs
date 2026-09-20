@@ -170,7 +170,9 @@ pub mod types {
         pub p25: u32,
         pub p50: u32,
         pub p99: u32,
-        pub hit_limit: bool,
+        #[proto(tag = 11)]
+        pub hit_limit: ::core::option::Option<Signature>,
+        #[proto(tag = 10)]
         pub efficiency: ::core::option::Option<CuEfficiencyStats>,
     }
 

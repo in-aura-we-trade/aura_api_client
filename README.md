@@ -54,6 +54,25 @@ This crate contains the generated/common Rust layer used to talk to Aura service
 
 Package name: `aura_api_client`
 
+## Palantir indexing client
+
+The indexing API is separate from the trading client and opt-in:
+
+```toml
+aura_api_client = { git = "https://github.com/in-aura-we-trade/aura_api_client", default-features = false, features = ["palantir"] }
+```
+
+Use `aura_api_client::palantir::{PalantirRpcClient, GetMint, SubscribeTrades}`.
+Messages are also available under `palantir::types`. Shared types such as
+`DexType`, `TradeType`, `MigrationStatus`, and `ProcKind` are re-exported from
+`crate::types` at `palantir`'s root and under `palantir::common`; no duplicate
+Rust definitions or conversions are needed. The feature enables shared
+`api-types`, but not the trading RPC clients. Enable `palantir` alongside
+the default features when both indexing and trading clients are needed.
+Connect to your deployed Palantir gRPC endpoint; authentication uses the
+`x-api-key` metadata header with a Palantir API key (not a trading API key).
+
+
 ## Services
 
 The public client groups the API into five service clients:

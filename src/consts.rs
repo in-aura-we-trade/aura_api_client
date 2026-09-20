@@ -44,7 +44,7 @@ pub const PUMP_BUY_V2_CU: u32 = 170_000;
 pub const PUMP_SELL_V2_CU: u32 = 150_000;
 
 pub const PUMP_AMM_BUY_CU: u32 = 121_000; // 104,844
-pub const PUMP_AMM_SELL_CU: u32 = 116_000; // 100,051
+pub const PUMP_AMM_SELL_CU: u32 = 140_000; // 120,214 exhausted; reserve >15% before token/fee overhead.
 
 pub const RAY_AMM_BUY_CU: u32 = 49_000;
 pub const RAY_AMM_SELL_CU: u32 = 47_000;
@@ -64,12 +64,12 @@ pub const METEORA_DLMM_SELL_CU: u32 = 53_000; // 45,747
 // they must not inflate ordinary trade defaults.
 pub const RAY_CLMM_MAX_CU: u32 = 100_000;
 pub const RAY_CLMM_BUY_CU: u32 = 71_000; // 61,574 (first buys were lower)
-pub const RAY_CLMM_SELL_CU: u32 = 70_000; // 60,403
+pub const RAY_CLMM_SELL_CU: u32 = 80_000; // 60,403 exhausted; profiled paths also need private model headroom.
 
 pub const METEORA_DBC_BUY_CU: u32 = 100_000;
 pub const METEORA_DBC_SELL_CU: u32 = 100_000;
 pub const METEORA_DAMM_V2_BUY_CU: u32 = 25_000;
-pub const METEORA_DAMM_V2_SELL_CU: u32 = 21_000; // 17,536
+pub const METEORA_DAMM_V2_SELL_CU: u32 = 28_000; // Taxed sell exhausted at 26,726; add private token/tax overhead.
 
 pub const fn meteora_dbc_buy_cu() -> u32 {
     METEORA_DBC_BUY_CU

@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 chrono = { version = "0.4" }
 fastnum = { version = "0.7.4", optional = true }
-solana-address = { version = "2" }
+solana-address = { version = "2", features = ["decode"] }
 solana-instruction-error = { version = "2", optional = true }
 solana-keypair = { version = "3", optional = true }
 solana-signature = { version = "3" }
@@ -27,6 +27,14 @@ tonic = { version = "0.14.6", optional = true, default-features = false, feature
 
 [features]
 default = ["client"]
+# Indexing RPC client reuses API types without enabling the trading RPC clients.
+palantir = [
+  "api-types",
+  "dep:tonic",
+  "proto_rs/tonic-transport",
+  "serde/rc",
+  "tonic/transport"
+]
 build-schemas = [
   "decisol/build-schemas",
   "dep:inventory",

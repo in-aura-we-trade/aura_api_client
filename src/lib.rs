@@ -1,3 +1,6 @@
+#[cfg(feature = "palantir")]
+pub mod palantir;
+
 #[cfg(feature = "api-types")]
 pub mod client;
 #[cfg(feature = "api-types")]
