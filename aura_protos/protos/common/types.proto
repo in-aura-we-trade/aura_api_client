@@ -903,6 +903,7 @@ message TokenPool {
   fastnum.UD128 liquidity_quote = 12;
   optional QuoteConversion quote_conversion = 13;
   optional string quote_symbol = 14;
+  optional solana.Address requested_mint = 15;
 }
 
 message TokenPosition {
@@ -934,6 +935,7 @@ message TokenPositionsUiReq {
 message TokenStatus {
   TokenPool most_liq_pool = 1;
   TokenMeta token_meta = 2;
+  optional solana.Address requested_mint = 3;
 }
 
 message TokenTradeState {
@@ -1697,12 +1699,14 @@ message UserAction {
 message UserActionErrorSwap {
   solana.Address mint = 1;
   SwapFailure reason = 2;
+  optional BalanceShortfall alternative_route = 3;
 }
 
 message UserActionErrorLimitOrder {
   solana.Address mint = 1;
   optional OrderId order_id = 2;
   LimitOrderFailure reason = 3;
+  optional BalanceShortfall alternative_route = 4;
 }
 
 message UserActionErrorSnipe {
@@ -1710,6 +1714,7 @@ message UserActionErrorSnipe {
   SnipeTaskId task_id = 2;
   string task_name = 3;
   SwapFailure reason = 4;
+  optional BalanceShortfall alternative_route = 5;
 }
 
 message UserActionErrorCopytrade {
@@ -1718,6 +1723,7 @@ message UserActionErrorCopytrade {
   string config_name = 3;
   SwapFailure reason = 4;
   optional BalanceShortfall balance_shortfall = 5;
+  optional BalanceShortfall alternative_route = 6;
 }
 
 message UserActionErrorNonceRecovery {

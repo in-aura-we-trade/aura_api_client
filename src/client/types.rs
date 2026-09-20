@@ -787,30 +787,17 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy)]
     #[proto_message]
     pub struct DexCu {
-        // Retired tags: 13, 14, 16..19, 22, 25, 28, 31. Never reuse.
-        #[proto(tag = 1)]
         pub pump_buy: u32,
-        #[proto(tag = 2)]
         pub pump_sell: u32,
-        #[proto(tag = 3)]
         pub pump_buy_v2: u32,
-        #[proto(tag = 4)]
         pub pump_sell_v2: u32,
-        #[proto(tag = 5)]
         pub pump_amm_buy: u32,
-        #[proto(tag = 6)]
         pub pump_amm_sell: u32,
-        #[proto(tag = 7)]
         pub ray_amm_buy: u32,
-        #[proto(tag = 8)]
         pub ray_amm_sell: u32,
-        #[proto(tag = 9)]
         pub ray_cpmm_buy: u32,
-        #[proto(tag = 10)]
         pub ray_cpmm_sell: u32,
-        #[proto(tag = 11)]
         pub ray_ll_buy: u32,
-        #[proto(tag = 12)]
         pub ray_ll_sell: u32,
         #[proto(tag = 15)]
         pub wsol: WsolSettings,
@@ -1912,6 +1899,7 @@ pub mod types {
         pub liquidity_quote: UD128,
         pub quote_conversion: ::core::option::Option<QuoteConversion>,
         pub quote_symbol: ::core::option::Option<::std::string::String>,
+        pub requested_mint: ::core::option::Option<Address>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1955,6 +1943,7 @@ pub mod types {
     pub struct TokenStatus {
         pub most_liq_pool: TokenPool,
         pub token_meta: TokenMeta,
+        pub requested_mint: ::core::option::Option<Address>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -2266,17 +2255,20 @@ pub mod types {
         Swap {
             mint: Address,
             reason: SwapFailure,
+            alternative_route: ::core::option::Option<BalanceShortfall>,
         },
         LimitOrder {
             mint: Address,
             order_id: ::core::option::Option<OrderId>,
             reason: LimitOrderFailure,
+            alternative_route: ::core::option::Option<BalanceShortfall>,
         },
         Snipe {
             mint: Address,
             task_id: SnipeTaskId,
             task_name: ::proto_rs::alloc::string::String,
             reason: SwapFailure,
+            alternative_route: ::core::option::Option<BalanceShortfall>,
         },
         Copytrade {
             mint: Address,
@@ -2284,6 +2276,7 @@ pub mod types {
             config_name: ::proto_rs::alloc::string::String,
             reason: SwapFailure,
             balance_shortfall: ::core::option::Option<BalanceShortfall>,
+            alternative_route: ::core::option::Option<BalanceShortfall>,
         },
         NonceRecovery {
             wallet: Address,

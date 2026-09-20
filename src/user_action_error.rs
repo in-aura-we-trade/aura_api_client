@@ -165,8 +165,14 @@ impl Display for LimitOrderFailure {
 impl Display for UserActionError {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            UserActionError::Swap { mint, reason } => {
-                write!(f, "Swap failed\n{reason}\n\nMint: {mint}")
+            UserActionError::Swap {
+                mint,
+                reason,
+                alternative_route,
+            } => {
+                write!(f, "Swap failed\n{reason}")?;
+                format_alternative(f, alternative_route.as_ref())?;
+                write!(f, "\n\nMint: {mint}")
             }
             UserActionError::NonceRecovery { wallet, message } => {
                 write!(f, "Durable nonce setup\n{message}\n\nWallet: {wallet}")
@@ -175,27 +181,36 @@ impl Display for UserActionError {
                 mint,
                 order_id: _,
                 reason,
-            } => write!(f, "Limit order stopped\n{reason}\n\nMint: {mint}"),
+                alternative_route,
+            } => {
+                write!(f, "Limit order stopped\n{reason}")?;
+                format_alternative(f, alternative_route.as_ref())?;
+                write!(f, "\n\nMint: {mint}")
+            }
             UserActionError::Snipe {
                 mint,
                 task_id: _,
                 task_name,
                 reason,
-            } => write!(
-                f,
-                "Snipe failed\nTask: {task_name}\n{reason}\n\nMint: {mint}"
-            ),
+                alternative_route,
+            } => {
+                write!(f, "Snipe failed\nTask: {task_name}\n{reason}")?;
+                format_alternative(f, alternative_route.as_ref())?;
+                write!(f, "\n\nMint: {mint}")
+            }
             UserActionError::Copytrade {
                 mint,
                 cfg_id: _,
                 config_name,
                 reason,
                 balance_shortfall,
+                alternative_route,
             } => {
                 write!(f, "Copytrade failed\nConfig: {config_name}\n{reason}")?;
                 if let Some(balance) = balance_shortfall {
                     write!(f, "\n{balance}")?;
                 }
+                format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")
             }
         }
@@ -222,6 +237,24 @@ impl Display for crate::types::BalanceShortfall {
         }
         Ok(())
     }
+}
+
+fn format_alternative(
+    f: &mut core::fmt::Formatter<'_>,
+    details: Option<&crate::types::BalanceShortfall>,
+) -> core::fmt::Result {
+    if let Some(details) = details {
+        write!(f, "\nAlternative route — {details}.")?;
+        if !details.native_only
+            && details.quote_mint.to_string() == "So11111111111111111111111111111111111111112"
+        {
+            f.write_str(" SOL/WSOL are one quote balance when auto-wrap is enabled.")?;
+        }
+        f.write_str(
+            " Required is the total quote budget, not an additional deposit; keep native SOL for transaction fees.",
+        )?;
+    }
+    Ok(())
 }
 
 impl From<&UserActionError> for String {
