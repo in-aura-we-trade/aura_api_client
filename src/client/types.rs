@@ -1957,7 +1957,6 @@ pub mod types {
     pub struct TokenStatus {
         pub most_liq_pool: TokenPool,
         pub token_meta: TokenMeta,
-        pub requested_mint: ::core::option::Option<Address>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

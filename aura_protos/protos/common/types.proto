@@ -947,7 +947,6 @@ message TokenPositionsUiReq {
 message TokenStatus {
   TokenPool most_liq_pool = 1;
   TokenMeta token_meta = 2;
-  optional solana.Address requested_mint = 3;
 }
 
 message TokenTradeState {
@@ -1751,4 +1750,3 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
-
