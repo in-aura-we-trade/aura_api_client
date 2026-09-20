@@ -293,6 +293,7 @@ message CollectedCuStats {
   uint32 p50 = 7;
   uint32 p99 = 8;
   bool hit_limit = 9;
+  optional CuEfficiencyStats efficiency = 10;
 }
 
 message ConfigPubkeys {
@@ -454,6 +455,17 @@ message CtTaskValues {
 message CtUpdate {
   CtTaskId cfg_id = 1;
   repeated CtUpdateField updates = 2;
+}
+
+message CuEfficiencyStats {
+  uint64 count = 1;
+  uint32 retained = 2;
+  double p25 = 3;
+  double p50 = 4;
+  double p90 = 5;
+  double p99 = 6;
+  double min = 7;
+  double max = 8;
 }
 
 message CuFingerprint {

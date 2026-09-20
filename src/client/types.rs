@@ -171,6 +171,7 @@ pub mod types {
         pub p50: u32,
         pub p99: u32,
         pub hit_limit: bool,
+        pub efficiency: ::core::option::Option<CuEfficiencyStats>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -721,6 +722,19 @@ pub mod types {
         MaxTax {
             maximum: ::core::option::Option<UD128>,
         },
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct CuEfficiencyStats {
+        pub count: u64,
+        pub retained: u32,
+        pub p25: f64,
+        pub p50: f64,
+        pub p90: f64,
+        pub p99: f64,
+        pub min: f64,
+        pub max: f64,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
