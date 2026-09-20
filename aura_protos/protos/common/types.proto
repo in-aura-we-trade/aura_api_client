@@ -676,7 +676,6 @@ message QuoteConversion {
   solana.Address denomination_mint = 1;
   fastnum.UD128 rate = 2;
   optional solana.Address valuation_pool = 3;
-  uint64 observed_at_ms = 4;
 }
 
 message QuoteState {
@@ -915,7 +914,6 @@ message TokenPool {
   fastnum.UD128 liquidity_quote = 12;
   optional QuoteConversion quote_conversion = 13;
   optional string quote_symbol = 14;
-  optional solana.Address requested_mint = 15;
 }
 
 message TokenPosition {

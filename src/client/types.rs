@@ -1227,7 +1227,6 @@ pub mod types {
         pub denomination_mint: Address,
         pub rate: UD128,
         pub valuation_pool: ::core::option::Option<Address>,
-        pub observed_at_ms: u64,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1913,7 +1912,6 @@ pub mod types {
         pub liquidity_quote: UD128,
         pub quote_conversion: ::core::option::Option<QuoteConversion>,
         pub quote_symbol: ::core::option::Option<::std::string::String>,
-        pub requested_mint: ::core::option::Option<Address>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
