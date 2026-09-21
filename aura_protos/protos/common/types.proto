@@ -1709,6 +1709,7 @@ message UserActionErrorSwap {
   solana.Address mint = 1;
   SwapFailure reason = 2;
   optional BalanceShortfall alternative_route = 3;
+  optional string details = 4;
 }
 
 message UserActionErrorLimitOrder {
@@ -1716,6 +1717,7 @@ message UserActionErrorLimitOrder {
   optional OrderId order_id = 2;
   LimitOrderFailure reason = 3;
   optional BalanceShortfall alternative_route = 4;
+  optional string details = 5;
 }
 
 message UserActionErrorSnipe {
@@ -1724,6 +1726,7 @@ message UserActionErrorSnipe {
   string task_name = 3;
   SwapFailure reason = 4;
   optional BalanceShortfall alternative_route = 5;
+  optional string details = 6;
 }
 
 message UserActionErrorCopytrade {
@@ -1733,7 +1736,7 @@ message UserActionErrorCopytrade {
   SwapFailure reason = 4;
   optional BalanceShortfall balance_shortfall = 5;
   optional BalanceShortfall alternative_route = 6;
-  optional string tax_details = 7;
+  optional string details = 7;
 }
 
 message UserActionErrorNonceRecovery {

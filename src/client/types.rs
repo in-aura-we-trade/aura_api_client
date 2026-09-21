@@ -2268,12 +2268,14 @@ pub mod types {
             mint: Address,
             reason: SwapFailure,
             alternative_route: ::core::option::Option<BalanceShortfall>,
+            details: ::core::option::Option<::std::string::String>,
         },
         LimitOrder {
             mint: Address,
             order_id: ::core::option::Option<OrderId>,
             reason: LimitOrderFailure,
             alternative_route: ::core::option::Option<BalanceShortfall>,
+            details: ::core::option::Option<::std::string::String>,
         },
         Snipe {
             mint: Address,
@@ -2281,6 +2283,7 @@ pub mod types {
             task_name: ::proto_rs::alloc::string::String,
             reason: SwapFailure,
             alternative_route: ::core::option::Option<BalanceShortfall>,
+            details: ::core::option::Option<::std::string::String>,
         },
         Copytrade {
             mint: Address,
@@ -2289,7 +2292,7 @@ pub mod types {
             reason: SwapFailure,
             balance_shortfall: ::core::option::Option<BalanceShortfall>,
             alternative_route: ::core::option::Option<BalanceShortfall>,
-            tax_details: ::core::option::Option<::std::string::String>,
+            details: ::core::option::Option<::std::string::String>,
         },
         NonceRecovery {
             wallet: Address,

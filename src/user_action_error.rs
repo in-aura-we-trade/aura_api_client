@@ -169,8 +169,10 @@ impl Display for UserActionError {
                 mint,
                 reason,
                 alternative_route,
+                details,
             } => {
                 write!(f, "Swap failed\n{reason}")?;
+                format_details(f, details.as_deref())?;
                 format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")
             }
@@ -182,8 +184,10 @@ impl Display for UserActionError {
                 order_id: _,
                 reason,
                 alternative_route,
+                details,
             } => {
                 write!(f, "Limit order stopped\n{reason}")?;
+                format_details(f, details.as_deref())?;
                 format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")
             }
@@ -193,8 +197,10 @@ impl Display for UserActionError {
                 task_name,
                 reason,
                 alternative_route,
+                details,
             } => {
                 write!(f, "Snipe failed\nTask: {task_name}\n{reason}")?;
+                format_details(f, details.as_deref())?;
                 format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")
             }
@@ -205,15 +211,13 @@ impl Display for UserActionError {
                 reason,
                 balance_shortfall,
                 alternative_route,
-                tax_details,
+                details,
             } => {
                 write!(f, "Copytrade failed\nConfig: {config_name}\n{reason}")?;
                 if let Some(balance) = balance_shortfall {
                     write!(f, "\n{balance}")?;
                 }
-                if let Some(details) = tax_details {
-                    write!(f, "\n{details}")?;
-                }
+                format_details(f, details.as_deref())?;
                 format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")
             }
@@ -241,6 +245,13 @@ impl Display for crate::types::BalanceShortfall {
         }
         Ok(())
     }
+}
+
+fn format_details(f: &mut core::fmt::Formatter<'_>, details: Option<&str>) -> core::fmt::Result {
+    if let Some(details) = details {
+        write!(f, "\n{details}")?;
+    }
+    Ok(())
 }
 
 fn format_alternative(
