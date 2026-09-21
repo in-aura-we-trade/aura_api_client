@@ -1,0 +1,180 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package decisol;
+
+enum QuoteKind {
+  QUOTEKIND_USD = 0;
+  QUOTEKIND_SOL = 1;
+}
+
+enum QuoteLamportsKind {
+  QUOTELAMPORTSKIND_LAMPORTS = 0;
+  QUOTELAMPORTSKIND_WSOL = 1;
+  QUOTELAMPORTSKIND_USDC = 2;
+  QUOTELAMPORTSKIND_USD1 = 3;
+  QUOTELAMPORTSKIND_USDT = 4;
+}
+
+enum SolanaLamportsKind {
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS0 = 0;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS1 = 1;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS2 = 2;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS3 = 3;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS4 = 4;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS5 = 5;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS6 = 6;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS7 = 7;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS8 = 8;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS9 = 9;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS10 = 10;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS11 = 11;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS12 = 12;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS13 = 13;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS14 = 14;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS15 = 15;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS16 = 16;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS17 = 17;
+  SOLANALAMPORTSKIND_TOKEN_LAMPORTS18 = 18;
+  SOLANALAMPORTSKIND_LAMPORTS = 19;
+  SOLANALAMPORTSKIND_WSOL = 20;
+  SOLANALAMPORTSKIND_USDC = 21;
+  SOLANALAMPORTSKIND_USD1 = 22;
+  SOLANALAMPORTSKIND_USDT = 23;
+}
+
+enum TokenLamportsKind {
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS0 = 0;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS1 = 1;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS2 = 2;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS3 = 3;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS4 = 4;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS5 = 5;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS6 = 6;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS7 = 7;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS8 = 8;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS9 = 9;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS10 = 10;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS11 = 11;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS12 = 12;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS13 = 13;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS14 = 14;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS15 = 15;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS16 = 16;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS17 = 17;
+  TOKENLAMPORTSKIND_TOKEN_LAMPORTS18 = 18;
+}
+
+message Lamports {
+  uint64 field_0 = 1;
+}
+
+message QuoteLamports {
+  uint64 amount = 1;
+  QuoteLamportsKind kind = 2;
+}
+
+message Sol {
+  uint64 field_0 = 1;
+}
+
+message SolanaLamports {
+  uint64 amount = 1;
+  SolanaLamportsKind kind = 2;
+}
+
+message TokenLamports0 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports1 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports10 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports11 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports12 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports13 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports14 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports15 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports16 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports17 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports18 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports2 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports3 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports4 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports5 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports6 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports7 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports8 {
+  uint64 field_0 = 1;
+}
+
+message TokenLamports9 {
+  uint64 field_0 = 1;
+}
+
+message Usd {
+  uint64 field_0 = 1;
+}
+
+message Usd1 {
+  uint64 field_0 = 1;
+}
+
+message Usdc {
+  uint64 field_0 = 1;
+}
+
+message Usdt {
+  uint64 field_0 = 1;
+}
+
+message Wsol {
+  uint64 field_0 = 1;
+}
+

@@ -1,0 +1,185 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package palantir;
+
+import "decisol.proto";
+import "fastnum.proto";
+import "solana.proto";
+import "types.proto";
+
+message ApiKey {
+  solana.Address key = 1;
+  uint32 requests_per_second = 2;
+  uint32 burst = 3;
+  uint32 max_streams = 4;
+  uint64 expires_at_ms = 5;
+  bool enabled = 6;
+}
+
+message Ath {
+  fastnum.UD128 price_sol = 1;
+  uint64 slot = 2;
+  solana.Signature signature = 3;
+}
+
+message Candle {
+  uint64 start_ms = 1;
+  fastnum.UD128 open = 2;
+  fastnum.UD128 high = 3;
+  fastnum.UD128 low = 4;
+  fastnum.UD128 close = 5;
+  fastnum.UD128 volume_sol = 6;
+  fastnum.UD128 base_volume = 7;
+  uint64 trade_count = 8;
+  uint64 unpriced_trade_count = 9;
+}
+
+message Candles {
+  repeated Candle candles = 1;
+}
+
+message CreateApiKey {
+  uint32 requests_per_second = 1;
+  uint32 burst = 2;
+  uint32 max_streams = 3;
+  uint64 expires_at_ms = 4;
+}
+
+message CreditAdjustment {
+  solana.Address key = 1;
+  uint64 amount = 2;
+}
+
+message Credits {
+  uint64 remaining = 1;
+}
+
+message Done {
+  bool ok = 1;
+}
+
+message GetBatch {
+  repeated solana.Address base_mints = 1;
+}
+
+message GetCandles {
+  solana.Address base_mint = 1;
+  uint32 interval_seconds = 2;
+  uint64 from_ms = 3;
+  uint64 to_ms = 4;
+}
+
+message GetDex {
+  types.DexType dex = 1;
+  optional solana.Address after = 2;
+  uint32 limit = 3;
+}
+
+message GetMint {
+  solana.Address base_mint = 1;
+}
+
+message Health {
+  uint64 current_slot = 1;
+  uint64 credits = 2;
+  uint64 cache_generation = 3;
+  uint64 durable_generation = 4;
+  uint64 pending_bytes = 5;
+}
+
+message HealthRequest {}
+
+message MarketSnapshot {
+  solana.Address pool_id = 1;
+  solana.Address base_mint = 2;
+  solana.Address quote_mint = 3;
+  types.DexType dex = 4;
+  uint64 slot = 5;
+  uint64 transaction_index = 6;
+  decisol.SolanaLamports base_liquidity = 7;
+  decisol.SolanaLamports quote_liquidity = 8;
+  decisol.SolanaLamports virtual_base_liquidity = 9;
+  decisol.SolanaLamports virtual_quote_liquidity = 10;
+  optional fastnum.UD128 price_quote = 11;
+  optional fastnum.UD128 price_sol = 12;
+  optional MintMetadata metadata = 13;
+  optional solana.Address creator = 14;
+  bool created = 15;
+  optional solana.Address migrated_from = 16;
+  types.MigrationStatus migration_status = 17;
+  bool inverted = 18;
+  bool available = 19;
+  int64 opens_at_ms = 20;
+  optional Ath ath = 21;
+}
+
+message Markets {
+  repeated MintMarkets mints = 1;
+  optional solana.Address next_after = 2;
+}
+
+message MintMarkets {
+  solana.Address base_mint = 1;
+  optional MintMetadata metadata = 2;
+  repeated MarketSnapshot markets = 3;
+  repeated WindowStats windows = 4;
+  optional fastnum.UD128 last_price_sol = 5;
+  optional Ath ath = 6;
+  uint64 as_of_ms = 7;
+}
+
+message MintMetadata {
+  string symbol = 1;
+  string name = 2;
+  string uri = 3;
+  optional decisol.SolanaLamports supply = 4;
+  bool mint_authority_present = 5;
+  bool freeze_authority_present = 6;
+  map<string, string> socials = 7;
+  optional fastnum.UD128 transfer_fee = 8;
+  optional uint32 decimals = 9;
+  optional solana.Address token_program = 10;
+}
+
+message RevokeKey {
+  solana.Address key = 1;
+}
+
+message SubscribeTrades {
+  optional solana.Address base_mint = 1;
+}
+
+message TradeEvent {
+  solana.Signature signature = 1;
+  uint64 slot = 2;
+  uint64 transaction_index = 3;
+  uint32 event_index = 4;
+  solana.Address base_mint = 5;
+  solana.Address quote_mint = 6;
+  solana.Address pool_id = 7;
+  solana.Address trader = 8;
+  types.DexType dex = 9;
+  types.TradeType side = 10;
+  decisol.SolanaLamports base_amount = 11;
+  decisol.SolanaLamports quote_amount = 12;
+  decisol.SolanaLamports pre_base_balance = 13;
+  decisol.SolanaLamports pre_quote_balance = 14;
+  decisol.SolanaLamports base_liquidity = 15;
+  decisol.SolanaLamports quote_liquidity = 16;
+  decisol.SolanaLamports virtual_base_liquidity = 17;
+  decisol.SolanaLamports virtual_quote_liquidity = 18;
+  bool migration = 19;
+  optional fastnum.UD128 quote_price_sol = 20;
+  optional fastnum.UD128 price_sol = 21;
+  optional fastnum.UD128 volume_sol = 22;
+}
+
+message WindowStats {
+  uint32 seconds = 1;
+  fastnum.UD128 volume_sol = 2;
+  fastnum.UD128 base_volume = 3;
+  uint64 trade_count = 4;
+  uint64 unpriced_trade_count = 5;
+  optional fastnum.D128 price_change_percent = 6;
+}
+

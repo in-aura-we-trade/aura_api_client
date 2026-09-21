@@ -292,7 +292,7 @@ message CollectedCuStats {
   uint32 p25 = 6;
   uint32 p50 = 7;
   uint32 p99 = 8;
-  optional Signature hit_limit = 11;
+  optional solana.Signature hit_limit = 11;
   optional CuEfficiencyStats efficiency = 10;
 }
 
@@ -1733,6 +1733,7 @@ message UserActionErrorCopytrade {
   SwapFailure reason = 4;
   optional BalanceShortfall balance_shortfall = 5;
   optional BalanceShortfall alternative_route = 6;
+  optional string tax_details = 7;
 }
 
 message UserActionErrorNonceRecovery {
@@ -1748,3 +1749,4 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
+

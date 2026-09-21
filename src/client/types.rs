@@ -172,7 +172,6 @@ pub mod types {
         pub p99: u32,
         #[proto(tag = 11)]
         pub hit_limit: ::core::option::Option<Signature>,
-        #[proto(tag = 10)]
         pub efficiency: ::core::option::Option<CuEfficiencyStats>,
     }
 
@@ -2290,6 +2289,7 @@ pub mod types {
             reason: SwapFailure,
             balance_shortfall: ::core::option::Option<BalanceShortfall>,
             alternative_route: ::core::option::Option<BalanceShortfall>,
+            tax_details: ::core::option::Option<::std::string::String>,
         },
         NonceRecovery {
             wallet: Address,

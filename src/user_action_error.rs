@@ -205,10 +205,14 @@ impl Display for UserActionError {
                 reason,
                 balance_shortfall,
                 alternative_route,
+                tax_details,
             } => {
                 write!(f, "Copytrade failed\nConfig: {config_name}\n{reason}")?;
                 if let Some(balance) = balance_shortfall {
                     write!(f, "\n{balance}")?;
+                }
+                if let Some(details) = tax_details {
+                    write!(f, "\n{details}")?;
                 }
                 format_alternative(f, alternative_route.as_ref())?;
                 write!(f, "\n\nMint: {mint}")

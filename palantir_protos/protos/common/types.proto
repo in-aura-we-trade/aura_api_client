@@ -1,0 +1,107 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package types;
+
+import "decisol.proto";
+import "fastnum.proto";
+import "solana.proto";
+
+enum DexType {
+  PUMP = 0;
+  PUMP_AMM = 1;
+  RAY_AMM = 2;
+  RAY_CPMM = 3;
+  RAY_LL = 4;
+  METEORA_DLMM = 5;
+  RAY_CLMM = 6;
+  METEORA_DBC = 7;
+  METEORA_DAMM_V2 = 8;
+}
+
+enum MigrationStatus {
+  PRE = 0;
+  POST = 1;
+  NON_MIGRATABLE = 2;
+}
+
+enum ProcKind {
+  AURA = 0;
+  JITO = 1;
+  BLOXROUTE = 2;
+  NOZOMI = 3;
+  NEXT_BLOCK = 4;
+  SLOT0 = 5;
+  ASTRA = 6;
+  BLOCK_RAZOR = 7;
+  NODE1 = 8;
+  TPU_PEN = 9;
+  HELIUS = 10;
+  STELLIUM = 11;
+  SOYAS = 12;
+  FALCON = 13;
+  RAIDEN = 14;
+  CIRCULAR = 15;
+  FLASH_BLOCK = 16;
+  MERIDIAN = 17;
+  BLOCKSPRINT = 18;
+  LANDX = 19;
+  MANKA = 20;
+  BLOCKRUSH = 21;
+}
+
+enum TokenTypeFilter {
+  ALL = 0;
+  TOKEN = 1;
+  TOKEN2022 = 2;
+}
+
+enum TradeType {
+  SELL = 0;
+  BUY = 1;
+}
+
+message BalanceShortfall {
+  solana.Address quote_mint = 1;
+  fastnum.UD128 required = 2;
+  fastnum.UD128 available = 3;
+  bool native_only = 4;
+}
+
+message CustomQuoteWhitelist {
+  bool enabled = 1;
+  repeated solana.Address addresses = 2;
+}
+
+message LiqState {
+  uint64 pc_raw = 1;
+  uint64 token_raw = 2;
+  uint64 pc_v = 3;
+  uint64 token_v = 4;
+}
+
+message Trade {
+  solana.Address mint = 1;
+  solana.Address pool_id = 2;
+  solana.Address trader = 3;
+  DexType dex_data = 4;
+  decisol.SolanaLamports base = 5;
+  decisol.SolanaLamports quote = 6;
+  TradeType side = 7;
+  decisol.SolanaLamports pre_base_balance = 8;
+  decisol.SolanaLamports pre_quote_balance = 9;
+  LiqState liq = 10;
+  bool migration = 11;
+}
+
+message TokenAccountKindAta {}
+
+message TokenAccountKindCanonicalPda {
+  uint32 bump = 1;
+}
+message TokenAccountKind {
+  oneof value {
+    TokenAccountKindAta ata = 1;
+    TokenAccountKindCanonicalPda canonical_pda = 2;
+  }
+}
+

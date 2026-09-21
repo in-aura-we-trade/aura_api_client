@@ -1,0 +1,19 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package palantir_rpc;
+
+import "palantir.proto";
+
+service PalantirRpc {
+  rpc GetMint(palantir.GetMint) returns (palantir.MintMarkets);
+  rpc GetBatch(palantir.GetBatch) returns (palantir.Markets);
+  rpc GetDex(palantir.GetDex) returns (palantir.Markets);
+  rpc GetCandles(palantir.GetCandles) returns (palantir.Candles);
+  rpc SubscribeTrades(palantir.SubscribeTrades) returns (stream palantir.TradeEvent);
+  rpc PutApiKey(palantir.ApiKey) returns (palantir.Done);
+  rpc CreateApiKey(palantir.CreateApiKey) returns (palantir.ApiKey);
+  rpc RevokeApiKey(palantir.RevokeKey) returns (palantir.Done);
+  rpc Health(palantir.HealthRequest) returns (palantir.Health);
+  rpc TopUpCredits(palantir.CreditAdjustment) returns (palantir.Credits);
+  rpc RemoveCredits(palantir.CreditAdjustment) returns (palantir.Credits);
+}
