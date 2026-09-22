@@ -1,6 +1,14 @@
 #[path = "client/types.rs"]
 mod api_types;
 pub use api_types::types;
+
+// Keep defaults available to api-types-only consumers as well as RPC clients.
+impl Default for types::FeeMode {
+    fn default() -> Self {
+        Self::Auto
+    }
+}
+
 #[cfg(feature = "client-generic")]
 pub mod ct_rpc;
 #[cfg(feature = "client-generic")]

@@ -170,9 +170,10 @@ pub mod types {
         pub p25: u32,
         pub p50: u32,
         pub p99: u32,
+        #[proto(tag = 10)]
+        pub efficiency: ::core::option::Option<CuEfficiencyStats>,
         #[proto(tag = 11)]
         pub hit_limit: ::core::option::Option<Signature>,
-        pub efficiency: ::core::option::Option<CuEfficiencyStats>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -193,6 +194,7 @@ pub mod types {
         pub confirm_trade_kind: ConfirmTradeKind,
         pub nonce: TxnNonce,
         pub requested_cu: u32,
+        pub default_cu: u32,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -432,6 +434,10 @@ pub mod types {
         pub quote_whitelist: CustomQuoteWhitelist,
         #[serde(default = "crate::consts::default_max_tax")]
         pub max_tax: ::core::option::Option<UD128>,
+        #[serde(default)]
+        pub buy_fee_mode: FeeMode,
+        #[serde(default)]
+        pub sell_fee_mode: FeeMode,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -723,6 +729,12 @@ pub mod types {
         MaxTax {
             maximum: ::core::option::Option<UD128>,
         },
+        BuyFeeMode(
+            FeeMode,
+        ),
+        SellFeeMode(
+            FeeMode,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -869,6 +881,13 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub struct Done;
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy, PartialEq, Eq)]
+    #[proto_message]
+    pub enum FeeMode {
+        Auto,
+        Exact,
+    }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
@@ -1065,6 +1084,8 @@ pub mod types {
         pub filters: TradeFilters,
         #[serde(default = "crate::consts::default_max_tax")]
         pub max_tax: ::core::option::Option<UD128>,
+        #[serde(default)]
+        pub fee_mode: FeeMode,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1258,6 +1279,8 @@ pub mod types {
         pub slot_latency: u8,
         #[serde(default = "crate::consts::default_max_tax")]
         pub max_tax: ::core::option::Option<UD128>,
+        #[serde(default)]
+        pub fee_mode: FeeMode,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1463,6 +1486,10 @@ pub mod types {
         pub quote_whitelist: CustomQuoteWhitelist,
         #[serde(default = "crate::consts::default_max_tax")]
         pub max_tax: ::core::option::Option<UD128>,
+        #[serde(default)]
+        pub buy_fee_mode: FeeMode,
+        #[serde(default)]
+        pub sell_fee_mode: FeeMode,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1754,6 +1781,12 @@ pub mod types {
         MaxTax {
             maximum: ::core::option::Option<UD128>,
         },
+        BuyFeeMode(
+            FeeMode,
+        ),
+        SellFeeMode(
+            FeeMode,
+        ),
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

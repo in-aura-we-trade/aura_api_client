@@ -19,6 +19,7 @@ mod client_ext_debug;
 pub mod consts;
 pub mod links;
 pub mod order_ext;
+pub mod slippage;
 #[cfg(feature = "private_client")]
 mod private_client;
 #[cfg(feature = "private_client")]

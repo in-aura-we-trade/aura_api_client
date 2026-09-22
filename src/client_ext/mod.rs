@@ -52,23 +52,12 @@ pub enum AmountKind {
 impl TradeStateUpdate {
     pub fn get_sigs(&self) -> impl Iterator<Item = &Signature> {
         match self {
-            TradeStateUpdate::Landed {
-                signature,
-                state: _,
-                ..
-            } => std::slice::from_ref(signature).iter(),
+            TradeStateUpdate::Landed { signature, .. } => std::slice::from_ref(signature).iter(),
             TradeStateUpdate::Lost { signatures } => signatures.iter(),
         }
     }
     pub fn is_landed(&self) -> bool {
-        matches!(
-            self,
-            Self::Landed {
-                signature: _,
-                state: _,
-                ..
-            }
-        )
+        matches!(self, Self::Landed { .. })
     }
 }
 impl ConfirmTradeKind {

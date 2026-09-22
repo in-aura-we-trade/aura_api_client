@@ -61,6 +61,11 @@ enum Direction {
   BELOW = 1;
 }
 
+enum FeeMode {
+  AUTO = 0;
+  EXACT = 1;
+}
+
 enum FollowSwaps {
   FOLLOW_OFF = 0;
   FIRST = 1;
@@ -292,8 +297,8 @@ message CollectedCuStats {
   uint32 p25 = 6;
   uint32 p50 = 7;
   uint32 p99 = 8;
-  optional solana.Signature hit_limit = 11;
   optional CuEfficiencyStats efficiency = 10;
+  optional solana.Signature hit_limit = 11;
 }
 
 message ConfigPubkeys {
@@ -310,6 +315,7 @@ message ConfirmState {
   ConfirmTradeKind confirm_trade_kind = 6;
   TxnNonce nonce = 7;
   uint32 requested_cu = 8;
+  uint32 default_cu = 9;
 }
 
 message CreateDefCfg {}
@@ -450,6 +456,8 @@ message CtTaskValues {
   solana.Address wallet = 25;
   CustomQuoteWhitelist quote_whitelist = 26;
   optional fastnum.UD128 max_tax = 27;
+  FeeMode buy_fee_mode = 28;
+  FeeMode sell_fee_mode = 29;
 }
 
 message CtUpdate {
@@ -633,6 +641,7 @@ message MarketTrade {
   ApiOrders limit_orders = 13;
   TradeFilters filters = 14;
   optional fastnum.UD128 max_tax = 15;
+  FeeMode fee_mode = 16;
 }
 
 message OpenTaRequest {
@@ -701,6 +710,7 @@ message RawOrder {
   UserNonceStrategy nonce = 7;
   uint32 slot_latency = 8;
   optional fastnum.UD128 max_tax = 9;
+  FeeMode fee_mode = 10;
 }
 
 message ReferralInfo {
@@ -858,6 +868,8 @@ message SnipeTaskValues {
   LruAddressuint321000 dev_buys = 27;
   CustomQuoteWhitelist quote_whitelist = 28;
   optional fastnum.UD128 max_tax = 29;
+  FeeMode buy_fee_mode = 30;
+  FeeMode sell_fee_mode = 31;
 }
 
 message SnipeUpdate {
@@ -1363,6 +1375,8 @@ message CtUpdateField {
     bool meteora_dbc = 91;
     bool meteora_damm_v2 = 92;
     CtUpdateFieldMaxTax max_tax = 93;
+    FeeMode buy_fee_mode = 94;
+    FeeMode sell_fee_mode = 95;
   }
 }
 
@@ -1557,6 +1571,8 @@ message SnipeUpdateField {
     bool meteora_dbc = 91;
     bool meteora_damm_v2 = 92;
     SnipeUpdateFieldMaxTax max_tax = 93;
+    FeeMode buy_fee_mode = 94;
+    FeeMode sell_fee_mode = 95;
   }
 }
 
@@ -1752,4 +1768,3 @@ message UserActionError {
     UserActionErrorNonceRecovery nonce_recovery = 5;
   }
 }
-
