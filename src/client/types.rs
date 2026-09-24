@@ -752,6 +752,15 @@ pub mod types {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
+    pub struct CuEstimateFingerprint {
+        pub profiled: bool,
+        pub auxiliary_known: u32,
+        pub auxiliary_unknown: u32,
+        pub creation_cu: u32,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
     pub struct CuFingerprint {
         pub trades: ::proto_rs::alloc::vec::Vec<CuTradeFingerprint>,
         pub durable_nonce: bool,
@@ -774,6 +783,7 @@ pub mod types {
         pub side: TradeType,
         pub first_buy: bool,
         pub instruction: u64,
+        pub estimate: ::core::option::Option<CuEstimateFingerprint>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -1839,6 +1849,8 @@ pub mod types {
         TaxUnavailable,
         UnfavorableRoute,
         StaleDataProtection,
+        TaskInactive,
+        BuyLimitExhausted,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]

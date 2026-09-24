@@ -24,7 +24,7 @@ use crate::utils::mc_formatter;
 use crate::utils::price_formatter;
 
 impl ApiLimitOrder {
-    pub fn id(&self) -> Option<OrderId> {
+    pub const fn id(&self) -> Option<OrderId> {
         match &self.state {
             OrderState::Placed {
                 id,
@@ -117,7 +117,7 @@ impl ApiLimitOrder {
             }
         }
     }
-    pub fn set_perc_amount(&mut self, v: UD128) {
+    pub const fn set_perc_amount(&mut self, v: UD128) {
         match &mut self.order.amount {
             SwapAmount::SellInit | SwapAmount::SellOut(_) => {
                 self.order.amount = SwapAmount::SellPerc { amount: v }
@@ -129,7 +129,7 @@ impl ApiLimitOrder {
             }
         }
     }
-    pub fn set_fixed_amount(&mut self, v: QuoteLamports) {
+    pub const fn set_fixed_amount(&mut self, v: QuoteLamports) {
         match &mut self.order.amount {
             SwapAmount::SellOut(quote_lamports) | SwapAmount::Buy(quote_lamports) => {
                 *quote_lamports = v;
@@ -145,7 +145,7 @@ impl ApiLimitOrder {
 }
 
 impl SwapAmount {
-    pub fn side(&self) -> TradeType {
+    pub const fn side(&self) -> TradeType {
         match self {
             SwapAmount::Buy(_) | SwapAmount::BuyPerc { amount: _ } => TradeType::Buy,
             SwapAmount::SellPerc { amount: _ } | SwapAmount::SellOut(_) | SwapAmount::SellInit => {
@@ -156,7 +156,7 @@ impl SwapAmount {
 }
 
 impl Target {
-    pub fn direction(&self) -> Option<Direction> {
+    pub const fn direction(&self) -> Option<Direction> {
         match self {
             Target::Price {
                 price: _,
@@ -191,7 +191,7 @@ impl Target {
 }
 
 impl OrderEventTrigger {
-    pub fn ui(&self) -> &'static str {
+    pub const fn ui(&self) -> &'static str {
         match self {
             OrderEventTrigger::Immediate => "Inst.",
             OrderEventTrigger::Migration => "Migr.",
@@ -211,7 +211,7 @@ pub enum OrderKindTrigger {
 }
 
 impl OrderKindTrigger {
-    fn price(value: UD128, denomination: Option<decisol::QuoteKind>) -> Self {
+    const fn price(value: UD128, denomination: Option<decisol::QuoteKind>) -> Self {
         if matches!(denomination, Some(decisol::QuoteKind::Usd)) {
             Self::PriceUsd(value)
         } else {
@@ -245,7 +245,7 @@ impl OrderKindTrigger {
             OrderKindTrigger::Mcap(v) => format!("🎯{}$ mcap", mc_formatter(*v)),
         }
     }
-    pub fn to_value_ui(&self) -> D128 {
+    pub const fn to_value_ui(&self) -> D128 {
         match self {
             OrderKindTrigger::Profit(decimal) => decimal.to_signed(),
             OrderKindTrigger::Price(decimal) => decimal.to_signed(),
@@ -298,7 +298,7 @@ pub enum OrderKind<'a> {
     },
 }
 impl<'a> OrderKind<'a> {
-    pub fn amount(&'a self) -> &'a SwapAmount {
+    pub const fn amount(&'a self) -> &'a SwapAmount {
         match self {
             OrderKind::TakeProfit { trigger: _, amount }
             | OrderKind::StopLoss { trigger: _, amount }
@@ -437,7 +437,7 @@ impl RawOrder {
             }
         }
     }
-    pub fn side(&self) -> TradeType {
+    pub const fn side(&self) -> TradeType {
         self.amount.side()
     }
     pub fn kind<'a>(&'a self) -> OrderKind<'a> {
@@ -524,7 +524,7 @@ impl RawOrder {
             }
         }
     }
-    fn kind_from_direction_side(
+    const fn kind_from_direction_side(
         &self,
         direction: Direction,
         trigger: OrderKindTrigger,
@@ -573,7 +573,7 @@ impl MarketOrdersDeduper {
         }
         self
     }
-    pub fn dedup(&mut self, ord: &ApiLimitOrder) -> bool {
+    pub const fn dedup(&mut self, ord: &ApiLimitOrder) -> bool {
         match ord.trigger {
             OrderEventTrigger::Immediate => self.imm.dedup(ord),
             OrderEventTrigger::Migration => self.migration.dedup(ord),
@@ -597,7 +597,7 @@ struct MarketKind {
 }
 
 impl MarketOrdersDeduperKind {
-    fn read(&mut self, ord: &ApiLimitOrder) {
+    const fn read(&mut self, ord: &ApiLimitOrder) {
         let kind = if let Target::Market { mode } = &ord.order.target {
             match mode {
                 MarketExecuteMode::Always => &mut self.always,
@@ -614,7 +614,7 @@ impl MarketOrdersDeduperKind {
         };
         *seen = true;
     }
-    fn dedup(&mut self, ord: &ApiLimitOrder) -> bool {
+    const fn dedup(&mut self, ord: &ApiLimitOrder) -> bool {
         let kind = if let Target::Market { mode } = &ord.order.target {
             match mode {
                 MarketExecuteMode::Always => &mut self.always,

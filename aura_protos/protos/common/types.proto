@@ -177,6 +177,8 @@ enum SwapFailure {
   TAX_UNAVAILABLE = 19;
   UNFAVORABLE_ROUTE = 20;
   STALE_DATA_PROTECTION = 21;
+  TASK_INACTIVE = 22;
+  BUY_LIMIT_EXHAUSTED = 23;
 }
 
 enum TokenAccountKindUi {
@@ -476,6 +478,13 @@ message CuEfficiencyStats {
   double max = 8;
 }
 
+message CuEstimateFingerprint {
+  bool profiled = 1;
+  uint32 auxiliary_known = 2;
+  uint32 auxiliary_unknown = 3;
+  uint32 creation_cu = 4;
+}
+
 message CuFingerprint {
   repeated CuTradeFingerprint trades = 1;
   bool durable_nonce = 2;
@@ -493,6 +502,7 @@ message CuTradeFingerprint {
   TradeType side = 4;
   bool first_buy = 5;
   uint64 instruction = 6;
+  optional CuEstimateFingerprint estimate = 7;
 }
 
 message CustomQuoteWhitelist {

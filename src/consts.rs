@@ -32,10 +32,10 @@ pub const OPEN_TA_CU: u32 = 40_000;
 pub const OPEN_UTILS_CU: u32 = 100_000;
 pub const OPEN_NONCE_CU: u32 = 10_000;
 
-// High-level fallback/user settings, originally seeded from captured maxima
-// plus 15%. Token-program, tax and first-account creation costs are now private
-// project_us policy; profiled CLMM/DLMM paths replace the default component.
-// Unobserved Pump v2, Ray AMM and Meteora DBC retain their fallback defaults.
+// User-facing fallback defaults, overridable through the API's DexCu settings.
+// Calibration, headroom, token work and account-creation costs are private
+// project_us policy. Profiled estimates preserve the user's offset from these
+// defaults; efficiency statistics always use the non-overridden defaults.
 pub const PUMP_BUY_CU: u32 = 83_000; // 72,149
 pub const PUMP_SELL_CU: u32 = 81_000; // 69,726
 

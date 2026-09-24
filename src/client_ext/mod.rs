@@ -29,7 +29,7 @@ impl Default for MarketExecuteMode {
 }
 
 impl TradeFilters {
-    pub fn empty() -> Self {
+    pub const fn empty() -> Self {
         Self {
             min_mcap: None,
             max_mcap: None,
@@ -56,7 +56,7 @@ impl TradeStateUpdate {
             TradeStateUpdate::Lost { signatures } => signatures.iter(),
         }
     }
-    pub fn is_landed(&self) -> bool {
+    pub const fn is_landed(&self) -> bool {
         matches!(self, Self::Landed { .. })
     }
 }
@@ -190,7 +190,7 @@ impl Display for UserNonceStrategy {
 }
 
 impl UserNonceStrategy {
-    pub fn to_ui_buy(&self) -> &str {
+    pub const fn to_ui_buy(&self) -> &str {
         match self {
             UserNonceStrategy::Durable => "🅑Nonce|Durable",
             UserNonceStrategy::Hybrid => "🅑Nonce|Hybrid",
@@ -199,7 +199,7 @@ impl UserNonceStrategy {
             UserNonceStrategy::AllHybrid => "🅑Nonce|AllHybrid",
         }
     }
-    pub fn to_ui_sell(&self) -> &str {
+    pub const fn to_ui_sell(&self) -> &str {
         match self {
             UserNonceStrategy::Durable => "ⓈNonce|Durable",
             UserNonceStrategy::Hybrid => "ⓈNonce|Hybrid",

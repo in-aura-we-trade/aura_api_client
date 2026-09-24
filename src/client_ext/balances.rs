@@ -9,7 +9,7 @@ use decisol::Wsol;
 use fastnum::UD128;
 
 impl WalletUtilAccountsInfo {
-    pub fn is_util_accs_created(&self) -> bool {
+    pub const fn is_util_accs_created(&self) -> bool {
         self.util_accs.pump_amm_uva && self.util_accs.custom_nonce && self.util_accs.pump_uva
         //&& self.util_accs.pump_amm_uva_ata
     }

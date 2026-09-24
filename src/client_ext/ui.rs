@@ -16,7 +16,7 @@ impl Display for TxnNonce {
 }
 
 impl UserNonceStrategy {
-    pub fn next(&self) -> Self {
+    pub const fn next(&self) -> Self {
         match self {
             UserNonceStrategy::Durable => UserNonceStrategy::Hybrid,
             UserNonceStrategy::Hybrid => UserNonceStrategy::Custom,
@@ -28,7 +28,7 @@ impl UserNonceStrategy {
 }
 
 impl SwapAmount {
-    pub fn amount_kind(&self) -> AmountKind {
+    pub const fn amount_kind(&self) -> AmountKind {
         match self {
             SwapAmount::Buy(_) => AmountKind::Fixed,
             SwapAmount::BuyPerc { amount: _ } => AmountKind::Perc,

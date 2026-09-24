@@ -1,4 +1,5 @@
 #[path = "client/types.rs"]
+#[allow(clippy::large_enum_variant, reason = "Generated shared API types mirror the server; retain their public by-value payloads instead of adding client-only boxes")]
 mod api_types;
 pub use api_types::types;
 
@@ -66,7 +67,7 @@ where
     }
 
     #[inline]
-    pub fn channel(&self) -> &Channel {
+    pub const fn channel(&self) -> &Channel {
         &self.channel
     }
 

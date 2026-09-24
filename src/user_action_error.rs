@@ -10,6 +10,8 @@ impl From<&SwapFailure> for &'static str {
             SwapFailure::StaleDataProtection => {
                 "Action was attempted but not executed because stale data protection detected missing mint metadata. No transaction was sent."
             }
+            SwapFailure::TaskInactive => "Task is inactive; no transaction was sent.",
+            SwapFailure::BuyLimitExhausted => "Task buy limit is exhausted; no transaction was sent.",
             SwapFailure::DurableNonceUnavailable => {
                 "No durable nonce is available. Open a D.Nonce account or select a nonce strategy with fallback."
             }
