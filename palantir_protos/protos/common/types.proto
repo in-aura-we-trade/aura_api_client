@@ -58,6 +58,8 @@ enum TokenTypeFilter {
 enum TradeType {
   SELL = 0;
   BUY = 1;
+  ADD_LIQUIDITY = 2;
+  REMOVE_LIQUIDITY = 3;
 }
 
 message BalanceShortfall {
@@ -93,7 +95,9 @@ message Trade {
   bool migration = 11;
 }
 
-message TokenAccountKindAta {}
+message TokenAccountKindAta {
+  uint32 bump = 1;
+}
 
 message TokenAccountKindCanonicalPda {
   uint32 bump = 1;

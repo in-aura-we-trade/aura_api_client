@@ -9,7 +9,7 @@ service PalantirRpc {
   rpc GetBatch(palantir.GetBatch) returns (palantir.Markets);
   rpc GetDex(palantir.GetDex) returns (palantir.Markets);
   rpc GetCandles(palantir.GetCandles) returns (palantir.Candles);
-  rpc SubscribeTrades(palantir.SubscribeTrades) returns (stream palantir.TradeEvent);
+  rpc SubscribeTransactions(palantir.SubscribeTransactions) returns (stream palantir.TransactionRecord);
   rpc PutApiKey(palantir.ApiKey) returns (palantir.Done);
   rpc CreateApiKey(palantir.CreateApiKey) returns (palantir.ApiKey);
   rpc RevokeApiKey(palantir.RevokeKey) returns (palantir.Done);

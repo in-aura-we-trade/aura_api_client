@@ -188,7 +188,7 @@ pub mod palantir {
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
-    pub struct SubscribeTrades {
+    pub struct SubscribeTransactions {
         pub base_mint: ::core::option::Option<Address>,
     }
 
@@ -217,6 +217,40 @@ pub mod palantir {
         pub quote_price_sol: ::core::option::Option<UD128>,
         pub price_sol: ::core::option::Option<UD128>,
         pub volume_sol: ::core::option::Option<UD128>,
+        pub final_base_balance: ::core::option::Option<SolanaLamports>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub enum TransactionEvent {
+        Trade(
+            TradeEvent,
+        ),
+        StateChange {
+            mint: Address,
+            pool: Address,
+            event_index: u32,
+            patch: ::proto_rs::alloc::vec::Vec<u8>,
+        },
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct TransactionInfo {
+        pub signature: ::core::option::Option<Signature>,
+        pub slot: u64,
+        pub transaction_index: u64,
+        pub time_ms: u64,
+        pub compute_units_requested: ::core::option::Option<u32>,
+        pub compute_units_consumed: ::core::option::Option<u64>,
+        pub priority_fee_lamports: ::core::option::Option<u64>,
+    }
+
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+    #[proto_message]
+    pub struct TransactionRecord {
+        pub info: TransactionInfo,
+        pub events: ::proto_rs::alloc::vec::Vec<TransactionEvent>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -248,12 +282,12 @@ pub mod palantir_rpc {
     use crate::palantir::Markets;
     use crate::palantir::MintMarkets;
     use crate::palantir::RevokeKey;
-    use crate::palantir::SubscribeTrades;
-    use crate::palantir::TradeEvent;
+    use crate::palantir::SubscribeTransactions;
+    use crate::palantir::TransactionRecord;
 
     #[proto_rpc(rpc_package = "palantir_rpc", rpc_server = false, rpc_client = true)]
     pub trait PalantirRpc {
-        type SubscribeTradesStream: ::tonic::codegen::tokio_stream::Stream<Item = ::core::result::Result<TradeEvent, ::tonic::Status>> + ::core::marker::Send;
+        type SubscribeTransactionsStream: ::tonic::codegen::tokio_stream::Stream<Item = ::core::result::Result<TransactionRecord, ::tonic::Status>> + ::core::marker::Send;
 
         async fn get_mint(
             &self,
@@ -275,10 +309,10 @@ pub mod palantir_rpc {
             request: ::tonic::Request<GetCandles>,
         ) -> ::core::result::Result<::tonic::Response<Candles>, ::tonic::Status>;
 
-        async fn subscribe_trades(
+        async fn subscribe_transactions(
             &self,
-            request: ::tonic::Request<SubscribeTrades>,
-        ) -> ::core::result::Result<::tonic::Response<Self::SubscribeTradesStream>, ::tonic::Status>;
+            request: ::tonic::Request<SubscribeTransactions>,
+        ) -> ::core::result::Result<::tonic::Response<Self::SubscribeTransactionsStream>, ::tonic::Status>;
 
         async fn put_api_key(
             &self,

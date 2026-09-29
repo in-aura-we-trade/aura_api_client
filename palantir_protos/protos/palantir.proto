@@ -145,7 +145,7 @@ message RevokeKey {
   solana.Address key = 1;
 }
 
-message SubscribeTrades {
+message SubscribeTransactions {
   optional solana.Address base_mint = 1;
 }
 
@@ -172,6 +172,22 @@ message TradeEvent {
   optional fastnum.UD128 quote_price_sol = 20;
   optional fastnum.UD128 price_sol = 21;
   optional fastnum.UD128 volume_sol = 22;
+  optional decisol.SolanaLamports final_base_balance = 23;
+}
+
+message TransactionInfo {
+  optional solana.Signature signature = 1;
+  uint64 slot = 2;
+  uint64 transaction_index = 3;
+  uint64 time_ms = 4;
+  optional uint32 compute_units_requested = 5;
+  optional uint64 compute_units_consumed = 6;
+  optional uint64 priority_fee_lamports = 7;
+}
+
+message TransactionRecord {
+  TransactionInfo info = 1;
+  repeated TransactionEvent events = 2;
 }
 
 message WindowStats {
@@ -181,5 +197,18 @@ message WindowStats {
   uint64 trade_count = 4;
   uint64 unpriced_trade_count = 5;
   optional fastnum.D128 price_change_percent = 6;
+}
+
+message TransactionEventStateChange {
+  solana.Address mint = 1;
+  solana.Address pool = 2;
+  uint32 event_index = 3;
+  bytes patch = 4;
+}
+message TransactionEvent {
+  oneof value {
+    TradeEvent trade = 1;
+    TransactionEventStateChange state_change = 2;
+  }
 }
 

@@ -1891,7 +1891,9 @@ pub mod types {
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum TokenAccountKind {
-        Ata,
+        Ata {
+            bump: u8,
+        },
         CanonicalPda {
             bump: u8,
         },
@@ -1910,6 +1912,7 @@ pub mod types {
         pub pda_balance: TokenBalanceSealed,
         pub ata_balance: TokenBalanceSealed,
         pub pda_bump: u8,
+        pub ata_bump: u8,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -2108,6 +2111,8 @@ pub mod types {
     pub enum TradeType {
         Sell,
         Buy,
+        AddLiquidity,
+        RemoveLiquidity,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
