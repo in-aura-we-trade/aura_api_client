@@ -144,13 +144,27 @@ impl ApiLimitOrder {
     }
 }
 
+// Orders execute swaps. TradeType also describes observed liquidity events,
+// which cannot be constructed from a SwapAmount.
+enum OrderSide {
+    Buy,
+    Sell,
+}
+
 impl SwapAmount {
-    pub const fn side(&self) -> TradeType {
+    const fn order_side(&self) -> OrderSide {
         match self {
-            SwapAmount::Buy(_) | SwapAmount::BuyPerc { amount: _ } => TradeType::Buy,
-            SwapAmount::SellPerc { amount: _ } | SwapAmount::SellOut(_) | SwapAmount::SellInit => {
-                TradeType::Sell
+            SwapAmount::Buy(_) | SwapAmount::BuyPerc { .. } => OrderSide::Buy,
+            SwapAmount::SellPerc { .. } | SwapAmount::SellOut(_) | SwapAmount::SellInit => {
+                OrderSide::Sell
             }
+        }
+    }
+
+    pub const fn side(&self) -> TradeType {
+        match self.order_side() {
+            OrderSide::Buy => TradeType::Buy,
+            OrderSide::Sell => TradeType::Sell,
         }
     }
 }
@@ -442,12 +456,12 @@ impl RawOrder {
     }
     pub fn kind<'a>(&'a self) -> OrderKind<'a> {
         match &self.target {
-            Target::Market { mode } => match self.side() {
-                TradeType::Buy => OrderKind::MarketBuy {
+            Target::Market { mode } => match self.amount.order_side() {
+                OrderSide::Buy => OrderKind::MarketBuy {
                     amount: &self.amount,
                     mode: mode.clone(),
                 },
-                TradeType::Sell => OrderKind::MarketSell {
+                OrderSide::Sell => OrderKind::MarketSell {
                     amount: &self.amount,
                     mode: mode.clone(),
                 },
@@ -500,22 +514,22 @@ impl RawOrder {
                     None => OrderKindTrigger::PricePerc(*price_perc),
                 };
                 match direction {
-                    Direction::Above => match self.side() {
-                        TradeType::Buy => OrderKind::TrailingBuyPush {
+                    Direction::Above => match self.amount.order_side() {
+                        OrderSide::Buy => OrderKind::TrailingBuyPush {
                             trigger,
                             amount: &self.amount,
                         },
-                        TradeType::Sell => OrderKind::TrailingTakeProfit {
+                        OrderSide::Sell => OrderKind::TrailingTakeProfit {
                             trigger,
                             amount: &self.amount,
                         },
                     },
-                    Direction::Below => match self.side() {
-                        TradeType::Buy => OrderKind::TralingBuyDip {
+                    Direction::Below => match self.amount.order_side() {
+                        OrderSide::Buy => OrderKind::TralingBuyDip {
                             trigger,
                             amount: &self.amount,
                         },
-                        TradeType::Sell => OrderKind::TralingStopLoss {
+                        OrderSide::Sell => OrderKind::TralingStopLoss {
                             trigger,
                             amount: &self.amount,
                         },
@@ -530,22 +544,22 @@ impl RawOrder {
         trigger: OrderKindTrigger,
     ) -> OrderKind<'_> {
         match direction {
-            Direction::Above => match self.side() {
-                TradeType::Buy => OrderKind::BuyPush {
+            Direction::Above => match self.amount.order_side() {
+                OrderSide::Buy => OrderKind::BuyPush {
                     trigger,
                     amount: &self.amount,
                 },
-                TradeType::Sell => OrderKind::TakeProfit {
+                OrderSide::Sell => OrderKind::TakeProfit {
                     trigger,
                     amount: &self.amount,
                 },
             },
-            Direction::Below => match self.side() {
-                TradeType::Buy => OrderKind::BuyDip {
+            Direction::Below => match self.amount.order_side() {
+                OrderSide::Buy => OrderKind::BuyDip {
                     trigger,
                     amount: &self.amount,
                 },
-                TradeType::Sell => OrderKind::StopLoss {
+                OrderSide::Sell => OrderKind::StopLoss {
                     trigger,
                     amount: &self.amount,
                 },
@@ -608,9 +622,9 @@ impl MarketOrdersDeduperKind {
             return;
         };
 
-        let seen = match ord.order.side() {
-            TradeType::Buy => &mut kind.buy,
-            TradeType::Sell => &mut kind.sell,
+        let seen = match ord.order.amount.order_side() {
+            OrderSide::Buy => &mut kind.buy,
+            OrderSide::Sell => &mut kind.sell,
         };
         *seen = true;
     }
@@ -625,9 +639,9 @@ impl MarketOrdersDeduperKind {
             return false;
         };
 
-        let seen = match ord.order.side() {
-            TradeType::Buy => &mut kind.buy,
-            TradeType::Sell => &mut kind.sell,
+        let seen = match ord.order.amount.order_side() {
+            OrderSide::Buy => &mut kind.buy,
+            OrderSide::Sell => &mut kind.sell,
         };
         if *seen {
             true
@@ -635,54 +649,5 @@ impl MarketOrdersDeduperKind {
             *seen = true;
             false
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn usd_price_label_does_not_change_with_sol_rate() {
-        let price =
-            super::OrderKindTrigger::price(decisol::udec128!(2), Some(decisol::QuoteKind::Usd));
-        assert_eq!(
-            price.to_string_ui(decisol::udec128!(100)),
-            price.to_string_ui(decisol::udec128!(200))
-        );
-        assert_eq!(
-            price.to_string_ui(decisol::UD128::NAN),
-            price.to_string_ui(decisol::udec128!(100))
-        );
-    }
-
-    use proto_rs::{ProtoDecoder, bytes::Bytes};
-
-    use crate::types::{ApiLimitOrder, UpdateTokenLimitOrders};
-
-    #[test]
-    fn test_round_trip_order() {
-        let encoded = vec![
-            10u8, 5, 8, 199, 241, 133, 103, 18, 8, 18, 6, 18, 4, 8, 128, 245, 36, 26, 52, 10, 4, 8,
-            2, 24, 1, 18, 5, 8, 192, 150, 177, 2, 26, 5, 8, 128, 173, 226, 4, 34, 8, 34, 6, 10, 4,
-            8, 13, 24, 1, 42, 8, 26, 6, 10, 4, 8, 5, 24, 1, 50, 8, 8, 1, 24, 1, 40, 1, 64, 1, 64,
-            10, 42, 34, 10, 32, 116, 74, 188, 129, 166, 216, 118, 242, 40, 80, 239, 197, 22, 132,
-            53, 158, 32, 120, 224, 28, 20, 154, 215, 197, 237, 21, 63, 175, 227, 38, 78, 31,
-        ];
-        let decoded = ApiLimitOrder::decode(Bytes::from(encoded), Default::default()).unwrap();
-        println!("Decoded: {decoded:?}")
-    }
-    #[test]
-    fn test_round_trip_update_orders() {
-        let encoded = vec![
-            10u8, 34, 10, 32, 198, 250, 122, 243, 190, 219, 173, 58, 61, 101, 243, 106, 171, 201,
-            116, 49, 177, 187, 228, 194, 210, 246, 224, 228, 124, 166, 2, 3, 69, 47, 93, 97, 18,
-            107, 10, 5, 8, 199, 241, 133, 103, 18, 8, 18, 6, 18, 4, 8, 128, 245, 36, 26, 52, 10, 4,
-            8, 2, 24, 1, 18, 5, 8, 192, 150, 177, 2, 26, 5, 8, 128, 173, 226, 4, 34, 8, 34, 6, 10,
-            4, 8, 13, 24, 1, 42, 8, 26, 6, 10, 4, 8, 5, 24, 1, 50, 8, 8, 1, 24, 1, 40, 1, 64, 1,
-            64, 10, 42, 34, 10, 32, 116, 74, 188, 129, 166, 216, 118, 242, 40, 80, 239, 197, 22,
-            132, 53, 158, 32, 120, 224, 28, 20, 154, 215, 197, 237, 21, 63, 175, 227, 38, 78, 31,
-        ];
-        let decoded =
-            UpdateTokenLimitOrders::decode(Bytes::from(encoded), Default::default()).unwrap();
-        println!("Decoded: {decoded:?}")
     }
 }

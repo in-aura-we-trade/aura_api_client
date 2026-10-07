@@ -1,0 +1,46 @@
+//CODEGEN BELOW - DO NOT TOUCH ME
+syntax = "proto3";
+package block_engine;
+
+import "bundle.proto";
+import "packet.proto";
+import "shared.proto";
+
+message BlockBuilderFeeInfoRequest {}
+
+message BlockBuilderFeeInfoResponse {
+  string pubkey = 1;
+  uint64 commission = 2;
+}
+
+message BlockEngineEndpoint {
+  string block_engine_url = 1;
+  string shredstream_receiver_address = 2;
+}
+
+message GetBlockEngineEndpointRequest {}
+
+message GetBlockEngineEndpointResponse {
+  optional BlockEngineEndpoint global_endpoint = 1;
+  repeated BlockEngineEndpoint regioned_endpoints = 2;
+}
+
+message SubscribeBundlesRequest {}
+
+message SubscribeBundlesResponse {
+  repeated bundle.BundleUuid bundles = 1;
+}
+
+message SubscribePacketsRequest {}
+
+message SubscribePacketsResponse {
+  optional shared.Header header = 1;
+  optional packet.PacketBatch batch = 2;
+}
+
+service BlockEngineValidator {
+  rpc SubscribePackets(SubscribePacketsRequest) returns (stream SubscribePacketsResponse);
+  rpc SubscribeBundles(SubscribeBundlesRequest) returns (stream SubscribeBundlesResponse);
+  rpc GetBlockBuilderFeeInfo(BlockBuilderFeeInfoRequest) returns (BlockBuilderFeeInfoResponse);
+  rpc GetBlockEngineEndpoints(GetBlockEngineEndpointRequest) returns (GetBlockEngineEndpointResponse);
+}

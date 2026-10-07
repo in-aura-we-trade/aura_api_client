@@ -107,23 +107,12 @@ impl fmt::Display for TxnProcessorsStats {
         writeln!(f, "Nozomi/Temporal  | {}", self.nozomi)?;
         writeln!(f, "AstraIris        | {}", self.astra)?;
         writeln!(f, "Jito             | {}", self.jito)?;
-        writeln!(f, "0slot            | {}", self.slot0)?;
         writeln!(f, "Bloxroute        | {}", self.bloxroute)?;
-        writeln!(f, "NextBlock        | {}", self.next_block)?;
-        writeln!(f, "BlockRazor       | {}", self.block_razor)?;
         writeln!(f, "Node1            | {}", self.node1)?;
         writeln!(f, "Helius           | {}", self.helius)?;
         writeln!(f, "Stellium         | {}", self.stellium)?;
-        writeln!(f, "Soyas            | {}", self.soyas)?;
-        writeln!(f, "Falcon           | {}", self.falcon)?;
-        writeln!(f, "Circular         | {}", self.circular)?;
         writeln!(f, "Raiden           | {}", self.raiden)?;
-        writeln!(f, "FlashBlock       | {}", self.flashblock)?;
-        writeln!(f, "Blocksprint      | {}", self.blocksprint)?;
-        writeln!(f, "Meridian         | {}", self.meridian)?;
         writeln!(f, "Landx            | {}", self.landx)?;
-        writeln!(f, "Manka            | {}", self.manka)?;
-        writeln!(f, "Blockrush        | {}", self.blockrush)?;
         writeln!(f, "</pre>")
     }
 }

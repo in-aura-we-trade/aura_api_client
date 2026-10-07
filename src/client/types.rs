@@ -2171,35 +2171,38 @@ pub mod types {
         pub aura: bool,
         pub bloxroute: bool,
         pub nozomi: bool,
+        #[serde(default, skip_serializing)]
         pub next_block: bool,
+        #[serde(default, skip_serializing)]
         pub slot0: bool,
         pub astra: bool,
+        #[serde(default, skip_serializing)]
         pub block_razor: bool,
         pub node1: bool,
         #[serde(default = "crate::serde_true")]
         pub helius: bool,
         #[serde(default = "crate::serde_true")]
         pub stellium: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub soyas: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub falcon: bool,
         #[serde(default = "crate::serde_true")]
         pub raiden: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub circular: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub flash_block: bool,
-        #[serde(default = "crate::serde_true", alias = "moon")]
+        #[serde(default, skip_serializing, alias = "moon")]
         pub meridian: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub blocksprint: bool,
         pub aura_revert: bool,
         #[serde(default = "crate::serde_true")]
         pub landx: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub manka: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub blockrush: bool,
     }
 
