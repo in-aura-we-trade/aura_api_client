@@ -159,7 +159,6 @@ pub const AURA_MANUAL_LINK: &str = "https://aura-15.gitbook.io/aura-user-manual"
 pub const AURA_SITE_LINK: &str = "https://aura.rehab";
 
 pub const AURA_API_LINK: &str = "http://trade.aura.rehab:40051";
-pub const AURA_SENDER_LINK: &str = "http://sender.aura.rehab:50054";
 pub const AURA_TXN_LINK: &str = "http://txn.aura.rehab:50053";
 
 /// Public request and spam-ban policy for an Aura API rate-limit scope.
