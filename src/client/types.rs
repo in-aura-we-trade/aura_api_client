@@ -253,6 +253,13 @@ pub mod types {
         BuyPercMaster,
     }
 
+    #[derive(Clone, Debug, serde::Serialize, serde::Deserialize, Copy, PartialEq, Eq)]
+    #[proto_message]
+    pub enum CopyTradeSellAmountFilterMode {
+        Value,
+        Percentage,
+    }
+
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
     #[proto_message]
     pub enum CopyTradeSellMode {
@@ -438,6 +445,16 @@ pub mod types {
         pub buy_fee_mode: FeeMode,
         #[serde(default)]
         pub sell_fee_mode: FeeMode,
+        #[serde(default)]
+        pub min_sell_amount: UD128,
+        #[serde(default)]
+        pub max_sell_amount: UD128,
+        #[serde(default)]
+        pub sell_amount_filter_mode: CopyTradeSellAmountFilterMode,
+        #[serde(default)]
+        pub min_sell_amount_quote: ::core::option::Option<QuoteKind>,
+        #[serde(default)]
+        pub max_sell_amount_quote: ::core::option::Option<QuoteKind>,
     }
 
     #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
@@ -734,6 +751,21 @@ pub mod types {
         ),
         SellFeeMode(
             FeeMode,
+        ),
+        MinSellAmount {
+            amount: UD128,
+            mode: CopyTradeSellAmountFilterMode,
+            #[serde(default)]
+            quote: ::core::option::Option<QuoteKind>,
+        },
+        MaxSellAmount {
+            amount: UD128,
+            mode: CopyTradeSellAmountFilterMode,
+            #[serde(default)]
+            quote: ::core::option::Option<QuoteKind>,
+        },
+        SellAmountFilterMode(
+            CopyTradeSellAmountFilterMode,
         ),
     }
 
@@ -1492,7 +1524,7 @@ pub mod types {
         pub sell_procs: TxnProcessors,
         pub wallet: Address,
         pub max_buys_per_dev: u8,
-        pub dev_buys: Lru<Address, u32, 1000>,
+        pub dev_buys: Lru<Address, u32, 4000>,
         pub quote_whitelist: CustomQuoteWhitelist,
         #[serde(default = "crate::consts::default_max_tax")]
         pub max_tax: ::core::option::Option<UD128>,
@@ -2169,6 +2201,7 @@ pub mod types {
     pub struct TxnProcessors {
         pub jito_validators: bool,
         pub aura: bool,
+        #[serde(default, skip_serializing)]
         pub bloxroute: bool,
         pub nozomi: bool,
         #[serde(default, skip_serializing)]
@@ -2181,7 +2214,7 @@ pub mod types {
         pub node1: bool,
         #[serde(default = "crate::serde_true")]
         pub helius: bool,
-        #[serde(default = "crate::serde_true")]
+        #[serde(default, skip_serializing)]
         pub stellium: bool,
         #[serde(default, skip_serializing)]
         pub soyas: bool,

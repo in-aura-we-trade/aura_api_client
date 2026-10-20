@@ -10,6 +10,12 @@ impl Default for types::FeeMode {
     }
 }
 
+impl Default for types::CopyTradeSellAmountFilterMode {
+    fn default() -> Self {
+        Self::Value
+    }
+}
+
 #[cfg(feature = "client-generic")]
 pub mod ct_rpc;
 #[cfg(feature = "client-generic")]

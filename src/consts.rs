@@ -141,14 +141,22 @@ pub const MAX_SLOT_LATENCY_DEF: u8 = 10;
 
 pub const MAX_WALLETS: usize = 5;
 pub const NONCE_ACCOUNT_RENT_LAMPORTS: u64 = 1_447_680;
-pub const CT_CFG_MAX_TRACKED_WALLETS: usize = 16;
+/// Total followed-wallet memberships per user across all copytrade tasks.
+/// There is no separate per-task cap.
+pub const CT_USER_MAX_TRACKED_WALLETS: usize = 4_000;
+/// Compatibility alias: the allowance is shared across all tasks, not per task.
+pub const CT_CFG_MAX_TRACKED_WALLETS: usize = CT_USER_MAX_TRACKED_WALLETS;
 pub const CFG_MAX_BLACKLIST: usize = 32;
 pub const CFG_MAX_QUOTE_WHITELIST: usize = 32;
 pub const CT_MAX_CFGS_PER_USER: usize = 32;
 
-pub const SNIPE_CFG_MAX_TRACKED_MINTS: usize = 16;
-pub const SNIPE_CFG_MAX_TRACKED_DEVS: usize = 1_000;
-pub const SNIPE_USER_MAX_TRACKED_DEVS: usize = 1_000;
+/// Combined CA and developer memberships per user across all snipe tasks.
+/// The same address in two tasks consumes two entries; one task may use all 4,000.
+pub const SNIPE_USER_MAX_TRIGGERS: usize = 4_000;
+/// Compatibility aliases; all CA/dev entries use the one shared trigger allowance.
+pub const SNIPE_CFG_MAX_TRACKED_MINTS: usize = SNIPE_USER_MAX_TRIGGERS;
+pub const SNIPE_CFG_MAX_TRACKED_DEVS: usize = SNIPE_USER_MAX_TRIGGERS;
+pub const SNIPE_USER_MAX_TRACKED_DEVS: usize = SNIPE_USER_MAX_TRIGGERS;
 pub const SNIPE_CFG_MAX_BLACKLIST: usize = 1_000;
 pub const SNIPE_USER_MAX_BLACKLIST: usize = 1_000;
 pub const SNIPE_MAX_CFGS: usize = 16;

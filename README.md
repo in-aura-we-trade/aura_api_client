@@ -89,6 +89,44 @@ By default, the API allows 4 requets per second per API key and per IP address.
 
 To receive live notifications such as trade updates, limit order executions, and errors, clients must subscribe to the `UserActivity` stream. Keep the stream alive by sending a ping every 10 seconds.
 
+### Task address allowances
+
+Each user has a combined allowance of 4,000 CA (mint) and developer trigger
+entries across all snipe tasks, and a separate allowance of 4,000 followed
+wallet entries across all copytrade tasks. There is no additional per-task
+address cap: one task may use the entire allowance. Duplicate addresses within
+one list count once; the same address in different tasks or trigger lists
+counts once per membership. Disabled tasks still consume their configured
+entries. Deleting entries/tasks releases capacity; duplicating a task requires
+capacity for its copied entries. Blacklist, quote-whitelist and task-count
+limits are unchanged.
+
+### Copy-trade sell trigger amounts
+
+`CtTaskValues.min_sell_amount` and `max_sell_amount` filter the watched wallet's
+sell, not the size of the copied order. `sell_amount_filter_mode` selects
+`Value` (gross routed proceeds before router fees) or `Percentage`
+(the fraction of the watched wallet's pre-transaction token balance, from `0`
+to `1`). Bounds are inclusive; `0` disables that bound, and both bounds default
+to disabled. The filter applies to the original watched sell even when
+reverse-copy turns the copied action into a buy.
+
+Value bounds independently select USD or SOL using `min_sell_amount_quote`
+and `max_sell_amount_quote`: `Some(QuoteKind::Usd)` means USD,
+`Some(QuoteKind::Sol)` or the legacy default `None` means SOL. Percentage
+bounds must use `None`. Telegram accepts `0.001$` as USD and bare `0.1` as SOL.
+Same-currency bounds must satisfy minimum <= maximum when maximum is enabled.
+Mixed USD/SOL bounds are checked independently against the live sale value;
+their relative ordering depends on the current exchange rate.
+
+Update them with `CtUpdateField::MinSellAmount { amount, mode, quote }` and
+`MaxSellAmount { amount, mode, quote }`. The supplied mode must match the current
+configuration, so a stale editor cannot reinterpret an amount in another unit.
+`SellAmountFilterMode(mode)` switches units and clears both bounds and quote currencies when the mode
+changes. When setting a range and switching units in one `CtUpdate`, put the
+mode update first. Missing balance or conversion data skips the trigger only
+when its corresponding filter is active.
+
 ## Quick Start
 
 Add the client from Git:

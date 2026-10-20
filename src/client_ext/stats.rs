@@ -107,10 +107,8 @@ impl fmt::Display for TxnProcessorsStats {
         writeln!(f, "Nozomi/Temporal  | {}", self.nozomi)?;
         writeln!(f, "AstraIris        | {}", self.astra)?;
         writeln!(f, "Jito             | {}", self.jito)?;
-        writeln!(f, "Bloxroute        | {}", self.bloxroute)?;
         writeln!(f, "Node1            | {}", self.node1)?;
         writeln!(f, "Helius           | {}", self.helius)?;
-        writeln!(f, "Stellium         | {}", self.stellium)?;
         writeln!(f, "Raiden           | {}", self.raiden)?;
         writeln!(f, "Landx            | {}", self.landx)?;
         writeln!(f, "</pre>")

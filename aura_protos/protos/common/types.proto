@@ -30,6 +30,11 @@ enum CopyTradeBuyMode {
   BUY_PERC_MASTER = 3;
 }
 
+enum CopyTradeSellAmountFilterMode {
+  VALUE = 0;
+  PERCENTAGE = 1;
+}
+
 enum CopyTradeSellMode {
   SELL_PERC_SELF = 0;
   SELL_PERC_MASTER = 1;
@@ -462,6 +467,11 @@ message CtTaskValues {
   optional fastnum.UD128 max_tax = 27;
   FeeMode buy_fee_mode = 28;
   FeeMode sell_fee_mode = 29;
+  fastnum.UD128 min_sell_amount = 30;
+  fastnum.UD128 max_sell_amount = 31;
+  CopyTradeSellAmountFilterMode sell_amount_filter_mode = 32;
+  optional decisol.QuoteKind min_sell_amount_quote = 33;
+  optional decisol.QuoteKind max_sell_amount_quote = 34;
 }
 
 message CtUpdate {
@@ -603,11 +613,11 @@ message LiqState {
   uint64 token_v = 4;
 }
 
-message LruAddressuint321000 {
+message LruAddressuint3232 {
   repeated LruPairAddressuint32 items = 1;
 }
 
-message LruAddressuint3232 {
+message LruAddressuint324000 {
   repeated LruPairAddressuint32 items = 1;
 }
 
@@ -877,7 +887,7 @@ message SnipeTaskValues {
   TxnProcessors sell_procs = 24;
   solana.Address wallet = 25;
   uint32 max_buys_per_dev = 26;
-  LruAddressuint321000 dev_buys = 27;
+  LruAddressuint324000 dev_buys = 27;
   CustomQuoteWhitelist quote_whitelist = 28;
   optional fastnum.UD128 max_tax = 29;
   FeeMode buy_fee_mode = 30;
@@ -1293,6 +1303,18 @@ message ConfirmTradeKind {
 message CtUpdateFieldMaxTax {
   optional fastnum.UD128 maximum = 1;
 }
+
+message CtUpdateFieldMinSellAmount {
+  fastnum.UD128 amount = 1;
+  CopyTradeSellAmountFilterMode mode = 2;
+  optional decisol.QuoteKind quote = 3;
+}
+
+message CtUpdateFieldMaxSellAmount {
+  fastnum.UD128 amount = 1;
+  CopyTradeSellAmountFilterMode mode = 2;
+  optional decisol.QuoteKind quote = 3;
+}
 message CtUpdateField {
   oneof value {
     bool config_limits = 1;
@@ -1390,6 +1412,9 @@ message CtUpdateField {
     CtUpdateFieldMaxTax max_tax = 93;
     FeeMode buy_fee_mode = 94;
     FeeMode sell_fee_mode = 95;
+    CtUpdateFieldMinSellAmount min_sell_amount = 96;
+    CtUpdateFieldMaxSellAmount max_sell_amount = 97;
+    CopyTradeSellAmountFilterMode sell_amount_filter_mode = 98;
   }
 }
 
